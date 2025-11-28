@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Controls.MediaPlayer" Version="11.3.6" />
+    <PackageReference Include="Avalonia.Controls.MediaPlayer" Version="11.3.7" />
   </ItemGroup>
 
   <ItemGroup>

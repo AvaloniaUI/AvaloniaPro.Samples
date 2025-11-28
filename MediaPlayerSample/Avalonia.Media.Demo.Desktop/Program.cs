@@ -16,5 +16,13 @@ sealed class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
+            .WithMediaPlayerOptions(new MediaPlayerOptions()
+            {
+                VlcOptions = new VlcMediaPlayerOptions
+                {
+                    LogVerbosity = 3, 
+                    AdditionalArgs = [""]
+                }
+            })
             .LogToTrace();
 }
