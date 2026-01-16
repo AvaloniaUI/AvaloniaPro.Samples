@@ -17,7 +17,9 @@
   <TreeDataGrid Name="countries"
                 Source="{Binding Source}"
                 AllowTriStateSorting="True"
-                AutoDragDropRows="True">
+                AutoDragDropRows="True"
+                CellPrepared="countries_CellPrepared"
+                CellClearing="countries_CellClearing">
     <TreeDataGrid.Resources>
 
       <!-- Template for Region column cells -->
