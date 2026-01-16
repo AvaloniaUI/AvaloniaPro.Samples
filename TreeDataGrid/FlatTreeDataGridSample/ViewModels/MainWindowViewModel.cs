@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Controls.Models.TreeDataGrid;
 using FlatTreeDataGridSample.Models;
@@ -50,6 +51,8 @@ internal partial class MainWindowViewModel : ViewModelBase
                 }),
             }
         };
+
+        MaxPopulation = _data.Max(x => x.Population);
     }
 
     /// <summary>
@@ -57,4 +60,9 @@ internal partial class MainWindowViewModel : ViewModelBase
     /// <see cref="Country"/> objects.
     /// </summary>
     public FlatTreeDataGridSource<Country> Source { get; }
+
+    /// <summary>
+    /// Gets the maximum population of all the countries.
+    /// </summary>
+    public int MaxPopulation { get; }
 }
