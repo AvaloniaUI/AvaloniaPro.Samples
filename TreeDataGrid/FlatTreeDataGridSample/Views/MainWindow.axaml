@@ -14,53 +14,18 @@
     <vm:MainWindowViewModel/>
   </Window.DataContext>
 
-  <TreeDataGrid Name="countries"
-                Source="{Binding Source}"
-                AllowTriStateSorting="True"
-                AutoDragDropRows="True"
-                CellPrepared="countries_CellPrepared"
-                CellClearing="countries_CellClearing">
-    <TreeDataGrid.Resources>
-
-      <!-- Template for Region column cells -->
-      <DataTemplate x:Key="RegionCell" DataType="models:Country">
-        <TextBlock Text="{Binding Region}" VerticalAlignment="Center"/>
-      </DataTemplate>
-
-      <!-- Template for Region column cells -->
-      <DataTemplate x:Key="RegionEditCell" DataType="models:Country">
-        <ComboBox ItemsSource="{x:Static models:Countries.Regions}"
-                  SelectedItem="{Binding Region}"/>
-      </DataTemplate>
-
-    </TreeDataGrid.Resources>
-
-    <!-- Display rows with alternating background colors -->
-    <TreeDataGrid.RowTheme>
-      <ControlTheme TargetType="TreeDataGridRow"
-                    BasedOn="{StaticResource {x:Type TreeDataGridRow}}">
-        <Style Selector="^:nth-last-child(2n)">
-          <Setter Property="Background" Value="#20808080"/>
-        </Style>
-      </ControlTheme>
-    </TreeDataGrid.RowTheme>
-
-    <!-- Display the last column header in bold font -->
-    <TreeDataGrid.ColumnHeaderTheme>
-      <ControlTheme TargetType="TreeDataGridColumnHeader"
-                    BasedOn="{StaticResource {x:Type TreeDataGridColumnHeader}}">
-        <Style Selector="^:nth-last-child(1)">
-          <Setter Property="TextBlock.FontWeight" Value="Bold"/>
-        </Style>
-      </ControlTheme>
-    </TreeDataGrid.ColumnHeaderTheme>
-
-    <!-- Display the last column cells in bold font -->
-    <TreeDataGrid.Styles>
-      <Style Selector="TreeDataGrid :is(TreeDataGridCell):nth-last-child(1)">
-        <Setter Property="TextBlock.FontWeight" Value="Bold"/>
-      </Style>
-    </TreeDataGrid.Styles>
-  </TreeDataGrid>
-
+  <TabControl Name="tabControl" SelectionChanged="TabControl_SelectionChanged">
+    <TabItem Header="Tab 1">
+      <TreeDataGrid Name="countries1"
+                    Source="{Binding Source1}"
+                    AllowTriStateSorting="True"
+                    AutoDragDropRows="True"/>
+    </TabItem>
+    <TabItem Header="Tab 2">
+      <TreeDataGrid Name="countries2"
+                    Source="{Binding Source2}"
+                    AllowTriStateSorting="True"
+                    AutoDragDropRows="True"/>
+    </TabItem>
+  </TabControl>
 </Window>

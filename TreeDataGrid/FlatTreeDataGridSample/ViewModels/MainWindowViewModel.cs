@@ -21,8 +21,7 @@ internal partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        // Create a flat TreeDataGrid source and define the columns to show.
-        Source = new FlatTreeDataGridSource<Country>(_data)
+        Source1 = new FlatTreeDataGridSource<Country>(_data)
         {
             Columns =
             {
@@ -36,8 +35,37 @@ internal partial class MainWindowViewModel : ViewModelBase
                     IsTextSearchEnabled = true,
                 }),
 
-                // Define a template column for the region with custom cell and edit templates.
-                new TemplateColumn<Country>("Region", "RegionCell", "RegionEditCell"),
+                // Define read-only text columns for population and area.
+                new TextColumn<Country, int>("Population", x => x.Population, new GridLength(3, GridUnitType.Star)),
+                new TextColumn<Country, int>("Area", x => x.Area, new GridLength(3, GridUnitType.Star)),
+
+                // Define a read-only text column for GDP with right-aligned text and a maximum width.
+                new TextColumn<Country, int>("GDP", x => x.Gdp, new GridLength(3, GridUnitType.Star), new()
+                {
+                    TextAlignment = Avalonia.Media.TextAlignment.Right,
+                    MaxWidth = new GridLength(150)
+                }),
+            }
+        };
+
+        Source1.RowSelection!.SelectionChanged += (s, e) =>
+        {
+            Source2!.RowSelection!.SelectedIndex = Source1.RowSelection!.SelectedIndex;
+        };
+
+        Source2 = new FlatTreeDataGridSource<Country>(_data)
+        {
+            Columns =
+            {
+                // Define a read/write text column for the country name with text search enabled.
+                new TextColumn<Country, string>(
+                    "Country",
+                    x => x.Name,
+                    (o, v) => o.Name = v,
+                    new GridLength(6, GridUnitType.Star), new()
+                {
+                    IsTextSearchEnabled = true,
+                }),
 
                 // Define read-only text columns for population and area.
                 new TextColumn<Country, int>("Population", x => x.Population, new GridLength(3, GridUnitType.Star)),
@@ -55,11 +83,8 @@ internal partial class MainWindowViewModel : ViewModelBase
         MaxPopulation = _data.Max(x => x.Population);
     }
 
-    /// <summary>
-    /// Gets the data source for the flat tree data grid, containing a collection of
-    /// <see cref="Country"/> objects.
-    /// </summary>
-    public FlatTreeDataGridSource<Country> Source { get; }
+    public FlatTreeDataGridSource<Country> Source1 { get; }
+    public FlatTreeDataGridSource<Country> Source2 { get; }
 
     /// <summary>
     /// Gets the maximum population of all the countries.
