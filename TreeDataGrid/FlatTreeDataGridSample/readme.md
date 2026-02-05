@@ -10,6 +10,7 @@ This `FlatTreeDataGridSource` sets up a grid which displays a list of countries 
 
 ### Column Configuration
 - **Multiple Column Types**: The sample shows how to define different column types:
+  - A row header column for row numbers. Together with the `FrozenColumnCount` property, this keeps the row numbers visible during horizontal scrolling.
   - Read/write text columns with the `Country` name column
   - Template columns with custom cell and edit templates for the `Region` column
   - Read-only text columns for data like `Population` and `Area`
@@ -26,6 +27,7 @@ This `FlatTreeDataGridSource` sets up a grid which displays a list of countries 
 - **Column Header Styling**: Custom styling for specific column headers (last column appears in bold)
 - **Cell Styling**: Custom styling for specific cells (last column cells appear in bold)
 - **Custom Templates**: Both display and edit templates for the Region column, including a ComboBox for selection
+- **Frozen Columns**: Keeping certain columns fixed during horizontal scrolling by setting `TreeDataGrid.FrozenColumnCount`
 
 ### Data Binding
 - Proper MVVM implementation showing how to bind a collection of domain objects (Countries) to the TreeDataGrid

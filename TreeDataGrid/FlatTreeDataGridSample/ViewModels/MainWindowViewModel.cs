@@ -2,6 +2,7 @@
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Controls.Models.TreeDataGrid;
+using Avalonia.Controls.Selection;
 using FlatTreeDataGridSample.Models;
 
 namespace FlatTreeDataGridSample.ViewModels;
@@ -26,6 +27,11 @@ internal partial class MainWindowViewModel : ViewModelBase
         {
             Columns =
             {
+                // Define a row header column for row numbering. This can be made to be always
+                // visible when scrolling horizontally by setting FrozenColumnCount = 1 on the
+                // TreeDataGrid.
+                new RowHeaderColumn<Country>(),
+
                 // Define a read/write text column for the country name with text search enabled.
                 new TextColumn<Country, string>(
                     "Country",
@@ -52,6 +58,7 @@ internal partial class MainWindowViewModel : ViewModelBase
             }
         };
 
+        Source.Selection = new TreeDataGridCellSelectionModel<Country>(Source);
         MaxPopulation = _data.Max(x => x.Population);
     }
 

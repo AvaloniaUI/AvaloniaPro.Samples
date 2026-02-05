@@ -18,6 +18,7 @@
                 Source="{Binding Source}"
                 AllowTriStateSorting="True"
                 AutoDragDropRows="True"
+                FrozenColumnCount="1"
                 CellPrepared="countries_CellPrepared"
                 CellClearing="countries_CellClearing">
     <TreeDataGrid.Resources>
