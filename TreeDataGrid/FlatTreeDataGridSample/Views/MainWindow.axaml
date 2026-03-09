@@ -14,18 +14,22 @@
     <vm:MainWindowViewModel/>
   </Window.DataContext>
 
-  <TabControl Name="tabControl" SelectionChanged="TabControl_SelectionChanged">
-    <TabItem Header="Tab 1">
-      <TreeDataGrid Name="countries1"
-                    Source="{Binding Source1}"
-                    AllowTriStateSorting="True"
-                    AutoDragDropRows="True"/>
-    </TabItem>
-    <TabItem Header="Tab 2">
-      <TreeDataGrid Name="countries2"
-                    Source="{Binding Source2}"
-                    AllowTriStateSorting="True"
-                    AutoDragDropRows="True"/>
-    </TabItem>
-  </TabControl>
+  <DockPanel>
+    <Button DockPanel.Dock="Bottom" Click="Button_Click">Close Tab</Button>
+    <TabControl Name="tabControl" SelectionChanged="TabControl_SelectionChanged">
+      <TabItem Header="Tab 1">
+        <TreeDataGrid Name="countries1"
+                      Source="{Binding Source1}"
+                      AllowTriStateSorting="True"
+                      AutoDragDropRows="True"/>
+      </TabItem>
+      <TabItem Header="Tab 2">
+        <TreeDataGrid Name="countries2"
+                      Source="{Binding Source2}"
+                      AllowTriStateSorting="True"
+                      AutoDragDropRows="True"/>
+      </TabItem>
+    </TabControl>
+  </DockPanel>
+
 </Window>

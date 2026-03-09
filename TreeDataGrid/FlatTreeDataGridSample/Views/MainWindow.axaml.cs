@@ -27,4 +27,9 @@ public partial class MainWindow : Window
             });
         }
     }
+
+    private void Button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        tabControl.Items.RemoveAt(tabControl.SelectedIndex);
+    }
 }
