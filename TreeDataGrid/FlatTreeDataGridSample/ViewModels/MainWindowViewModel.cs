@@ -2,6 +2,7 @@
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Controls.Models.TreeDataGrid;
+using Avalonia.Controls.Templates;
 using FlatTreeDataGridSample.Models;
 
 namespace FlatTreeDataGridSample.ViewModels;
@@ -25,26 +26,11 @@ internal partial class MainWindowViewModel : ViewModelBase
         {
             Columns =
             {
-                // Define a read/write text column for the country name with text search enabled.
-                new TextColumn<Country, string>(
-                    "Country",
-                    x => x.Name,
-                    (o, v) => o.Name = v, 
-                    new GridLength(6, GridUnitType.Star), new()
-                {
-                    IsTextSearchEnabled = true,
-                }),
-
-                // Define read-only text columns for population and area.
-                new TextColumn<Country, int>("Population", x => x.Population, new GridLength(3, GridUnitType.Star)),
-                new TextColumn<Country, int>("Area", x => x.Area, new GridLength(3, GridUnitType.Star)),
-
-                // Define a read-only text column for GDP with right-aligned text and a maximum width.
-                new TextColumn<Country, int>("GDP", x => x.Gdp, new GridLength(3, GridUnitType.Star), new()
-                {
-                    TextAlignment = Avalonia.Media.TextAlignment.Right,
-                    MaxWidth = new GridLength(150)
-                }),
+                new TemplateColumn<Country>(
+                    "Scientific Name",
+                    new FuncDataTemplate<Country>((x, _) => new StackPanel()),
+                    null,
+                    GridLength.Star)
             }
         };
 
