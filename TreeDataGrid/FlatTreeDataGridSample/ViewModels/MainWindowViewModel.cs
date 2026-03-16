@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Controls;
-using Avalonia.Controls.Models.TreeDataGrid;
 using FlatTreeDataGridSample.Models;
 
 namespace FlatTreeDataGridSample.ViewModels;
@@ -27,24 +26,20 @@ internal partial class MainWindowViewModel : ViewModelBase
             Columns =
             {
                 // Define a read/write text column for the country name with text search enabled.
-                new TextColumn<Country, string>(
+                TreeDataGridTextColumn.Create<Country, string>(
                     "Country",
                     x => x.Name,
-                    (o, v) => o.Name = v, 
-                    new GridLength(6, GridUnitType.Star), new()
-                {
-                    IsTextSearchEnabled = true,
-                }),
+                    width: new GridLength(6, GridUnitType.Star)),
 
                 // Define a template column for the region with custom cell and edit templates.
-                new TemplateColumn<Country>("Region", "RegionCell", "RegionEditCell"),
+                TreeDataGridTemplateColumn.CreateFromResourceKeys("Region", "RegionCell", "RegionEditCell"),
 
                 // Define read-only text columns for population and area.
-                new TextColumn<Country, int>("Population", x => x.Population, new GridLength(3, GridUnitType.Star)),
-                new TextColumn<Country, int>("Area", x => x.Area, new GridLength(3, GridUnitType.Star)),
+                TreeDataGridTextColumn.Create<Country, int>("Population", x => x.Population, width: new GridLength(3, GridUnitType.Star)),
+                TreeDataGridTextColumn.Create<Country, int>("Area", x => x.Area, width: new GridLength(3, GridUnitType.Star)),
 
                 // Define a read-only text column for GDP with right-aligned text and a maximum width.
-                new TextColumn<Country, int>("GDP", x => x.Gdp, new GridLength(3, GridUnitType.Star), new()
+                TreeDataGridTextColumn.Create<Country, int>("GDP", x => x.Gdp, width: new GridLength(3, GridUnitType.Star), options: new()
                 {
                     TextAlignment = Avalonia.Media.TextAlignment.Right,
                     MaxWidth = new GridLength(150)
