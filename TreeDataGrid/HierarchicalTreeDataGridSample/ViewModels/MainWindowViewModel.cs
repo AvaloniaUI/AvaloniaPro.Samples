@@ -16,49 +16,42 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         // Create a hierarchical TreeDataGrid source
         Source = new HierarchicalTreeDataGridSource<TaxonomyItem>(_data)
-        {
-            Columns =
-            {
-                // Define an expander column with an inner text column for the scientific name
-                TreeDataGridHierarchicalExpanderColumn.Create<TaxonomyItem>(
-                    "Scientific Name",
-                    TreeDataGridTextColumn.Create<TaxonomyItem, string>(
-                        null,
-                        x => x.ScientificName),
-                    x => x.Children,
-                    width: new GridLength(2, GridUnitType.Star)),
+            
+            // Define an expander column with an inner text column for the scientific name
+            .WithHierarchicalExpanderTextColumn(
+                "Scientific Name",
+                x => x.ScientificName,
+                x => x.Children,
+                o => o.Width = new GridLength(2, GridUnitType.Star))
 
-                // Define a text column for the taxonomic rank
-                TreeDataGridTextColumn.Create<TaxonomyItem, string>(
-                    "Taxonomic Rank",
-                    x => x.TaxonomicRank,
-                    width: new GridLength(1, GridUnitType.Star)),
+            // Define a text column for the taxonomic rank
+            .WithTextColumn(
+                "Taxonomic Rank",
+                x => x.TaxonomicRank,
+                o => o.Width = new GridLength(1, GridUnitType.Star))
 
-                // Define a column for the common name
-                TreeDataGridTextColumn.Create<TaxonomyItem, string>(
-                    "Common Name",
-                    x => x.CommonName,
-                    width: new GridLength(2, GridUnitType.Star)),
+            //        // Define a column for the common name
+            .WithTextColumn(
+                "Common Name",
+                x => x.CommonName,
+                o => o.Width = new GridLength(2, GridUnitType.Star))
 
-                // Define a column for the description
-                TreeDataGridTextColumn.Create<TaxonomyItem, string>(
-                    "Description",
-                    x => x.Description,
-                    width: new GridLength(3, GridUnitType.Star)),
+            // Define a column for the description
+            .WithTextColumn(
+                "Description",
+                x => x.Description,
+                o => o.Width = new GridLength(3, GridUnitType.Star))
 
-                // Define a column for the habitat
-                TreeDataGridTextColumn.Create<TaxonomyItem, string>(
-                    "Habitat",
-                    x => x.Habitat,
-                    width: new GridLength(2, GridUnitType.Star)),
+            // Define a column for the habitat
+            .WithTextColumn(
+                x => x.Habitat,
+                o => o.Width = new GridLength(2, GridUnitType.Star))
 
-                // Define a column for the conservation status
-                TreeDataGridTemplateColumn.CreateFromResourceKeys(
-                    "Conservation Status",
-                    "ConservationStatusTemplate",
-                    width: new GridLength(1, GridUnitType.Star))
-            }
-        };
+            // Define a column for the conservation status
+            .WithTemplateColumnFromResourceKeys(
+                "Conservation Status",
+                "ConservationStatusTemplate",
+                options: o => o.Width = new GridLength(1, GridUnitType.Star));
 
         // Auto-expand the top level items
         for (var i = 0; i < _data.Count; ++i)
