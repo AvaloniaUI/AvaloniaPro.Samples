@@ -22,30 +22,23 @@ internal partial class MainWindowViewModel : ViewModelBase
     {
         // Create a flat TreeDataGrid source and define the columns to show.
         Source = new FlatTreeDataGridSource<Country>(_data)
-        {
-            Columns =
+            .WithTextColumn("Country", x => x.Name, o => o.Width = new GridLength(6, GridUnitType.Star))
+            
+            // Define a template column for the region with custom cell and edit templates.
+            .WithTemplateColumnFromResourceKeys("Region", "RegionCell", "RegionEditCell")
+
+            // Define read-only text columns for population and area. The header can be inferred
+            // from the property name, so we don't need to specify it explicitly.
+            .WithTextColumn(x => x.Population, o =>o.Width = new GridLength(3, GridUnitType.Star))
+            .WithTextColumn(x => x.Area, o => o.Width = new GridLength(3, GridUnitType.Star))
+
+            // Define a read-only text column for GDP with right-aligned text and a maximum width.
+            .WithTextColumn(x => x.Gdp, o =>
             {
-                // Define a read/write text column for the country name with text search enabled.
-                TreeDataGridTextColumn.Create<Country, string>(
-                    "Country",
-                    x => x.Name,
-                    width: new GridLength(6, GridUnitType.Star)),
-
-                // Define a template column for the region with custom cell and edit templates.
-                TreeDataGridTemplateColumn.CreateFromResourceKeys("Region", "RegionCell", "RegionEditCell"),
-
-                // Define read-only text columns for population and area.
-                TreeDataGridTextColumn.Create<Country, int>("Population", x => x.Population, width: new GridLength(3, GridUnitType.Star)),
-                TreeDataGridTextColumn.Create<Country, int>("Area", x => x.Area, width: new GridLength(3, GridUnitType.Star)),
-
-                // Define a read-only text column for GDP with right-aligned text and a maximum width.
-                TreeDataGridTextColumn.Create<Country, int>("GDP", x => x.Gdp, width: new GridLength(3, GridUnitType.Star), options: new()
-                {
-                    TextAlignment = Avalonia.Media.TextAlignment.Right,
-                    MaxWidth = new GridLength(150)
-                }),
-            }
-        };
+                o.Width = new GridLength(3, GridUnitType.Star);
+                o.TextAlignment = Avalonia.Media.TextAlignment.Right;
+                o.MaxWidth = new GridLength(150);
+            });
 
         MaxPopulation = _data.Max(x => x.Population);
     }
