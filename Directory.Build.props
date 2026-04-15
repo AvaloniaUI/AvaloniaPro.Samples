@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <!-- Set the AVALONIA_LICENCE_KEY environment variable or paste your license key directly -->
+    <!-- Set the AVALONIA_LICENSE_KEY environment variable or paste your license key directly -->
     <AvaloniaUILicenseKey Include="$(AVALONIA_LICENSE_KEY)" />
   </ItemGroup>
 </Project>

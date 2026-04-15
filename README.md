@@ -2,7 +2,7 @@
 
 Sample projects for Avalonia Pro UI Components
 
-To set this up, you must have your Avalonia credentials ready and set the `AVALONIA_LICENCE_KEY` environment variable to your license key, or explicitly set `AvaloniaUILicenseKey` in the [`Directory.Build.props`](Directory.Build.props) file. 
+To set this up, you must have your Avalonia credentials ready and set the `AVALONIA_LICENSE_KEY` environment variable to your license key, or explicitly set `AvaloniaUILicenseKey` in the [`Directory.Build.props`](Directory.Build.props) file. 
 
 Your license key can be found in your the Avalonia portal and will be of the format `avln_on_key:v1:` or `avln_off_key:v1:` followed by a string of characters.
 
