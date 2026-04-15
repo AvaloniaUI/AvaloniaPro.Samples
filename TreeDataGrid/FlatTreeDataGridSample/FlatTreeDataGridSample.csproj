@@ -18,11 +18,11 @@
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Developer Tools integration -->
-    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.1.*" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.*" Condition="'$(Configuration)' == 'Debug'" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,0 @@
-<Project>
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
-  <PropertyGroup>
-    <AvaloniaVersion>12.0.0-rc2</AvaloniaVersion>
-  </PropertyGroup>
-</Project>
