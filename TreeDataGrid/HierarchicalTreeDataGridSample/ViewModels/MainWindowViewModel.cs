@@ -22,7 +22,7 @@ public partial class MainWindowViewModel : ViewModelBase
                 "Scientific Name",
                 x => x.ScientificName,
                 x => x.Children,
-                o => o.Width = new GridLength(2, GridUnitType.Star))
+                options: o => o.Width = new GridLength(2, GridUnitType.Star))
 
             // Define a text column for the taxonomic rank
             .WithTextColumn(
@@ -30,7 +30,7 @@ public partial class MainWindowViewModel : ViewModelBase
                 x => x.TaxonomicRank,
                 o => o.Width = new GridLength(1, GridUnitType.Star))
 
-            //        // Define a column for the common name
+            // Define a column for the common name
             .WithTextColumn(
                 "Common Name",
                 x => x.CommonName,

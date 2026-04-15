@@ -19,11 +19,9 @@ public partial class MainWindow : Window
 
         if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            TransparencyLevelHint = new[] { WindowTransparencyLevel.AcrylicBlur, };
+            TransparencyLevelHint = [WindowTransparencyLevel.AcrylicBlur,];
             ExtendClientAreaToDecorationsHint = true;
-            ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.OSXThickTitleBar |
-                                               ExtendClientAreaChromeHints.Default |
-                                               ExtendClientAreaChromeHints.PreferSystemChrome;
+            WindowDecorations = WindowDecorations.None;
             ExtendClientAreaTitleBarHeightHint = 48;
         }
     }
