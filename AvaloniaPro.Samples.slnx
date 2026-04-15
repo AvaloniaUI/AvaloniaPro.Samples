@@ -1,0 +1,39 @@
+<Solution>
+  <Folder Name="/MediaPlayerSample/">
+    <Project Path="MediaPlayerSample/Avalonia.Media.Demo.Android/Avalonia.Media.Demo.Android.csproj" />
+    <Project Path="MediaPlayerSample/Avalonia.Media.Demo.Desktop/Avalonia.Media.Demo.Desktop.csproj" />
+    <Project Path="MediaPlayerSample/Avalonia.Media.Demo.iOS/Avalonia.Media.Demo.iOS.csproj" />
+    <Project Path="MediaPlayerSample/Avalonia.Media.Demo/Avalonia.Media.Demo.csproj" />
+    <Project Path="MediaPlayerSample/Avalonia.Media.MultiViewDemo.Android/Avalonia.Media.MultiViewDemo.Android.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="MediaPlayerSample/Avalonia.Media.MultiViewDemo.Browser/Avalonia.Media.MultiViewDemo.Browser.csproj" />
+    <Project Path="MediaPlayerSample/Avalonia.Media.MultiViewDemo.Desktop/Avalonia.Media.MultiViewDemo.Desktop.csproj" />
+    <Project Path="MediaPlayerSample/Avalonia.Media.MultiViewDemo.iOS/Avalonia.Media.MultiViewDemo.iOS.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="MediaPlayerSample/Avalonia.Media.MultiViewDemo/Avalonia.Media.MultiViewDemo.csproj" />
+  </Folder>
+  <Folder Name="/NativeWebViewAndDialogSample/">
+    <Project Path="NativeWebViewAndDialogSample/NativeWebViewAndDialogSample.Android/NativeWebViewAndDialogSample.Android.csproj" />
+    <Project Path="NativeWebViewAndDialogSample/NativeWebViewAndDialogSample.Desktop/NativeWebViewAndDialogSample.Desktop.csproj" />
+    <Project Path="NativeWebViewAndDialogSample/NativeWebViewAndDialogSample.iOS/NativeWebViewAndDialogSample.iOS.csproj" />
+    <Project Path="NativeWebViewAndDialogSample/NativeWebViewAndDialogSample/NativeWebViewAndDialogSample.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/TreeDataGrid/">
+    <Project Path="TreeDataGrid/FlatTreeDataGridSample/FlatTreeDataGridSample.csproj" />
+    <Project Path="TreeDataGrid/HierarchicalTreeDataGridSample/HierarchicalTreeDataGridSample.csproj" />
+  </Folder>
+  <Folder Name="/WebAuthenticationBrokerSample/">
+    <Project Path="WebAuthenticationBrokerSample/WebAuthenticationBrokerSample.Desktop/WebAuthenticationBrokerSample.Desktop.csproj" />
+    <Project Path="WebAuthenticationBrokerSample/WebAuthenticationBrokerSample.iOS/WebAuthenticationBrokerSample.iOS.csproj" />
+    <Project Path="WebAuthenticationBrokerSample/WebAuthenticationBrokerSample/WebAuthenticationBrokerSample.csproj" />
+  </Folder>
+</Solution>
