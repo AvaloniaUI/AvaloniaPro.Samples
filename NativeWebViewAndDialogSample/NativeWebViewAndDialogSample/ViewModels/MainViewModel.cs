@@ -10,7 +10,7 @@ public partial class MainViewModel : ObservableObject
 {
     public MainViewModel()
     {
-        Url = "https://docs.avaloniaui.net/accelerate/components/webview/nativewebview/";
+        Url = "https://docs.avaloniaui.net/controls/web/nativewebview";
         NavigationUrl = new Uri(Url);
     }
 

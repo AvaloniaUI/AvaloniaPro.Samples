@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Avalonia.Media.Demo</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.avaloniaui.accelerate.media.demo</string>
+	<string>net.avaloniaui.media.demo</string>
 	<key>Provisioning</key>
 	<string></string>
 	<key>CFBundleShortVersionString</key>

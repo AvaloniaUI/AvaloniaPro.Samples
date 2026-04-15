@@ -3,7 +3,7 @@
              xmlns:local="using:Avalonia.Media.Demo"
              x:Class="Avalonia.Media.Demo.App"
              xmlns:labs="using:Avalonia.Labs.Controls"
-             Name="Avalonia® Accelerate Media Player Controls Demo"
+             Name="Avalonia® Media Player Controls Demo"
              RequestedThemeVariant="Dark">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
