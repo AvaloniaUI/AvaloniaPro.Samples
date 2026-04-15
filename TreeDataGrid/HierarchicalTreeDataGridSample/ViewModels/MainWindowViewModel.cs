@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using Avalonia.Controls;
-using Avalonia.Controls.Models.TreeDataGrid;
 using HierarchicalTreeDataGridSample.Models;
 
 namespace HierarchicalTreeDataGridSample.ViewModels;
@@ -17,58 +16,47 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         // Create a hierarchical TreeDataGrid source
         Source = new HierarchicalTreeDataGridSource<TaxonomyItem>(_data)
-        {
-            Columns =
-            {
-                // Define an expander column with an inner text column for the scientific name
-                new HierarchicalExpanderColumn<TaxonomyItem>(
-                    new TextColumn<TaxonomyItem, string>(
-                    "Scientific Name",
-                    x => x.ScientificName,
-                    new GridLength(2, GridUnitType.Star),
-                    new TextColumnOptions<TaxonomyItem>
-                    {
-                        IsTextSearchEnabled = true,
-                    }),
-                    x => x.Children),
-                
-                // Define an expander column with an inner text column the taxonomic rank
-                new TextColumn<TaxonomyItem, string>(
-                        "Taxonomic Rank",
-                        x => x.TaxonomicRank,
-                        new GridLength(1, GridUnitType.Star)),
-                
-                // Define a column for the common name
-                new TextColumn<TaxonomyItem, string>(
-                    "Common Name",
-                    x => x.CommonName,
-                    new GridLength(2, GridUnitType.Star)),
-                
-                // Define a column for the description
-                new TextColumn<TaxonomyItem, string>(
-                    "Description",
-                    x => x.Description,
-                    new GridLength(3, GridUnitType.Star)),
-                
-                // Define a column for the habitat
-                new TextColumn<TaxonomyItem, string>(
-                    "Habitat",
-                    x => x.Habitat,
-                    new GridLength(2, GridUnitType.Star)),
-                
-                // Define a column for the conservation status
-                new TemplateColumn<TaxonomyItem>(
-                    "Conservation Status",
-                    "ConservationStatusTemplate",
-                    null,
-                    new GridLength(1, GridUnitType.Star))
-            }
-        };
+            
+            // Define an expander column with an inner text column for the scientific name
+            .WithHierarchicalExpanderTextColumn(
+                "Scientific Name",
+                x => x.ScientificName,
+                x => x.Children,
+                options: o => o.Width = new GridLength(2, GridUnitType.Star))
+
+            // Define a text column for the taxonomic rank
+            .WithTextColumn(
+                "Taxonomic Rank",
+                x => x.TaxonomicRank,
+                o => o.Width = new GridLength(1, GridUnitType.Star))
+
+            // Define a column for the common name
+            .WithTextColumn(
+                "Common Name",
+                x => x.CommonName,
+                o => o.Width = new GridLength(2, GridUnitType.Star))
+
+            // Define a column for the description
+            .WithTextColumn(
+                "Description",
+                x => x.Description,
+                o => o.Width = new GridLength(3, GridUnitType.Star))
+
+            // Define a column for the habitat
+            .WithTextColumn(
+                x => x.Habitat,
+                o => o.Width = new GridLength(2, GridUnitType.Star))
+
+            // Define a column for the conservation status
+            .WithTemplateColumnFromResourceKeys(
+                "Conservation Status",
+                "ConservationStatusTemplate",
+                options: o => o.Width = new GridLength(1, GridUnitType.Star));
 
         // Auto-expand the top level items
         for (var i = 0; i < _data.Count; ++i)
         {
-            Source.Expand(i);
+            Source.Expand(new IndexPath(i));
         }
     }
 

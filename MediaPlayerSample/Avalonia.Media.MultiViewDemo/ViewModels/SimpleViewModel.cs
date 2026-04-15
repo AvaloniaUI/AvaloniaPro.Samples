@@ -26,8 +26,12 @@ namespace Avalonia.Media.MultiViewDemo.ViewModels
             if (e.PropertyName == nameof(Source))
             {
                 await Player.StopAsync();
-                Player.Source = Source;
-                await Player.PrepareAsync();
+
+                if (Source is not null)
+                {
+                    await Player.SetSourceAsync(Source);
+                    await Player.PrepareAsync();
+                }
             }
         }
 
