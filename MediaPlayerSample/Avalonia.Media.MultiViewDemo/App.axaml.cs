@@ -1,36 +1,29 @@
-using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
-using System.Linq;
 using Avalonia.Markup.Xaml;
-using Avalonia.Media.MultiViewDemo.ViewModels;
 using Avalonia.Media.MultiViewDemo.Views;
-using System.Diagnostics.CodeAnalysis;
 
-namespace Avalonia.Media.MultiViewDemo;
-
-public partial class App : Application
+namespace Avalonia.Media.MultiViewDemo
 {
-    public override void Initialize()
+    public partial class App : Application
     {
-        AvaloniaXamlLoader.Load(this);
-    }
-
-    public override void OnFrameworkInitializationCompleted()
-    {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        public override void Initialize()
         {
-            desktop.MainWindow = new MainWindow
+            AvaloniaXamlLoader.Load(this);
+        }
+
+        public override void OnFrameworkInitializationCompleted()
+        {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                DataContext = new SimplePlayer(),
-            };
-        }
-        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
-        {
-            singleViewPlatform.MainView = new SimplePlayer();
-        }
+                desktop.MainWindow = new MainWindow
+                {
+                    DataContext = new SimplePlayer(),
+                };
+            }
+            else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+                singleViewPlatform.MainView = new SimplePlayer();
 
-        base.OnFrameworkInitializationCompleted();
+            base.OnFrameworkInitializationCompleted();
+        }
     }
 }

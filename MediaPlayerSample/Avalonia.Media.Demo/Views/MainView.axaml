@@ -57,10 +57,9 @@
     </UserControl.Styles>
 
     <Panel Name="RootPanel" Classes.enableTransparency="{Binding EnableTransparency}">
-
-        <Interaction.Behaviors>
+        <behaviors:MiniBehavior.Behavior>
             <behaviors:DropTargetBehavior DropCommand="{Binding DropCommand}" />
-        </Interaction.Behaviors>
+        </behaviors:MiniBehavior.Behavior>
 
         <Border Name="RootPanelBg2" />
 
@@ -69,9 +68,7 @@
         <ContentControl Content="{Binding CurrentMediaView}">
             <ContentControl.DataTemplates>
                 <DataTemplate DataType="vm:RemovableMediaView">
-                    <!-- Main Media Player Control Here-->
-                    <MediaPlayerControl Source="{Binding Source}"
-                                        ErrorOccurred="MediaPlayerControl_OnErrorOccurred" />
+                    <MediaPlayerControl Source="{Binding Source}" />
                 </DataTemplate>
             </ContentControl.DataTemplates>
         </ContentControl>
@@ -105,6 +102,27 @@
                 </Button.Flyout>
             </Button>
         </StackPanel>
+
+        <Border Name="ErrorToast"
+                IsVisible="False"
+                IsHitTestVisible="False"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,80"
+                Padding="16,10"
+                CornerRadius="8"
+                Background="#DD2D2D2D">
+            <Border.Transitions>
+                <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="0:0:0.25" />
+                </Transitions>
+            </Border.Transitions>
+            <TextBlock Name="ErrorToastText"
+                       Foreground="#FFE04040"
+                       FontSize="13"
+                       MaxWidth="500"
+                       TextWrapping="Wrap" />
+        </Border>
 
         <Panel Name="DropTargetOverlay" Background="#6f000000" IsHitTestVisible="False">
             <TextBlock FontSize="48" VerticalAlignment="Center"
