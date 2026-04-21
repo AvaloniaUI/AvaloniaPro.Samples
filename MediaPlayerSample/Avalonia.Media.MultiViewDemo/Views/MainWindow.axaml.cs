@@ -1,11 +1,12 @@
 using Avalonia.Controls;
 
-namespace Avalonia.Media.MultiViewDemo.Views;
-
-public partial class MainWindow : Window
+namespace Avalonia.Media.MultiViewDemo.Views
 {
-    public MainWindow()
+    public partial class MainWindow : Window
     {
-        InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
     }
 }

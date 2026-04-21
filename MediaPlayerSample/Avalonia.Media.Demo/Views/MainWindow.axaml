@@ -6,7 +6,7 @@
         xmlns:views="clr-namespace:Avalonia.Media.Demo.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         MinWidth="600" MinHeight="186"
-        Title="Avalonia® - MediaPlayer Demo"
+        Title="Avalonia® MediaPlayer Demo"
         Background="Transparent"
         x:Class="Avalonia.Media.Demo.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico">

@@ -1,83 +1,85 @@
 using System;
 using System.Runtime.InteropServices;
-using Avalonia.Media.Demo.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Media.Demo.ViewModels;
 using Avalonia.Platform;
 using CommunityToolkit.Mvvm.Input;
 
-namespace Avalonia.Media.Demo.Views;
-
-public partial class MainWindow : Window
+namespace Avalonia.Media.Demo.Views
 {
-    private MainViewModel? _mainVm;
-    private WindowState _oldState;
-
-    public MainWindow()
+    public partial class MainWindow : Window
     {
-        InitializeComponent();
+        private MainViewModel? _mainVm;
+        private WindowState _oldState;
 
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        public MainWindow()
         {
-            TransparencyLevelHint = [WindowTransparencyLevel.AcrylicBlur,];
-            ExtendClientAreaToDecorationsHint = true;
-            WindowDecorations = WindowDecorations.None;
-            ExtendClientAreaTitleBarHeightHint = 48;
-        }
-    }
+            InitializeComponent();
 
-    protected override void OnDataContextChanged(EventArgs e)
-    {
-        _mainVm = DataContext as MainViewModel;
-
-        if (_mainVm is null) throw new InvalidOperationException("MainViewModel can't be null.");
-
-        _mainVm.FullScreenCommand = new RelayCommand(HandleFullScreen);
-
-        _mainVm.EnableTransparency = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
-
-        _mainVm.DragMoveCommand = new RelayCommand<PointerPressedEventArgs>(HandleDragMove);
-
-        base.OnDataContextChanged(e);
-    }
-
-    private void HandleDragMove(PointerPressedEventArgs? e)
-    {
-        if (e == null) return;
-        switch (e.ClickCount)
-        {
-            case 2 when WindowState is WindowState.Normal:
-                WindowState = WindowState.Maximized;
-                break;
-            case 2:
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                if (WindowState is WindowState.Maximized )
-                    WindowState = WindowState.Normal;
-                break;
+                TransparencyLevelHint = new[] { WindowTransparencyLevel.AcrylicBlur, };
+                ExtendClientAreaToDecorationsHint = true;
+                ExtendClientAreaTitleBarHeightHint = 48;
             }
-            case 1 when WindowState is not WindowState.FullScreen:
-                BeginMoveDrag(e);
-                break;
+
+            RendererDiagnostics.DebugOverlays = Rendering.RendererDebugOverlays.Fps;
         }
-    }
 
-    private void HandleFullScreen()
-    {
-        if (WindowState is WindowState.FullScreen)
+        protected override void OnDataContextChanged(EventArgs e)
         {
-            WindowState = _oldState;
+            _mainVm = DataContext as MainViewModel;
 
-            if (_mainVm != null)
-                _mainVm.IsFullScreen = false;
+            if (_mainVm is null)
+                throw new InvalidOperationException("MainViewModel can't be null.");
+
+            _mainVm.FullScreenCommand = new RelayCommand(HandleFullScreen);
+
+            _mainVm.EnableTransparency = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+
+            _mainVm.DragMoveCommand = new RelayCommand<PointerPressedEventArgs>(HandleDragMove);
+
+            base.OnDataContextChanged(e);
         }
-        else if (WindowState is not WindowState.FullScreen)
-        {
-            _oldState = WindowState;
-            WindowState = WindowState.FullScreen;
 
-            if (_mainVm != null)
+        private void HandleDragMove(PointerPressedEventArgs? e)
+        {
+            if (e == null)
+                return;
+            switch (e.ClickCount)
             {
-                _mainVm.IsFullScreen = true;
+                case 2 when WindowState is WindowState.Normal:
+                    WindowState = WindowState.Maximized;
+                    break;
+                case 2:
+                    {
+                        if (WindowState is WindowState.Maximized)
+                            WindowState = WindowState.Normal;
+                        break;
+                    }
+                case 1 when WindowState is not WindowState.FullScreen:
+                    BeginMoveDrag(e);
+                    break;
+            }
+        }
+
+        private void HandleFullScreen()
+        {
+            if (WindowState is WindowState.FullScreen)
+            {
+                WindowState = _oldState;
+
+                if (_mainVm != null)
+                    _mainVm.IsFullScreen = false;
+            }
+            else if (WindowState is not WindowState.FullScreen)
+            {
+                _oldState = WindowState;
+                WindowState = WindowState.FullScreen;
+
+                if (_mainVm != null)
+                    _mainVm.IsFullScreen = true;
             }
         }
     }

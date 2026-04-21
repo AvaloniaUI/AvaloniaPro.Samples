@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Avalonia.Media.Demo.Models
 {
@@ -6,8 +6,8 @@ namespace Avalonia.Media.Demo.Models
     {
         private readonly MediaStatistics? _mediaStats;
         private readonly DateTime _timestamp;
-        private float _frameRate;
-        private int _displayedFrames;
+        private readonly float _frameRate;
+        private readonly int _displayedFrames;
 
         public Statistics(MediaStatistics? mediaStats, Statistics? previous = null)
         {
@@ -21,7 +21,7 @@ namespace Avalonia.Media.Demo.Models
                 {
                     var timeDiff = (_timestamp - previous._timestamp).TotalMilliseconds;
                     var frameDiff = _displayedFrames - previous._displayedFrames;
-                    double frameRateMicroS = frameDiff / timeDiff;
+                    var frameRateMicroS = frameDiff / timeDiff;
 
                     _frameRate = (float)(frameRateMicroS * 1_000);
 
@@ -34,9 +34,7 @@ namespace Avalonia.Media.Demo.Models
                 }
             }
             else
-            {
                 _frameRate = mediaStats?.FramesPerSecond ?? 0;
-            }
         }
 
         public string ReadBytes

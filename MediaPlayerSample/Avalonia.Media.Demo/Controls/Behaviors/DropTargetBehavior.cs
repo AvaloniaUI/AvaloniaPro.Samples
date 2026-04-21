@@ -1,98 +1,85 @@
 using System.Windows.Input;
-using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Threading;
-using Avalonia.Xaml.Interactivity;
 
-namespace Avalonia.Media.Demo.Controls.Behaviors;
-
-public class DropTargetBehavior : Behavior<Control>
+namespace Avalonia.Media.Demo.Controls.Behaviors
 {
-    public static readonly StyledProperty<ICommand?> DropCommandProperty =
-        AvaloniaProperty.Register<DropTargetBehavior, ICommand?>(
-            nameof(DropCommand));
-
-    public ICommand? DropCommand
+    public class DropTargetBehavior : MiniBehavior
     {
-        get => GetValue(DropCommandProperty);
-        set => SetValue(DropCommandProperty, value);
-    }
-    
-    protected override void OnAttached()
-    {
-        base.OnAttached();
-        if (AssociatedObject == null) return;
-        AssociatedObject.SetValue(DragDrop.AllowDropProperty, true);
-        AssociatedObject.AddHandler(DragDrop.DropEvent, Drop);
-        AssociatedObject.AddHandler(DragDrop.DragEnterEvent, DragEnter);
-        AssociatedObject.AddHandler(DragDrop.DragLeaveEvent, DragLeave);
-     } 
+        public static readonly StyledProperty<ICommand?> DropCommandProperty =
+            AvaloniaProperty.Register<DropTargetBehavior, ICommand?>(
+                nameof(DropCommand));
 
-    protected override void OnDetaching()
-    {
-        base.OnDetaching();
-        if (AssociatedObject == null) return;
-        AssociatedObject.SetValue(DragDrop.AllowDropProperty, false);
-        AssociatedObject.RemoveHandler(DragDrop.DropEvent, Drop);
-        AssociatedObject.RemoveHandler(DragDrop.DragEnterEvent, DragEnter);
-        AssociatedObject.RemoveHandler(DragDrop.DragLeaveEvent, DragLeave);
-
-     }
-
-    private void DragLeave(object? sender, DragEventArgs e)
-    {
-        e.DragEffects &= (DragDropEffects.Copy | DragDropEffects.Move);
-        if (!e.DataTransfer.Contains(DataFormat.File))
+        public ICommand? DropCommand
         {
-            e.DragEffects = DragDropEffects.None;
-            return;
+            get => GetValue(DropCommandProperty);
+            set => SetValue(DropCommandProperty, value);
         }
-        
-        DisableClass();
-    }
 
-    private void DragEnter(object? sender, DragEventArgs e)
-    {
-        e.DragEffects &= (DragDropEffects.Copy | DragDropEffects.Move);
-        if (!e.DataTransfer.Contains(DataFormat.File))
+        protected override void OnAttached()
         {
-            e.DragEffects = DragDropEffects.None;
-            return;
+            base.OnAttached();
+            if (AssociatedObject == null)
+                return;
+            AssociatedObject.SetValue(DragDrop.AllowDropProperty, true);
+            AssociatedObject.AddHandler(DragDrop.DropEvent, Drop);
+            AssociatedObject.AddHandler(DragDrop.DragEnterEvent, DragEnter);
+            AssociatedObject.AddHandler(DragDrop.DragLeaveEvent, DragLeave);
         }
-        
-        EnableClass();
-    }
 
-    private void Drop(object? sender, DragEventArgs e)
-    {
-        DisableClass();
-        if (!e.DataTransfer.Contains(DataFormat.File)) return;
-        if (DropCommand?.CanExecute(e) == true)
+        protected override void OnDetaching()
         {
-            DropCommand.Execute(e);
+            base.OnDetaching();
+            if (AssociatedObject == null)
+                return;
+            AssociatedObject.SetValue(DragDrop.AllowDropProperty, false);
+            AssociatedObject.RemoveHandler(DragDrop.DropEvent, Drop);
+            AssociatedObject.RemoveHandler(DragDrop.DragEnterEvent, DragEnter);
+            AssociatedObject.RemoveHandler(DragDrop.DragLeaveEvent, DragLeave);
         }
-    }
 
-    private void DisableClass()
-    {
-        Dispatcher.UIThread.Post(() =>
+        private void DragLeave(object? sender, DragEventArgs e)
         {
-            if (AssociatedObject?.Classes.Contains("dragover") ?? false)
+            e.DragEffects &= (DragDropEffects.Copy | DragDropEffects.Move);
+            if (e.DataTransfer.TryGetFiles()?.Length > 0)
+                DisableClass();
+            else
+                e.DragEffects = DragDropEffects.None;
+        }
+
+        private void DragEnter(object? sender, DragEventArgs e)
+        {
+            e.DragEffects &= (DragDropEffects.Copy | DragDropEffects.Move);
+            if (e.DataTransfer.TryGetFiles()?.Length > 0)
+                EnableClass();
+            else
+                e.DragEffects = DragDropEffects.None;
+        }
+
+        private void Drop(object? sender, DragEventArgs e)
+        {
+            DisableClass();
+            if (e?.DataTransfer.TryGetFiles()?.Length > 0)
+                if (DropCommand?.CanExecute(e) == true)
+                    DropCommand.Execute(e);
+        }
+
+        private void DisableClass()
+        {
+            Dispatcher.UIThread.Post(() =>
             {
-                AssociatedObject.Classes.Remove("dragover");
-            }
-        });
+                if (AssociatedObject?.Classes.Contains("dragover") ?? false)
+                    AssociatedObject.Classes.Remove("dragover");
+            });
+        }
 
-    }
-    
-    private void EnableClass()
-    {
-        Dispatcher.UIThread.Post(() =>
+        private void EnableClass()
         {
-            if (AssociatedObject is { } associatedObject && !associatedObject.Classes.Contains("dragover"))
+            Dispatcher.UIThread.Post(() =>
             {
-                associatedObject.Classes.Add("dragover");
-            }
-        });
+                if (AssociatedObject is { } associatedObject && !associatedObject.Classes.Contains("dragover"))
+                    associatedObject.Classes.Add("dragover");
+            });
+        }
     }
 }

@@ -1,8 +1,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Avalonia.Media.Demo.ViewModels;
-
-public partial class RemovableMediaView : ViewModelBase
+namespace Avalonia.Media.Demo.ViewModels
 {
-    [ObservableProperty] private MediaSource? _source;
+    public partial class RemovableMediaView : ViewModelBase
+    {
+        [ObservableProperty] private MediaSource? _source;
+    }
 }

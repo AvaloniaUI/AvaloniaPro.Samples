@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Browser;
-using Avalonia.Media.MultiViewDemo;
+using Avalonia.Media.Demo;
 
 internal sealed partial class Program
 {

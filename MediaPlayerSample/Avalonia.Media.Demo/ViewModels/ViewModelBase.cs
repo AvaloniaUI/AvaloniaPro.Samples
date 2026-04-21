@@ -1,7 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Avalonia.Media.Demo.ViewModels;
-
-public class ViewModelBase : ObservableObject
+namespace Avalonia.Media.Demo.ViewModels
 {
+    public class ViewModelBase : ObservableObject
+    {
+    }
 }

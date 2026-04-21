@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -19,19 +19,15 @@ namespace Avalonia.Media.MultiViewDemo.ViewModels
         {
         }
 
-        protected async override void OnPropertyChanged(PropertyChangedEventArgs e)
+        protected override async void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             base.OnPropertyChanged(e);
 
-            if (e.PropertyName == nameof(Source))
+            if (e.PropertyName == nameof(Source) && Source is { } source)
             {
                 await Player.StopAsync();
-
-                if (Source is not null)
-                {
-                    await Player.SetSourceAsync(Source);
-                    await Player.PrepareAsync();
-                }
+                await Player.SetSourceAsync(source);
+                await Player.PrepareAsync();
             }
         }
 
@@ -55,7 +51,7 @@ namespace Avalonia.Media.MultiViewDemo.ViewModels
                 Duration = Player.Duration;
                 Ticks = Duration?.Ticks ?? 0;
             }
-            else if(e.PropertyName == nameof(Player.Position))
+            else if (e.PropertyName == nameof(Player.Position))
             {
                 var position = Player.Position;
                 Ticks = long.Max(Ticks, position.Ticks);
