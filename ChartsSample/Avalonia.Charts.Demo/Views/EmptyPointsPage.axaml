@@ -1,0 +1,145 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.EmptyPointsPage"
+             x:CompileBindings="True" x:DataType="vm:EmptyPointsViewModel">
+
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="20">
+            <TextBlock Text="Configure how charts handle missing or null data points." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Empty Point Strategies" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    
+                    <StackPanel Spacing="4" Margin="0,0,0,10">
+                        <WrapPanel>
+                            <TextBlock Text="Empty Point Mode:" VerticalAlignment="Center" Margin="0,0,10,8"/>
+                            <ComboBox ItemsSource="{Binding Modes}"
+                                      SelectedItem="{Binding SelectedMode}"
+                                      Width="150"
+                                      Margin="0,0,0,8"/>
+                        </WrapPanel>
+                        <TextBlock Text="{Binding CurrentModeDescription}"
+                                   TextWrapping="Wrap"
+                                   FontStyle="Italic"/>
+                    </StackPanel>
+
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Spacing="20" Margin="0,0,16,0">
+                            
+                            <!-- Line Series (Markers) -->
+                            <Border Theme="{StaticResource CardBorder}">
+                                <Grid RowDefinitions="Auto, *">
+                                    <TextBlock Text="Line Series (with Markers)" Theme="{StaticResource CardTitle}"/>
+                                    <charts:CartesianChart Grid.Row="1" Height="300">
+                                        <charts:CartesianChart.Series>
+                                            <charts:LineSeries Title="Line Data"
+                                                               ItemsSource="{Binding Data}"
+                                                               CategoryPath="Category"
+                                                               ValuePath="Value"
+                                                               EmptyPointMode="{Binding SelectedMode}"
+                                                               Stroke="DodgerBlue"
+                                                               StrokeThickness="2"
+                                                               MarkerShape="Circle"
+                                                               MarkerSize="10"
+                                                               MarkerFill="White"
+                                                               MarkerStroke="DodgerBlue" ShowMarkers="True"/>
+                                        </charts:CartesianChart.Series>
+                                        <charts:CartesianChart.HorizontalAxis>
+                                            <charts:CategoryAxis ShowGridLines="False"/>
+                                        </charts:CartesianChart.HorizontalAxis>
+                                        <charts:CartesianChart.VerticalAxis>
+                                            <charts:NumericalAxis Minimum="0" Maximum="30"/>
+                                        </charts:CartesianChart.VerticalAxis>
+                                    </charts:CartesianChart>
+                                </Grid>
+                            </Border>
+
+                            <!-- Area Series -->
+                            <Border Theme="{StaticResource CardBorder}">
+                                <Grid RowDefinitions="Auto, *">
+                                    <TextBlock Text="Area Series" Theme="{StaticResource CardTitle}"/>
+                                    <charts:CartesianChart Grid.Row="1" Height="300">
+                                        <charts:CartesianChart.Series>
+                                            <charts:AreaSeries Title="Area Data"
+                                                               ItemsSource="{Binding Data}"
+                                                               CategoryPath="Category"
+                                                               ValuePath="Value"
+                                                               EmptyPointMode="{Binding SelectedMode}"
+                                                               Stroke="SeaGreen"
+                                                               StrokeThickness="2"
+                                                               Fill="SeaGreen"
+                                                               FillOpacity="0.2"/>
+                                        </charts:CartesianChart.Series>
+                                        <charts:CartesianChart.HorizontalAxis>
+                                            <charts:CategoryAxis ShowGridLines="False"/>
+                                        </charts:CartesianChart.HorizontalAxis>
+                                        <charts:CartesianChart.VerticalAxis>
+                                            <charts:NumericalAxis Minimum="0" Maximum="30"/>
+                                        </charts:CartesianChart.VerticalAxis>
+                                    </charts:CartesianChart>
+                                </Grid>
+                            </Border>
+
+                            <!-- Bar Series -->
+                            <Border Theme="{StaticResource CardBorder}">
+                                <Grid RowDefinitions="Auto, *">
+                                    <TextBlock Text="Bar Series" Theme="{StaticResource CardTitle}"/>
+                                    <charts:CartesianChart Grid.Row="1" Height="300">
+                                        <charts:CartesianChart.Series>
+                                            <charts:BarSeries Title="Bar Data"
+                                                              ItemsSource="{Binding Data}"
+                                                              CategoryPath="Category"
+                                                              ValuePath="Value"
+                                                              EmptyPointMode="{Binding SelectedMode}"
+                                                              Fill="Orange"
+                                                              Stroke="DarkOrange"
+                                                              StrokeThickness="1"/>
+                                        </charts:CartesianChart.Series>
+                                        <charts:CartesianChart.HorizontalAxis>
+                                            <charts:CategoryAxis ShowGridLines="False"/>
+                                        </charts:CartesianChart.HorizontalAxis>
+                                        <charts:CartesianChart.VerticalAxis>
+                                            <charts:NumericalAxis Minimum="0" Maximum="30"/>
+                                        </charts:CartesianChart.VerticalAxis>
+                                    </charts:CartesianChart>
+                                </Grid>
+                            </Border>
+
+                            <!-- Scatter Series -->
+                            <Border Theme="{StaticResource CardBorder}">
+                                <Grid RowDefinitions="Auto, *">
+                                    <TextBlock Text="Scatter Series" Theme="{StaticResource CardTitle}"/>
+                                    <charts:CartesianChart Grid.Row="1" Height="300">
+                                        <charts:CartesianChart.Series>
+                                            <charts:ScatterSeries Title="Scatter Data"
+                                                                  ItemsSource="{Binding Data}"
+                                                                  CategoryPath="Category"
+                                                                  ValuePath="Value"
+                                                                  EmptyPointMode="{Binding SelectedMode}"
+                                                                  MarkerShape="Diamond"
+                                                                  MarkerSize="12"
+                                                                  Fill="Purple"/>
+                                        </charts:CartesianChart.Series>
+                                        <charts:CartesianChart.HorizontalAxis>
+                                            <charts:CategoryAxis ShowGridLines="False"/>
+                                        </charts:CartesianChart.HorizontalAxis>
+                                        <charts:CartesianChart.VerticalAxis>
+                                            <charts:NumericalAxis Minimum="0" Maximum="30"/>
+                                        </charts:CartesianChart.VerticalAxis>
+                                    </charts:CartesianChart>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <TextBlock Text="Demonstrates handling of null/NaN values." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

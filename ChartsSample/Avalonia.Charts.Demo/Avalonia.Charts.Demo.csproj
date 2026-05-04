@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <NoWarn>$(NoWarn);CS8669</NoWarn>
+    <AvaloniaControlsChartsVersion>12.0.0-beta3.1</AvaloniaControlsChartsVersion>
+    <AvaloniaLicensingVersion>3.0.8</AvaloniaLicensingVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <EmbeddedResource Include="Resources\ne_110m_world.geojson" />
+    <EmbeddedResource Include="Resources\spain_communities.geojson" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Controls.Charts" Version="$(AvaloniaControlsChartsVersion)" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Labs.Controls" Version="12.0.0" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="AvaloniaUI.Licensing" Version="$(AvaloniaLicensingVersion)" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+  </ItemGroup>
+</Project>

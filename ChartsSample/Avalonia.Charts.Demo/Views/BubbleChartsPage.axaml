@@ -1,0 +1,64 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:BubbleChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.BubbleChartsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Bubble charts add a third dimension (size) to standard data points, perfect for visualizing magnitude relationships." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+          
+            <!-- Bubble Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Bubble Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="BubbleChartSample" Title="Market Analysis" Height="300">
+                        <charts:CartesianChart.HorizontalAxis><charts:CategoryAxis /></charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis><charts:NumericalAxis /></charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BubbleSeries Title="Products"
+                                                   ItemsSource="{Binding BubbleSeriesData}"
+                                                   CategoryPath="X" ValuePath="Y" SizePath="Size" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="BubbleSeries with variable-size markers" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Packed Bubble Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Packed Bubble Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PackedBubbleChart Name="PackedBubbleChartSample" Title="Market Sectors" Height="350"
+                                                ItemsSource="{Binding PackedBubbleData}"
+                                                ValuePath="Value" LabelPath="Name" />
+                    <TextBlock Text="PackedBubbleChart with force-directed clustering" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Bubble Cloud -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Bubble Cloud" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:BubbleCloud Name="BubbleCloudSample" Title="Category Sizes" Height="350" 
+                                          ItemsSource="{Binding BubbleCloudData}"
+                                          ValuePath="Value" LabelPath="Name" />
+                    <TextBlock Text="BubbleCloud with animated clustering and collision avoidance" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Hexbin Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Hexbin Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:HexbinChart Name="HexbinChartSample" Title="Density Distribution" Height="350" 
+                                          ItemsSource="{Binding HexbinData}"
+                                          XPath="X" YPath="Y" />
+                    <TextBlock Text="HexbinChart for 2D density visualization" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

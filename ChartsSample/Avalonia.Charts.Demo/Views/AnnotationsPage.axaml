@@ -1,0 +1,200 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1500"
+             x:CompileBindings="True" x:DataType="vm:AnnotationsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.AnnotationsPage">
+    
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Add context to your charts using lines, bands, shapes, and custom text annotations." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            
+            <!-- Reference Lines -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Reference Lines" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="ReferenceLinesChart" Height="250">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Category" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="0" Maximum="100" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Values" ItemsSource="{Binding ReferenceData}" Stroke="SteelBlue" StrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.Annotations>
+                            <!-- Horizontal Reference Line -->
+                            <chartsEnterprise:LineAnnotation Value="75" Orientation="Horizontal" Stroke="Red" StrokeThickness="2" Label="Threshold (75)" Foreground="Red" />
+                            <!-- Vertical Reference Line -->
+                            <chartsEnterprise:LineAnnotation Value="3" Orientation="Vertical" Stroke="Green" StrokeThickness="2" Label="Milestone" Foreground="Green" />
+                        </charts:CartesianChart.Annotations>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Horizontal and Vertical lines to mark specific values or thresholds." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Plot Bands -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Plot Bands" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="BandsChart" Height="250">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Date" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Temperature" Minimum="0" Maximum="40" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Temp" ItemsSource="{Binding BandsData}" MarkerSize="6" Stroke="CornflowerBlue"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.Annotations>
+                            <!-- Comfort Zone (Horizontal Band) -->
+                            <chartsEnterprise:BandAnnotation FromValue="20" ToValue="26" Orientation="Horizontal" 
+                                                     Label="Comfort Zone" Foreground="DarkGreen">
+                                <chartsEnterprise:BandAnnotation.Fill>
+                                    <SolidColorBrush Color="#32008000" />
+                                </chartsEnterprise:BandAnnotation.Fill>
+                            </chartsEnterprise:BandAnnotation>
+                            <!-- High Heat (Horizontal Band) -->
+                            <chartsEnterprise:BandAnnotation FromValue="30" ToValue="40" Orientation="Horizontal" 
+                                                     Label="High Heat" Foreground="DarkRed">
+                                <chartsEnterprise:BandAnnotation.Fill>
+                                    <SolidColorBrush Color="#32FF0000" />
+                                </chartsEnterprise:BandAnnotation.Fill>
+                            </chartsEnterprise:BandAnnotation>
+                            <!-- Weekend (Vertical Band) -->
+                            <chartsEnterprise:BandAnnotation FromValue="5" ToValue="6" Orientation="Vertical" 
+                                                     Label="Weekend" Foreground="Gray">
+                                <chartsEnterprise:BandAnnotation.Fill>
+                                    <SolidColorBrush Color="#1E000000" />
+                                </chartsEnterprise:BandAnnotation.Fill>
+                            </chartsEnterprise:BandAnnotation>
+                        </charts:CartesianChart.Annotations>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Shaded regions to highlight specific ranges (e.g., safe zones, weekends)." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Text Annotations Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Text Annotations" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="TextAnnotationsChart" Height="250">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis Title="X" Minimum="0" Maximum="10" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Y" Minimum="0" Maximum="100" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="Data" ItemsSource="{Binding TextData}" 
+                                                    CategoryPath="X" ValuePath="Y" MarkerSize="8" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.Annotations>
+                            <chartsEnterprise:TextAnnotation X="0.7" Y="90" Text="High Importance" FontSize="14" Foreground="#1E3A8A" />
+                            <chartsEnterprise:TextAnnotation X="0.6" Y="25" Text="Start Point" FontSize="12" Foreground="#4B5563" />
+                        </charts:CartesianChart.Annotations>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Text labels placed at arbitrary coordinates in the plot area." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Shape Annotations Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Shape Annotations" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="ShapesChart" Height="250">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis Title="X" Minimum="0" Maximum="10" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Y" Minimum="0" Maximum="100" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="Points" ItemsSource="{Binding ShapeData}" 
+                                                    CategoryPath="X" ValuePath="Y" MarkerSize="8" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.Annotations>
+                            <!-- Highlight Region -->
+                            <chartsEnterprise:RectangleAnnotation X="0.6" Y="60" Width="0.2" Height="20" 
+                                                          Stroke="Blue" Label="Region A">
+                                <chartsEnterprise:RectangleAnnotation.Fill>
+                                    <SolidColorBrush Color="#280000FF" />
+                                </chartsEnterprise:RectangleAnnotation.Fill>
+                            </chartsEnterprise:RectangleAnnotation>
+                            <!-- Circle of Interest -->
+                            <chartsEnterprise:EllipseAnnotation X="0.3" Y="30" RadiusX="0.05" RadiusY="5" 
+                                                        Stroke="Orange" Label="Cluster">
+                                <chartsEnterprise:EllipseAnnotation.Fill>
+                                    <SolidColorBrush Color="#28FFA500" />
+                                </chartsEnterprise:EllipseAnnotation.Fill>
+                            </chartsEnterprise:EllipseAnnotation>
+                            <!-- Trend Arrow -->
+                            <chartsEnterprise:ArrowLineAnnotation X1="0.3" Y1="35" X2="0.7" Y2="65" 
+                                                          Stroke="Purple" StrokeThickness="2" ShowEndArrow="True" Label="Growth" />
+                        </charts:CartesianChart.Annotations>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Geometric shapes and arrows to draw attention to specific data points." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Quadrant Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Quadrant Chart (Composed)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="QuadrantChart" Height="400">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis Title="Potential (Low → High)" Minimum="0" Maximum="100" ShowGridLines="False" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Capability (Low → High)" Minimum="0" Maximum="100" ShowGridLines="False" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="Items" ItemsSource="{Binding QuadrantData}" 
+                                                    CategoryPath="X" ValuePath="Y" MarkerSize="10" Stroke="White" StrokeThickness="1" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.Annotations>
+                            <!-- Bottom Left: Needs Attention -->
+                            <chartsEnterprise:RectangleAnnotation X="0.0" Y="0" Width="0.5" Height="50" Label="Needs Attention">
+                                <chartsEnterprise:RectangleAnnotation.Fill>
+                                    <SolidColorBrush Color="#1EAAAAAA" />
+                                </chartsEnterprise:RectangleAnnotation.Fill>
+                            </chartsEnterprise:RectangleAnnotation>
+                            <!-- Bottom Right: Potential Stars -->
+                            <chartsEnterprise:RectangleAnnotation X="0.5" Y="0" Width="0.5" Height="50" Label="Potential Stars">
+                                <chartsEnterprise:RectangleAnnotation.Fill>
+                                    <SolidColorBrush Color="#1E0000FF" />
+                                </chartsEnterprise:RectangleAnnotation.Fill>
+                            </chartsEnterprise:RectangleAnnotation>
+                            <!-- Top Left: High Performers -->
+                            <chartsEnterprise:RectangleAnnotation X="0.0" Y="50" Width="0.5" Height="50" Label="High Performers">
+                                <chartsEnterprise:RectangleAnnotation.Fill>
+                                    <SolidColorBrush Color="#1E00FF00" />
+                                </chartsEnterprise:RectangleAnnotation.Fill>
+                            </chartsEnterprise:RectangleAnnotation>
+                            <!-- Top Right: Champions -->
+                            <chartsEnterprise:RectangleAnnotation X="0.5" Y="50" Width="0.5" Height="50" Label="Champions">
+                                <chartsEnterprise:RectangleAnnotation.Fill>
+                                    <SolidColorBrush Color="#1EFFD700" />
+                                </chartsEnterprise:RectangleAnnotation.Fill>
+                            </chartsEnterprise:RectangleAnnotation>
+                            
+                            <!-- Mid lines -->
+                            <chartsEnterprise:LineAnnotation Value="50" Orientation="Horizontal" Stroke="Gray" StrokeThickness="1" Opacity="0.5" />
+                            <chartsEnterprise:LineAnnotation Value="50" Orientation="Vertical" Stroke="Gray" StrokeThickness="1" Opacity="0.5" />
+                        </charts:CartesianChart.Annotations>
+                    </charts:CartesianChart>
+                    <TextBlock Text="A Quadrant Chart created by combining ScatterSeries with RectangleAnnotations to divide the plotting area." 
+                               Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,114 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels"
+             x:CompileBindings="True"
+             x:DataType="vm:DiagnosticsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.DiagnosticsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Inspect internal render diagnostics counters while charts are drawing."
+                       TextWrapping="Wrap"
+                       Foreground="{DynamicResource TextMutedBrush}" />
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}"
+                    BorderThickness="2"
+                    Padding="15"
+                    CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Frame Timing"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="FrameTimingChart"
+                                           Title="CPU Load"
+                                           Height="320"
+                                           IsAnimationEnabled="False"
+                                           IsRenderDiagnosticsEnabled="True"
+                                           ShowRenderDiagnosticsOverlay="True"
+                                           ShowLegend="True"
+                                           LegendPosition="Top">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis LabelFormat="N0" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" Maximum="100" LabelFormat="0'%'" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="CPU"
+                                               ItemsSource="{Binding CpuData}"
+                                               Stroke="#2563EB"
+                                               StrokeThickness="2"
+                                               ShowMarkers="False" />
+                            <charts:LineSeries Title="Memory"
+                                               ItemsSource="{Binding MemoryData}"
+                                               Stroke="#16A34A"
+                                               StrokeThickness="2"
+                                               ShowMarkers="False" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}"
+                    BorderThickness="2"
+                    Padding="15"
+                    CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Hit Regions"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="HitRegionsChart"
+                                           Title="Subsystem Throughput"
+                                           Height="320"
+                                           IsAnimationEnabled="False"
+                                           IsRenderDiagnosticsEnabled="True"
+                                           ShowRenderDiagnosticsOverlay="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Throughput"
+                                              ItemsSource="{Binding ThroughputData}"
+                                              CategoryPath="Category"
+                                              ValuePath="Value"
+                                              Fill="#F97316"
+                                              Stroke="#EA580C" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}"
+                    BorderThickness="2"
+                    Padding="15"
+                    CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Geometry"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PieChart Name="GeometryChart"
+                                     Title="Rendered Chart Mix"
+                                     Height="340"
+                                     IsRenderDiagnosticsEnabled="True"
+                                     ShowRenderDiagnosticsOverlay="True"
+                                     ShowLegend="True"
+                                     LegendPosition="Right">
+                        <charts:PieChart.Series>
+                            <charts:PieSeries ItemsSource="{Binding SegmentData}"
+                                              LabelPath="Category"
+                                              ValuePath="Value"
+                                              ShowLabels="True"
+                                              SliceLabelFormat="CategoryAndPercentage" />
+                        </charts:PieChart.Series>
+                    </charts:PieChart>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

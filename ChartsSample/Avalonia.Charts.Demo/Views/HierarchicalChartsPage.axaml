@@ -1,0 +1,153 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:HierarchicalChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.HierarchicalChartsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Hierarchical charts like TreeMap and Sunburst visualize tree-structured data and part-to-whole relationships." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <!-- TreeMap Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="TreeMap Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:TreeMapChart Name="TreeMapSample" Title="Disk Usage" Height="300"
+                                           ItemsSource="{Binding TreeMapData}" ValuePath="Size" LabelPath="Name" />
+                    <TextBlock Text="TreeMapChart with nested rectangles sized by value" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Sunburst Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Sunburst Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:SunburstChart Name="SunburstChartSample" Title="Organization Structure" Height="350"
+                                            ItemsSource="{Binding SunburstData}" ValuePath="Size" LabelPath="Name" ChildrenPath="Children" />
+                    <TextBlock Text="SunburstChart with concentric rings for hierarchy" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- TreeMap Interaction Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="TreeMap Interaction Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="TreeMap supports hover highlight and selection without needing Cartesian axes." TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <charts:TreeMapChart Title="Selectable Disk Usage"
+                                         Height="320"
+                                         ItemsSource="{Binding TreeMapData}"
+                                         ValuePath="Size"
+                                         LabelPath="Name"
+                                         TileGap="3"
+                                         IsHighlightEnabled="True"
+                                         IsSelectionEnabled="True"
+                                         SelectionMode="SingleDeselect"
+                                         SelectionBrush="#FACC15"
+                                         SelectionStroke="#854D0E"
+                                         SelectionStrokeThickness="3" />
+                </StackPanel>
+            </Border>
+
+            <!-- Sunburst Interaction Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Sunburst Interaction Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Sunburst supports hover highlight and selection across hierarchy rings." TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <charts:SunburstChart Title="Selectable Org Structure"
+                                         Height="320"
+                                         ItemsSource="{Binding SunburstData}"
+                                         ValuePath="Size"
+                                         LabelPath="Name"
+                                         ChildrenPath="Children"
+                                         IsHighlightEnabled="True"
+                                         IsSelectionEnabled="True"
+                                         SelectionMode="SingleDeselect"
+                                         SelectionBrush="#38BDF8"
+                                         SelectionStroke="#075985"
+                                         SelectionStrokeThickness="3" />
+                </StackPanel>
+            </Border>
+
+            <!-- Icicle Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Icicle Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:IcicleChart Name="IcicleChartSample" Title="File System" Height="300"
+                                          ItemsSource="{Binding IcicleData}" ValuePath="Size" LabelPath="Name" />
+                    <TextBlock Text="IcicleChart showing hierarchy as stacked rectangles" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Circle Packing Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Circle Packing Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:CirclePackingChart Name="CirclePackingChartSample" Title="Package Sizes" Height="350"
+                                                ItemsSource="{Binding CirclePackingData}" ValuePath="Size" LabelPath="Name" />
+                    <TextBlock Text="CirclePackingChart with nested circles" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Organization Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Organization Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:OrganizationChart Name="OrganizationChartSample" Title="Company Structure" Height="350"
+                                               ItemsSource="{Binding OrgChartData}" LabelPath="Name" ChildrenPath="Reports" />
+                    <TextBlock Text="OrganizationChart for hierarchical reporting" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Dendrogram Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Dendrogram Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:DendrogramChart Name="DendrogramChartSample" Title="Clustering" Height="300"
+                                             ItemsSource="{Binding DendrogramData}" LabelPath="Name" ChildrenPath="Children" />
+                    <TextBlock Text="DendrogramChart for clustering visualization" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Indented Tree Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Indented Tree Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <Border HorizontalAlignment="Center" Width="260" Background="Transparent">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="File Explorer" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource TextBrush}" Margin="10,0,0,0" />
+                            <chartsEnterprise:IndentedTreeChart Name="IndentedTreeChartSample" Height="320"
+                                                       ItemsSource="{Binding IndentedTreeData}" LabelPath="Name" ChildrenPath="Children" />
+                        </StackPanel>
+                    </Border>
+                    <TextBlock Text="IndentedTreeChart for file/folder visualization" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Radial Tree Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Radial Tree Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:RadialTreeChart Name="RadialTreeChartSample" Title="Taxonomy" Height="400"
+                                             ItemsSource="{Binding RadialTreeData}" LabelPath="Name" ChildrenPath="Children" />
+                    <TextBlock Text="RadialTreeChart for radial hierarchy" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Flame Graph -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Flame Graph" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:FlameGraph Name="FlameGraphSample" 
+                                         Title="CPU Profile" 
+                                         Height="300"
+                                         ValuePath="Duration"
+                                         LabelPath="MethodName"
+                                         ChildrenPath="SubCalls"
+                                         ItemsSource="{Binding StackTraceData}" />
+                    <TextBlock Text="FlameGraph for stack trace visualization (bottom-up)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

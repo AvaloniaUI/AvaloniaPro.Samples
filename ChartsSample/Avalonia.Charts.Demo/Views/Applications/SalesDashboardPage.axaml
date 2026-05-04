@@ -1,0 +1,633 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Applications"
+             xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
+             xmlns:converters="clr-namespace:Avalonia.Charts.Demo.Converters"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="900"
+             xmlns:models="clr-namespace:Avalonia.Charts.Demo.Models"
+             x:Class="Avalonia.Charts.Demo.Views.Applications.SalesDashboardPage"
+             x:CompileBindings="True" x:DataType="vm:SalesDashboardViewModel">
+    <UserControl.Resources>
+        <converters:DictionaryValueConverter x:Key="DictionaryValueConverter" />
+        <DataTemplate x:Key="MapFallbackTooltip" x:CompileBindings="True" x:DataType="collections:IDictionary">
+            <StackPanel Spacing="4" MinWidth="120">
+                <TextBlock Text="{CompiledBinding ., Converter={StaticResource DictionaryValueConverter}, ConverterParameter=NAME}" FontWeight="Bold"/>
+                <TextBlock Text="No Data" Foreground="Gray" FontSize="11"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <UserControl.Styles>
+        <StyleInclude Source="avares://Avalonia.Charts.Demo/Views/Applications/ApplicationStyles.axaml" />
+        
+        <!-- KPI Card Style -->
+        <Style Selector="Border.KpiCard">
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderLightBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="BoxShadow" Value="0 1 3 0 #0A000000"/>
+            <Setter Property="MinWidth" Value="240"/>
+        </Style>
+        
+        <Style Selector="TextBlock.KpiTitle">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+        </Style>
+        
+        <Style Selector="TextBlock.KpiValue">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        </Style>
+        
+        <Style Selector="TextBlock.KpiChangePositive">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#10B981"/>
+        </Style>
+        
+        <Style Selector="TextBlock.KpiChangeNegative">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#EF4444"/>
+        </Style>
+        
+        <Style Selector="TextBlock.SectionTitle">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        </Style>
+
+        <!-- Header Styles -->
+        <Style Selector="StackPanel#HeaderActionsPanel > ComboBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="StackPanel#HeaderActionsPanel > Border.SearchBar">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="StackPanel#HeaderActionsPanel > Border:nth-child(3)">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Responsive Styles -->
+        <Style Selector="UserControl.mobile Grid">
+             <!-- Handled in code-behind -->
+        </Style>
+
+        <Style Selector="UserControl.mobile UniformGrid">
+             <!-- Not used anymore, switching to Grid for KPIs -->
+        </Style>
+
+        <Style Selector="UserControl.mobile Border.KpiCard">
+             <Setter Property="MinWidth" Value="0" />
+             <Setter Property="Margin" Value="0" />
+        </Style>
+
+        <Style Selector="UserControl.mobile Border.ResponsiveCard">
+             <Setter Property="Margin" Value="0" />
+        </Style>
+
+        <Style Selector="UserControl.mobile Border.KpiCard">
+             <Setter Property="Margin" Value="0,0,0,12" />
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="20" Margin="24,20">
+                
+                <!-- Header -->
+                <Grid x:Name="HeaderGrid" ColumnSpacing="20" RowSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Left: Title & Period -->
+                    <StackPanel x:Name="HeaderTitlePanel" Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Dashboard" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,4,0,0">
+                            <TextBlock Text="Welcome back, Admin" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            <Border Background="{DynamicResource PrimaryGreenLightBrush}" CornerRadius="4" Padding="6,2">
+                                <TextBlock Text="{Binding SelectedPeriod}" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryGreenBrush}"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Right: Search & Actions -->
+                    <StackPanel x:Name="HeaderActionsPanel" Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                         <!-- Period Selector -->
+                        <ComboBox Classes="CurrencyCombo" ItemsSource="{Binding TimePeriods}" SelectedItem="{Binding SelectedPeriod}" Width="140" VerticalAlignment="Center"/>
+                        
+                        <!-- Search Bar -->
+                        <Border Classes="SearchBar" MinWidth="200" MaxWidth="240" VerticalAlignment="Center">
+                            <Grid ColumnDefinitions="*,Auto" VerticalAlignment="Center">
+                                <TextBox Grid.Column="0"
+                                         Classes="SearchInput"
+                                         Text="{Binding SearchText}"
+                                         PlaceholderText="Search orders..."
+                                         VerticalAlignment="Center"
+                                         VerticalContentAlignment="Center"/>
+                                <Path Grid.Column="1"
+                                      Data="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                                      Fill="{DynamicResource TextMutedBrush}"
+                                      Width="18"
+                                      Height="18"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"
+                                      Margin="8,0,0,0"/>
+                            </Grid>
+                        </Border>
+                        
+                        <!-- Notification Bell -->
+                        <Border Width="38" Height="38" CornerRadius="19" Background="{DynamicResource SearchBarBackgroundBrush}" Cursor="Hand" VerticalAlignment="Center">
+                            <Path Data="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"
+                                  Fill="{DynamicResource TextSecondaryBrush}"
+                                  Width="20"
+                                  Height="20"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Statistics -->
+                <Grid x:Name="KpiGrid" ColumnDefinitions="*,*,*,*" ColumnSpacing="15" RowSpacing="15">
+                    <!-- Total Revenue -->
+                    <Border x:Name="KpiCard1" Classes="KpiCard">
+                        <Grid RowDefinitions="Auto,Auto,*">
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Width="40" Height="40" CornerRadius="10" Background="#DBEAFE">
+                                    <Path Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"
+                                          Fill="#3B82F6"
+                                          Width="24"
+                                          Height="24"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Grid.Column="1" Classes="KpiChangePositive" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <Run Text="▲ "/><Run Text="{Binding RevenueChange}"/><Run Text="%"/>
+                                </TextBlock>
+                            </Grid>
+                            <StackPanel Grid.Row="1" Spacing="4" Margin="0,8,0,0">
+                                <TextBlock Text="Total Revenue" Classes="KpiTitle"/>
+                                <TextBlock Text="{Binding TotalRevenue, StringFormat='{}{0:C0}'}" Classes="KpiValue"/>
+                            </StackPanel>
+                            <charts:SparklineChart Grid.Row="2" Height="40" SparklineType="Area" ItemsSource="{Binding RevenueSparkline}" ValuePath="Value" LineBrush="#3B82F6" StrokeThickness="2" VerticalAlignment="Bottom" Margin="0,8,0,0">
+                                <charts:SparklineChart.AreaFill>
+                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                                        <GradientStop Offset="0" Color="#60A5FA" />
+                                        <GradientStop Offset="1" Color="#0060A5FA" />
+                                    </LinearGradientBrush>
+                                </charts:SparklineChart.AreaFill>
+                            </charts:SparklineChart>
+                        </Grid>
+                    </Border>
+
+                    <!-- Total Orders -->
+                    <Border x:Name="KpiCard2" Classes="KpiCard">
+                        <Grid RowDefinitions="Auto,Auto,*">
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Width="40" Height="40" CornerRadius="10" Background="#F3E8FF">
+                                    <Path Data="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"
+                                          Fill="#8B5CF6"
+                                          Width="24"
+                                          Height="24"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Grid.Column="1" Classes="KpiChangePositive" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <Run Text="▲ "/><Run Text="{Binding OrdersChange}"/><Run Text="%"/>
+                                </TextBlock>
+                            </Grid>
+                            <StackPanel Grid.Row="1" Spacing="4" Margin="0,8,0,0">
+                                <TextBlock Text="Total Orders" Classes="KpiTitle"/>
+                                <TextBlock Text="{Binding TotalOrders, StringFormat='{}{0:N0}'}" Classes="KpiValue"/>
+                            </StackPanel>
+                            <charts:SparklineChart Grid.Row="2" Height="40" SparklineType="Area" ItemsSource="{Binding OrdersSparkline}" ValuePath="Value" LineBrush="#8B5CF6" StrokeThickness="2" VerticalAlignment="Bottom" Margin="0,8,0,0">
+                                <charts:SparklineChart.AreaFill>
+                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                                        <GradientStop Offset="0" Color="#A78BFA" />
+                                        <GradientStop Offset="1" Color="#00A78BFA" />
+                                    </LinearGradientBrush>
+                                </charts:SparklineChart.AreaFill>
+                            </charts:SparklineChart>
+                        </Grid>
+                    </Border>
+
+                    <!-- Average Order Value -->
+                    <Border x:Name="KpiCard3" Classes="KpiCard">
+                        <Grid RowDefinitions="Auto,Auto,*">
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Width="40" Height="40" CornerRadius="10" Background="#DCFCE7">
+                                    <Path Data="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
+                                          Fill="#10B981"
+                                          Width="24"
+                                          Height="24"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Grid.Column="1" Classes="KpiChangeNegative" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <Run Text="▼ "/><Run Text="{Binding AovChange}"/><Run Text="%"/>
+                                </TextBlock>
+                            </Grid>
+                            <StackPanel Grid.Row="1" Spacing="4" Margin="0,8,0,0">
+                                <TextBlock Text="Avg. Order Value" Classes="KpiTitle"/>
+                                <TextBlock Text="{Binding AverageOrderValue, StringFormat='{}{0:C}'}" Classes="KpiValue"/>
+                            </StackPanel>
+                            <charts:SparklineChart Grid.Row="2" Height="40" SparklineType="Area" ItemsSource="{Binding AovSparkline}" ValuePath="Value" LineBrush="#10B981" StrokeThickness="2" VerticalAlignment="Bottom" Margin="0,8,0,0">
+                                <charts:SparklineChart.AreaFill>
+                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                                        <GradientStop Offset="0" Color="#34D399" />
+                                        <GradientStop Offset="1" Color="#0034D399" />
+                                    </LinearGradientBrush>
+                                </charts:SparklineChart.AreaFill>
+                            </charts:SparklineChart>
+                        </Grid>
+                    </Border>
+
+                    <!-- Total Customers -->
+                    <Border x:Name="KpiCard4" Classes="KpiCard">
+                        <Grid RowDefinitions="Auto,Auto,*">
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Width="40" Height="40" CornerRadius="10" Background="#FEF3C7">
+                                    <Path Data="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"
+                                          Fill="#F59E0B"
+                                          Width="24"
+                                          Height="24"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Grid.Column="1" Classes="KpiChangePositive" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <Run Text="▲ "/><Run Text="{Binding CustomersChange}"/><Run Text="%"/>
+                                </TextBlock>
+                            </Grid>
+                            <StackPanel Grid.Row="1" Spacing="4" Margin="0,8,0,0">
+                                <TextBlock Text="Total Customers" Classes="KpiTitle"/>
+                                <TextBlock Text="{Binding TotalCustomers, StringFormat='{}{0:N0}'}" Classes="KpiValue"/>
+                            </StackPanel>
+                            <charts:SparklineChart Grid.Row="2" Height="40" SparklineType="Area" ItemsSource="{Binding CustomersSparkline}" ValuePath="Value" LineBrush="#F59E0B" StrokeThickness="2" VerticalAlignment="Bottom" Margin="0,8,0,0">
+                                <charts:SparklineChart.AreaFill>
+                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                                        <GradientStop Offset="0" Color="#FBBF24" />
+                                        <GradientStop Offset="1" Color="#00FBBF24" />
+                                    </LinearGradientBrush>
+                                </charts:SparklineChart.AreaFill>
+                            </charts:SparklineChart>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- Charts -->
+                <Grid x:Name="ChartsGrid" ColumnDefinitions="2*,420" RowDefinitions="Auto" ColumnSpacing="20" RowSpacing="20">
+                    <!-- Revenue Overview -->
+                    <Border x:Name="RevenueCard" Classes="DashCard ResponsiveCard" MinWidth="400">
+                        <StackPanel Spacing="16">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Revenue Overview" Classes="SectionTitle"/>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="16" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                        <Border Background="#10B981" Width="12" Height="12" CornerRadius="2" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Revenue" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                        <Border Background="#6366F1" Width="12" Height="12" CornerRadius="2" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Target" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                            
+                            <charts:CartesianChart Height="300" ShowLegend="False" 
+                                                     TrackballMode="Vertical" 
+                                                     TrackballDisplayMode="GroupAllPoints"
+                                                     TrackballLineStroke="{DynamicResource BorderLightBrush}">
+                                <charts:CartesianChart.HorizontalAxis>
+                                    <charts:CategoryAxis LabelForeground="{DynamicResource TextSecondaryBrush}" FontSize="11" ShowGridLines="False"/>
+                                </charts:CartesianChart.HorizontalAxis>
+                                <charts:CartesianChart.VerticalAxis>
+                                    <charts:NumericalAxis ShowGridLines="True" GridLineBrush="{DynamicResource BorderLightBrush}" 
+                                                           LabelForeground="{DynamicResource TextSecondaryBrush}" FontSize="11"
+                                                           LabelFormat="{}{0:N0}"/>
+                                </charts:CartesianChart.VerticalAxis>
+                                <charts:CartesianChart.Series>
+                                    <!-- Revenue Area -->
+                                    <charts:SplineAreaSeries ItemsSource="{Binding MonthlyRevenue}" 
+                                                               Title="Revenue"
+                                                               Stroke="Transparent"
+                                                               ValuePath="Value" 
+                                                               CategoryPath="Month">
+                                        <charts:SplineAreaSeries.Fill>
+                                            <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                                                <GradientStop Offset="0.0" Color="#1AB981"/>
+                                                <GradientStop Offset="0.6" Color="#0DB98166"/>
+                                                <GradientStop Offset="1.0" Color="#00B98100"/>
+                                            </LinearGradientBrush>
+                                        </charts:SplineAreaSeries.Fill>
+                                    </charts:SplineAreaSeries>
+                                    
+                                    <charts:SplineSeries ItemsSource="{Binding MonthlyRevenue}" 
+                                                           Title="Revenue Line"
+                                                           Stroke="#10B981"
+                                                           StrokeThickness="2.5"
+                                                           ShowMarkers="False"
+                                                           ValuePath="Value" 
+                                                           CategoryPath="Month"
+                                                           Fill="Transparent" />
+                                    
+                                    <!-- Target Line -->
+                                    <charts:SplineSeries ItemsSource="{Binding MonthlyRevenue}"
+                                                           Title="Target"
+                                                           Stroke="#6366F1"
+                                                           StrokeThickness="2"
+                                                           ShowMarkers="True"
+                                                           MarkerSize="4"
+                                                           MarkerFill="#6366F1"
+                                                           ValuePath="Target"
+                                                           CategoryPath="Month"
+                                                           Fill="Transparent">
+                                        <charts:SplineSeries.StrokeDashStyle>
+                                            <DashStyle Dashes="4,2"/>
+                                        </charts:SplineSeries.StrokeDashStyle>
+                                    </charts:SplineSeries>
+                                </charts:CartesianChart.Series>
+                            </charts:CartesianChart>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Sales by Category -->
+                    <Border x:Name="CategoryCard" Classes="DashCard ResponsiveCard" MinWidth="320">
+                        <StackPanel Spacing="16">
+                            <TextBlock Text="Sales by Category" Classes="SectionTitle"/>
+                            
+                            <charts:PieChart Height="220" ShowLegend="False">
+                                <charts:PieChart.Series>
+                                    <charts:PieSeries ItemsSource="{Binding CategoryData}" 
+                                                        ValuePath="Value" 
+                                                        LabelPath="Category"/>
+                                </charts:PieChart.Series>
+                            </charts:PieChart>
+                            
+                            <!-- Category Legend -->
+                            <StackPanel Spacing="8">
+                                <ItemsControl ItemsSource="{Binding CategoryData}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="vm:CategorySales">
+                                            <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,4">
+                                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
+                                                    <Border Width="10" Height="10" CornerRadius="2" Background="{Binding Color}"/>
+                                                    <TextBlock Text="{Binding Category}" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                                </StackPanel>
+                                                <TextBlock Grid.Column="1" Text="{Binding Percentage, StringFormat='{}{0}%'}" FontSize="13" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+                                                <TextBlock Grid.Column="2" Text="{Binding Value, StringFormat='{}{0:C0}'}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Right"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Geographical Distribution -->
+                <Grid x:Name="RegionsGrid" ColumnDefinitions="*,420" RowDefinitions="Auto" ColumnSpacing="20" RowSpacing="20">
+                    <!-- Sales by Region - TreeMap -->
+                    <Border x:Name="RegionsCard" Classes="DashCard ResponsiveCard" MinWidth="400">
+                        <StackPanel Spacing="16">
+                            <TextBlock Text="Sales by Region" Classes="SectionTitle"/>
+                            <chartsEnterprise:ShapeMap Height="320" ShowLegend="False">
+                                <chartsEnterprise:ShapeMap.Layers>
+                                    <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.World}"
+                                                         GeoJsonIdPath="ISO_A2"
+                                                         ItemsSource="{Binding RegionalSales}"
+                                                         RegionPath="Code"
+                                                         ValuePath="Sales"
+                                                         MinValue="0"
+                                                         MaxValue="50000"
+                                                         LowBrush="#DBEAFE"
+                                                         HighBrush="#3B82F6"
+                                                         Stroke="#F1F5F9"
+                                                         StrokeThickness="0.5">
+                                        <charts:ShapeLayer.TooltipTemplate>
+                                            <DataTemplate>
+                                                <ContentControl Content="{Binding}">
+                                                    <ContentControl.DataTemplates>
+                                                        <DataTemplate DataType="vm:RegionSales">
+                                                            <StackPanel Spacing="4" MinWidth="120">
+                                                                <TextBlock Text="{Binding Region}" FontWeight="Bold"/>
+                                                                <TextBlock Text="{Binding Sales, StringFormat='{}{0:N0}€'}" Foreground="Gray"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                        <DataTemplate x:CompileBindings="True" x:DataType="collections:IDictionary">
+                                                            <StackPanel Spacing="4" MinWidth="120">
+                                                                <TextBlock Text="{CompiledBinding ., Converter={StaticResource DictionaryValueConverter}, ConverterParameter=NAME}" FontWeight="Bold"/>
+                                                                <TextBlock Text="No Sales Data" Foreground="Gray" FontSize="11"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ContentControl.DataTemplates>
+                                                </ContentControl>
+                                            </DataTemplate>
+                                        </charts:ShapeLayer.TooltipTemplate>
+                                    </charts:ShapeLayer>
+                                    <charts:BubbleLayer ItemsSource="{Binding RegionalSales}"
+                                                          LatitudePath="Latitude"
+                                                          LongitudePath="Longitude"
+                                                          SizePath="Sales"
+                                                          PointBrushPath="Color"
+                                                          MinBubbleSize="5"
+                                                          MaxBubbleSize="20"
+                                                          Stroke="White"
+                                                          ShowLabels="False">
+                                        <charts:BubbleLayer.TooltipTemplate>
+                                            <DataTemplate x:DataType="vm:RegionSales">
+                                                <StackPanel Spacing="4" MinWidth="150">
+                                                    <TextBlock Text="{Binding Region}" FontWeight="Bold"/>
+                                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+                                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Sales: " Foreground="Gray" FontSize="11"/>
+                                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Sales, StringFormat='{}{0:N0}€'}" FontWeight="SemiBold" FontSize="11"/>
+                                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Growth: " Foreground="Gray" FontSize="11"/>
+                                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Growth, StringFormat='{}{0}%'}" FontWeight="SemiBold" FontSize="11"/>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </charts:BubbleLayer.TooltipTemplate>
+                                    </charts:BubbleLayer>
+                                </chartsEnterprise:ShapeMap.Layers>
+                            </chartsEnterprise:ShapeMap>
+                            <!-- Region Legend -->
+                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <ItemsControl ItemsSource="{Binding RegionalSales}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="vm:RegionSales">
+                                            <StackPanel Orientation="Horizontal" Spacing="4" Margin="8,4">
+                                                <Border Width="12" Height="12" CornerRadius="3" Background="{Binding Color}"/>
+                                                <TextBlock Text="{Binding Region}" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                                <TextBlock FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" FontWeight="SemiBold">
+                                                    <Run Text="€"/><Run Text="{Binding Sales, StringFormat='{}{0:N0}'}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Product Performance -->
+                    <Border x:Name="PerformanceCard" Classes="DashCard ResponsiveCard" MinWidth="380">
+                        <StackPanel Spacing="16">
+                            <TextBlock Text="Product Performance" Classes="SectionTitle"/>
+                            <charts:RadarChart Height="300" 
+                                                AxisCount="6" 
+                                                ShowGridLines="True" 
+                                                GridLevels="5"
+                                                AxisLabels="Sales,Growth,Profit,Returns,Reviews,Stock">
+                                <charts:RadarChart.Series>
+                                <charts:RadarSeries ItemsSource="{Binding ProductPerformanceData[0]}" 
+                                                     ValuePath="Value"
+                                                     Stroke="#3B82F6"
+                                                     Fill="#93C5FD"
+                                                     StrokeThickness="2"/>
+                                <charts:RadarSeries ItemsSource="{Binding ProductPerformanceData[1]}" 
+                                                     ValuePath="Value"
+                                                     Stroke="#EC4899"
+                                                     Fill="#F9A8D4"
+                                                     StrokeThickness="2"/>
+                                <charts:RadarSeries ItemsSource="{Binding ProductPerformanceData[2]}" 
+                                                     ValuePath="Value"
+                                                     Stroke="#10B981"
+                                                     Fill="#6EE7B7"
+                                                     StrokeThickness="2"/>
+                                </charts:RadarChart.Series>
+                            </charts:RadarChart>
+                            <!-- Legend -->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16">
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <Border Width="12" Height="12" CornerRadius="6" Background="#3B82F6"/>
+                                    <TextBlock Text="Electronics" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <Border Width="12" Height="12" CornerRadius="6" Background="#EC4899"/>
+                                    <TextBlock Text="Fashion" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <Border Width="12" Height="12" CornerRadius="6" Background="#10B981"/>
+                                    <TextBlock Text="Home" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Transactions -->
+                <Grid x:Name="OrdersGrid" ColumnDefinitions="*,380" RowDefinitions="Auto" ColumnSpacing="20" RowSpacing="20">
+                    <!-- Recent Orders -->
+                    <Border x:Name="OrdersCard" Classes="DashCard ResponsiveCard" MinWidth="500">
+                        <StackPanel Spacing="16">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Recent Orders" Classes="SectionTitle"/>
+                                <TextBlock Grid.Column="1" Text="View All" Classes="Link" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            </Grid>
+                            
+                            <!-- Orders Header -->
+                            <Grid ColumnDefinitions="80,*,100,80,80" Margin="0,0,0,8">
+                                <TextBlock Grid.Column="0" Text="Order ID" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMutedBrush}"/>
+                                <TextBlock Grid.Column="1" Text="Customer" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMutedBrush}"/>
+                                <TextBlock Grid.Column="2" Text="Amount" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="3" Text="Status" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Column="4" Text="Date" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Right"/>
+                            </Grid>
+                            
+                            <!-- Orders List -->
+                            <ItemsControl ItemsSource="{Binding RecentOrders}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="vm:Order">
+                                        <Grid ColumnDefinitions="80,*,100,80,80" Margin="0,8">
+                                            <TextBlock Grid.Column="0" Text="{Binding OrderId}" FontSize="13" FontWeight="Medium" Foreground="#3B82F6"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Customer}" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Amount, StringFormat='{}{0:C}'}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Right"/>
+                                            <Border Grid.Column="3" HorizontalAlignment="Center" Padding="8,4" CornerRadius="6" Background="#DCFCE7">
+                                                <TextBlock Text="{Binding Status}" FontSize="11" FontWeight="Medium" Foreground="#166534"/>
+                                            </Border>
+                                            <TextBlock Grid.Column="4" Text="{Binding Date, StringFormat='{}{0:MMM dd}'}" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Right"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Top Products -->
+                    <Border x:Name="TopProductsCard" Classes="DashCard ResponsiveCard" MinWidth="300">
+                        <StackPanel Spacing="16">
+                            <TextBlock Text="Top Products" Classes="SectionTitle"/>
+                            
+                            <!-- Products Header -->
+                            <Grid ColumnDefinitions="*,80,80" Margin="0,0,0,8">
+                                <TextBlock Grid.Column="0" Text="Product" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMutedBrush}"/>
+                                <TextBlock Grid.Column="1" Text="Sold" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="2" Text="Revenue" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Right"/>
+                            </Grid>
+                            
+                            <!-- Products List -->
+                            <ItemsControl ItemsSource="{Binding TopProducts}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="vm:TopProduct">
+                                        <Grid ColumnDefinitions="Auto,*,80,80" Margin="0,10">
+                                            <Border Grid.Column="0" Width="36" Height="36" CornerRadius="8" Background="{DynamicResource SearchBarBackgroundBrush}" Margin="0,0,12,0">
+                                                <Path Data="M12 2l-5.5 9h11z M17.5 11l-5.5 9 5.5-9z M6.5 11h11l-5.5-9-5.5 9z"
+                                                      Fill="{DynamicResource TextMutedBrush}"
+                                                      Width="20"
+                                                      Height="20"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                            </Border>
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                                                <TextBlock Text="{Binding Name}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding Category}" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2" Text="{Binding Quantity}" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="3" Text="{Binding Total, StringFormat='{}{0:C0}'}" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+    </ScrollViewer>
+</UserControl>

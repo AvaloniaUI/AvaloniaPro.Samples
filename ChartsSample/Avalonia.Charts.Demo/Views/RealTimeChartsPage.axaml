@@ -1,0 +1,276 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             xmlns:models="clr-namespace:Avalonia.Charts.Demo.Models"
+             x:Class="Avalonia.Charts.Demo.Views.RealTimeChartsPage"
+             x:CompileBindings="True" x:DataType="vm:RealTimeChartsViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Real-time charts are optimized for handling high-frequency data updates, ideal for monitoring and live data visualization." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- High Frequency Data (Benchmarks) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="High Frequency Data - Stress Test" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="HighFreqChartSample" Height="250"
+                                             Title="High Frequency Signal (20Hz Update)"
+                                             IsAnimationEnabled="False">
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="-20"
+                                                  Maximum="100"
+                                                  MajorStep="20"
+                                                  LabelFormat="N0" />
+                        </charts:CartesianChart.VerticalAxis>
+                         <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis Minimum="0"
+                                                  Maximum="999"
+                                                  MajorStep="250"
+                                                  LabelFormat="N0" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Live Stream"
+                                                 ItemsSource="{Binding HighFreqData}"
+                                                 Stroke="Crimson"
+                                                 StrokeThickness="1"
+                                                 ShowMarkers="False"
+                                                 ValuePath="Y"
+                                                 CategoryPath="X" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Renders a fixed 1000-point rolling window with stable axes while simulating 200 pts/sec."
+                              Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Live Line Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Live Line Chart - Sensor Data Stream" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="LiveLineChart" Height="200"
+                                             Title="Real-Time Sensor Data"
+                                             IsAnimationEnabled="False"
+                                             ShowLegend="True">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Sensor 1"
+                                                 ItemsSource="{Binding LineData1}"
+                                                 Stroke="DodgerBlue"
+                                                 StrokeThickness="2"
+                                                 ShowMarkers="False" />
+                            <charts:LineSeries Title="Sensor 2"
+                                                 ItemsSource="{Binding LineData2}"
+                                                 Stroke="OrangeRed"
+                                                 StrokeThickness="2"
+                                                 ShowMarkers="False" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Updates every 200ms with rolling window of 50 data points" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Live Gauge Charts -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Live System Metrics - Circular Gauges" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <charts:CircularGaugeChart Name="CpuGauge" Value="{Binding CpuValue}" Width="180" Height="180" Title="CPU %" Margin="10" />
+                        <charts:CircularGaugeChart Name="MemoryGauge" Value="{Binding MemoryValue}" Width="180" Height="180" Title="Memory %" Margin="10" />
+                        <charts:CircularGaugeChart Name="NetworkGauge" Value="{Binding NetworkValue}" Width="180" Height="180" Title="Network %" Margin="10" />
+                        <charts:CircularGaugeChart Name="DiskGauge" Value="{Binding DiskValue}" Width="180" Height="180" Title="Disk I/O %" Margin="10" />
+                    </WrapPanel>
+                    <TextBlock Text="Simulated system metrics updating every 500ms with smooth transitions" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Live Bar Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Live Bar Chart - Real-Time Categories" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="LiveBarChart" Height="220"
+                                             Title="Live Category Values"
+                                             IsAnimationEnabled="False">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Live Values"
+                                                ItemsSource="{Binding BarValues}"
+                                                Fill="MediumPurple" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Bar heights change every second simulating live category data" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Live Area Chart (Network Traffic) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Live Area Chart - Network Traffic" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="LiveAreaChart" Height="200"
+                                             Title="Network IN/OUT (MB/s)"
+                                             IsAnimationEnabled="False"
+                                             ShowLegend="True">
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="Download (IN)"
+                                                 ItemsSource="{Binding AreaInData}"
+                                                 Fill="#801E90FF"
+                                                 Stroke="DodgerBlue"
+                                                 StrokeThickness="2" />
+                            <charts:AreaSeries Title="Upload (OUT)"
+                                                 ItemsSource="{Binding AreaOutData}"
+                                                 Fill="#8032CD32"
+                                                 Stroke="LimeGreen"
+                                                 StrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Dual series showing download (IN) and upload (OUT) traffic" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Live Scatter Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Live Scatter Chart - Event Stream" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="LiveScatterChart" Height="200"
+                                             Title="Real-Time Events"
+                                             IsAnimationEnabled="False">
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="Events"
+                                                    ItemsSource="{Binding ScatterDataValues}"
+                                                    Fill="#B4FF6347"
+                                                    Stroke="Tomato"
+                                                    StrokeThickness="1"
+                                                    MarkerSize="10"
+                                                    MarkerShape="Circle" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Random events appearing with varying intensity (bubble size)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Live Stacked Area Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Live Stacked Area - Resource Allocation" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="LiveStackedAreaChart" Height="200"
+                                             Title="Resource Usage Over Time"
+                                             IsAnimationEnabled="False"
+                                             ShowLegend="True">
+                        <charts:CartesianChart.Series>
+                            <charts:StackedAreaSeries Title="Compute"
+                                                        ItemsSource="{Binding StackedData1}"
+                                                        Fill="#B44169E1"
+                                                        Stroke="RoyalBlue" />
+                            <charts:StackedAreaSeries Title="Storage"
+                                                        ItemsSource="{Binding StackedData2}"
+                                                        Fill="#B4FFA500"
+                                                        Stroke="Orange" />
+                            <charts:StackedAreaSeries Title="Network"
+                                                        ItemsSource="{Binding StackedData3}"
+                                                        Fill="#B432CD32"
+                                                        Stroke="LimeGreen" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Three stacked categories showing dynamic resource distribution" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Bar Race Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Grid.Column="0" Text="Bar Race Chart - GDP Growth Simulation" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" TextWrapping="Wrap" Margin="0,0,10,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding CurrentYear}" FontWeight="Bold" FontSize="32" Foreground="{DynamicResource AccentBrush}" Opacity="0.5" />
+                    </Grid>
+                    
+                    <charts:CartesianChart Name="BarRaceChart" Height="400"
+                                             IsAnimationEnabled="True"
+                                             AnimationDuration="0:0:0.15">
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis LabelFormat="N0" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="GDP (Simulated)"
+                                                ItemsSource="{Binding BarRaceData}"
+                                                ValuePath="Value"
+                                                CategoryPath="Name"
+                                                ColorByPoint="True"
+                                                StrokeThickness="0" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Simulates country GDP growth. Data resorts dynamically as values update." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Live Cyber Attack Map -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Live Cyber Attack Monitor" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Real-time visualization of simulated global cyber attack traffic with glowing regions." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <chartsEnterprise:ShapeMap Name="CyberAttackMap" Title="Global Threat Monitor (Simulated)" Height="450" ShowLegend="False" IsAnimationEnabled="False">
+                        <chartsEnterprise:ShapeMap.Layers>
+                            <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.World}"
+                                                 GeoJsonIdPath="ISO_A2"
+                                                 LowBrush="#0A0F14"
+                                                 HighBrush="#141E28"
+                                                 Stroke="#1E3A50"
+                                                 StrokeThickness="0.4" />
+                            <charts:HeatmapLayer LatitudePath="Lat"
+                                                   LongitudePath="Lon"
+                                                   IntensityPath="Heat"
+                                                   MaxIntensity="100"
+                                                   Radius="60"
+                                                   LowBrush="#2000FF00"
+                                                   MediumBrush="#8000FFFF"
+                                                   HighBrush="#CC00FF00"
+                                                   ItemsSource="{Binding HeatmapPoints}" />
+                            <charts:VectorLayer Arcs="{Binding AttackArcs}"
+                                                  IsLineAnimationEnabled="False" />
+                            <charts:MarkerLayer Markers="{Binding AttackMarkers}" />
+                        </chartsEnterprise:ShapeMap.Layers>
+                    </chartsEnterprise:ShapeMap>
+                    <TextBlock Text="Red markers = attack sources, green markers = targets. Lines show attack paths updating every 600ms." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Continuous DateTime Axis -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Live Continuous DateTime Axis - Rolling Timestamp Window" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="LiveContinuousDateTimeChart" Height="240"
+                                             Title="Live Samples by Timestamp"
+                                             IsAnimationEnabled="False">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis Title="Time"
+                                                 DateFormat="HH:mm:ss"
+                                                 MajorStepUnit="Second"
+                                                 MajorStep="5"
+                                                 LabelFitMode="Auto"
+                                                 ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value"
+                                                  Minimum="0"
+                                                  Maximum="100"
+                                                  LabelFormat="0"
+                                                  ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Timestamped Samples"
+                                               ItemsSource="{Binding ContinuousDateTimeData}"
+                                               CategoryPath="Timestamp"
+                                               ValuePath="Value"
+                                               Stroke="#2E7D32"
+                                               StrokeThickness="2"
+                                               ShowMarkers="False" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Adds one timestamped sample every 600ms and trims the oldest values. The DateTimeAxis uses actual timestamps instead of collection indexes."
+                              Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

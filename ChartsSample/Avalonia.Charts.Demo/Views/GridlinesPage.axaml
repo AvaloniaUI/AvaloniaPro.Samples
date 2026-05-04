@@ -1,0 +1,101 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="1200"
+             x:CompileBindings="True" x:DataType="vm:GridlinesViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.GridlinesPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Gridlines help users estimate values on the chart. You can customize their appearance, visibility, and frequency." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Default Gridlines -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Default Gridlines" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="DefaultGridChart" Title="Standard Grid" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Series 1" ItemsSource="{Binding DefaultGridData}" 
+                                                 StrokeThickness="3" Stroke="DodgerBlue" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Standard major gridlines enabled on both axes" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Custom Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Custom Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="StyledGridChart" Title="Styled Grid" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Data" ItemsSource="{Binding StyledGridData}" Fill="Orange" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="True" GridLineBrush="Crimson" GridLineStrokeThickness="1" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis ShowGridLines="True" GridLineBrush="DodgerBlue" GridLineStrokeThickness="2" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Customized color and thickness for gridlines" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Minor Gridlines -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Minor Gridlines" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="MinorGridChart" Title="Precision Grid" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:SplineSeries Title="Smooth Data" ItemsSource="{Binding MinorGridData}"
+                                                   CategoryPath="X" ValuePath="Y"
+                                                   Stroke="MediumPurple" StrokeThickness="2"
+                                                   MarkerShape="Circle" MarkerSize="10" MarkerFill="MediumPurple"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis ShowGridLines="True" 
+                                                    ShowMinorGridLines="True" 
+                                                    MinorTickCount="3" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis ShowGridLines="True" 
+                                                    ShowMinorGridLines="True" 
+                                                    MinorTickCount="4" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="ShowMinorGridLines=True with MinorTickCount subdivisions" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- No Gridlines -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Hidden Gridlines" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="NoGridChart" Title="Clean Look" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Clean" ItemsSource="{Binding NoGridData}"
+                                                 Stroke="Teal" StrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="False" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis ShowGridLines="False" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Gridlines disabled for a cleaner look" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

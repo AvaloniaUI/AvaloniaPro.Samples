@@ -1,0 +1,182 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="using:Avalonia.Controls.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.ChartsWelcomePage">
+
+    <ScrollViewer>
+        <StackPanel Spacing="30" Margin="20" MaxWidth="1200" HorizontalAlignment="Center">
+            <!-- Hero Section -->
+            <Border Background="{DynamicResource CardBackgroundBrush}" 
+                    BorderBrush="{DynamicResource CardBorderBrush}" 
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="0"
+                    ClipToBounds="True"
+                    MinHeight="220">
+                <Grid RowDefinitions="Auto,220">
+                    <!-- Text Content -->
+                    <StackPanel Grid.Row="0" Spacing="8" Margin="40,30,40,10" VerticalAlignment="Center" ZIndex="1">
+                        <TextBlock Text="Avalonia Charts" 
+                                   FontSize="36" 
+                                   FontWeight="Bold" 
+                                   Foreground="{DynamicResource AccentBrush}"/>
+                        <TextBlock Text="High-customizable, feature-rich charting library for Avalonia" 
+                                   FontSize="18" 
+                                   FontWeight="SemiBold"
+                                   TextWrapping="Wrap"
+                                   Foreground="{DynamicResource TextBrush}"
+                                   Margin="0,0,0,5"/>
+                        <TextBlock Text="Visualize your data with stunning, interactive charts. Avalonia Charts offers a vast range of features to customize appearance and render fluid animations across all platforms." 
+                                   FontSize="15" 
+                                   TextWrapping="Wrap"
+                                   Opacity="0.8"
+                                   LineHeight="22"
+                                   Foreground="{DynamicResource TextBrush}"
+                                   MaxWidth="800"
+                                   HorizontalAlignment="Left"/>
+                    </StackPanel>
+
+                    <!-- Decorative Chart Background -->
+                    <charts:CartesianChart Grid.Row="1"
+                                         IsAnimationEnabled="False" 
+                                         ShowLegend="False"
+                                         IsHitTestVisible="False"
+                                         Opacity="0.8"
+                                         Margin="-10,0,-10,-10">
+                        <charts:CartesianChart.Series>
+                            <charts:SplineAreaSeries x:Name="HeroSeries" 
+                                                   ValuePath="Value"
+                                                   CategoryPath="Item"
+                                                   Stroke="{DynamicResource AccentBrush}"
+                                                   StrokeThickness="3">
+                                <charts:SplineAreaSeries.Fill>
+                                    <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                                        <GradientStop Offset="0" Color="{DynamicResource AccentColor}"/>
+                                        <GradientStop Offset="0.7" Color="#400078D7"/>
+                                        <GradientStop Offset="1" Color="Transparent"/>
+                                    </LinearGradientBrush>
+                                </charts:SplineAreaSeries.Fill>
+                            </charts:SplineAreaSeries>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis IsVisible="False"/>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis IsVisible="False"/>
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </Grid>
+            </Border>
+
+            <!-- Features Section -->
+            <StackPanel Spacing="30">
+                <TextBlock Text="Why Avalonia Charts?" 
+                           FontSize="28" 
+                           FontWeight="SemiBold" 
+                           HorizontalAlignment="Center" />
+
+                <WrapPanel HorizontalAlignment="Center" MaxWidth="1200">
+                    <WrapPanel.Styles>
+                        <Style Selector="Border.FeatureCard">
+                            <Setter Property="Width" Value="260"/>
+                            <Setter Property="Height" Value="170"/>
+                            <Setter Property="Margin" Value="10"/>
+                            <Setter Property="Padding" Value="24"/>
+                            <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="CornerRadius" Value="8"/>
+                        </Style>
+                        <Style Selector="PathIcon.FeatureIcon">
+                            <Setter Property="Width" Value="24"/>
+                            <Setter Property="Height" Value="24"/>
+                            <Setter Property="Foreground" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                        </Style>
+                    </WrapPanel.Styles>
+
+                    <!-- Rich Feature Set -->
+                    <Border Classes="FeatureCard">
+                        <StackPanel Spacing="12">
+                            <!-- Toolbox/Features icon -->
+                            <PathIcon Classes="FeatureIcon" Data="M21.17,3.25Q21.5,3.25 21.76,3.5Q22,3.74 22,4.08V19.92Q22,20.26 21.76,20.5Q21.5,20.75 21.17,20.75H2.83Q2.5,20.75 2.26,20.5Q2,20.26 2,19.92V4.08Q2,3.74 2.26,3.5Q2.5,3.25 2.83,3.25H21.17M11,8.5V11H8.5V8.5H11M15.5,8.5V11H13V8.5H15.5M20,8.5V11H17.5V8.5H20M11,13V15.5H8.5V13H11M15.5,13V15.5H13V13H15.5M20,13V15.5H17.5V13H20M11,17V19.5H8.5V17H11M15.5,17V19.5H13V17H15.5M20,17V19.5H17.5V17H20M6.5,8.5V19.5H4V8.5H6.5Z"/>
+                            <TextBlock Text="Rich feature set" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="A vast range of features is available to customize the appearance of charts and render the desired outputs." 
+                                       TextWrapping="Wrap" FontSize="13" Opacity="0.7"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Fluid Animation -->
+                    <Border Classes="FeatureCard">
+                        <StackPanel Spacing="12">
+                            <!-- Play/Animation icon -->
+                            <PathIcon Classes="FeatureIcon" Data="M8,5.14V19.14L19,12.14L8,5.14M10,8.29L15.23,12.14L10,16V8.29Z"/>
+                            <TextBlock Text="Fluid animation" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="Fluid animation represents data with smooth transitions." 
+                                       TextWrapping="Wrap" FontSize="13" Opacity="0.7"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Fully Customizable -->
+                    <Border Classes="FeatureCard">
+                        <StackPanel Spacing="12">
+                            <!-- Palette/Paint brush icon -->
+                            <PathIcon Classes="FeatureIcon" Data="M17.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,9A1.5,1.5 0 0,1 19,10.5A1.5,1.5 0 0,1 17.5,12M14.5,8A1.5,1.5 0 0,1 13,6.5A1.5,1.5 0 0,1 14.5,5A1.5,1.5 0 0,1 16,6.5A1.5,1.5 0 0,1 14.5,8M9.5,8A1.5,1.5 0 0,1 8,6.5A1.5,1.5 0 0,1 9.5,5A1.5,1.5 0 0,1 11,6.5A1.5,1.5 0 0,1 9.5,8M6.5,12A1.5,1.5 0 0,1 5,10.5A1.5,1.5 0 0,1 6.5,9A1.5,1.5 0 0,1 8,10.5A1.5,1.5 0 0,1 6.5,12M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21C12.83,21 13.5,20.33 13.5,19.5C13.5,19.11 13.35,18.76 13.11,18.5C12.88,18.23 12.73,17.88 12.73,17.5A1.5,1.5 0 0,1 14.23,16H16A5,5 0 0,0 21,11C21,6.58 16.97,3 12,3Z"/>
+                            <TextBlock Text="Fully Customizable" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="Control every aspect of rendering, from axes to tooltips and legends." 
+                                       TextWrapping="Wrap" FontSize="13" Opacity="0.7"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Interactive -->
+                    <Border Classes="FeatureCard">
+                        <StackPanel Spacing="12">
+                            <!-- Touch/gesture/cursor icon -->
+                            <PathIcon Classes="FeatureIcon" Data="M13.64,21.97C13.14,22.21 12.54,22 12.31,21.5L10.13,16.76L7.62,18.78C7.45,18.92 7.24,19 7,19A1,1 0 0,1 6,18V3A1,1 0 0,1 7,2C7.24,2 7.47,2.09 7.64,2.23L7.65,2.22L19.14,11.86C19.57,12.22 19.62,12.85 19.27,13.27C19.12,13.45 18.91,13.57 18.7,13.61L15.54,14.23L17.74,18.96C17.97,19.46 17.76,20.06 17.26,20.28L13.64,21.97Z"/>
+                            <TextBlock Text="Interactive" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="Built-in support for zooming, panning, selection, and trackball/tooltips." 
+                                       TextWrapping="Wrap" FontSize="13" Opacity="0.7"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Cross Platform -->
+                    <Border Classes="FeatureCard">
+                        <StackPanel Spacing="12">
+                            <!-- Multiple devices icon -->
+                            <PathIcon Classes="FeatureIcon" Data="M4,6V16H9V18H2V4H22V10H20V6H4M17,12H22V20H17V12M18,13V17H21V13H18M7,15H11V13H7V15M7,11H13V9H7V11M15,21V23H5V21H15Z"/>
+                            <TextBlock Text="Cross Platform" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="Write once, run everywhere. Works on Windows, macOS, Linux, iOS, Android and Web." 
+                                       TextWrapping="Wrap" FontSize="13" Opacity="0.7"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 70+ Chart Types -->
+                    <Border Classes="FeatureCard">
+                        <StackPanel Spacing="12">
+                            <!-- Bar chart icon -->
+                            <PathIcon Classes="FeatureIcon" Data="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z"/>
+                            <TextBlock Text="70+ Chart Types" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="Including Cartesian, Circular, Maps, Gauges, Heatmaps, Financial and many more." 
+                                       TextWrapping="Wrap" FontSize="13" Opacity="0.7"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <!-- Use XAML/C# -->
+                    <Border Classes="FeatureCard">
+                        <StackPanel Spacing="12">
+                            <!-- C# / .NET logo style icon -->
+                            <PathIcon Classes="FeatureIcon" Data="M11.5,15.97L11.91,18.41C11.65,18.55 11.23,18.68 10.67,18.8C10.1,18.93 9.43,19 8.66,19C6.45,18.96 4.79,18.3 3.68,17.04C2.56,15.77 2,14.16 2,12.21C2.05,9.9 2.72,8.13 4,6.89C5.32,5.64 6.96,5 8.94,5C9.69,5 10.34,5.07 10.88,5.19C11.42,5.31 11.82,5.44 12.08,5.59L11.5,8.08L10.44,7.74C10.04,7.64 9.58,7.59 9.05,7.59C7.89,7.58 6.93,7.95 6.18,8.69C5.42,9.42 5.03,10.54 5,12.03C5,13.39 5.37,14.45 6.08,15.23C6.79,16 7.79,16.4 9.07,16.41L10.4,16.29C10.83,16.21 11.19,16.1 11.5,15.97M13.89,19L14.5,15H13L13.34,13H14.84L15.16,11H13.66L14,9H15.5L16.11,5H18.11L17.5,9H18.5L19.11,5H21.11L20.5,9H22L21.66,11H20.16L19.84,13H21.34L21,15H19.5L18.89,19H16.89L17.5,15H16.5L15.89,19H13.89M16.84,13H17.84L18.16,11H17.16L16.84,13Z"/>
+                            <TextBlock Text="Use XAML/C#" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="Fully integrated with Avalonia, use C# and XAML to build your charts." 
+                                       TextWrapping="Wrap" FontSize="13" Opacity="0.7"/>
+                        </StackPanel>
+                    </Border>
+                </WrapPanel>
+            </StackPanel>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

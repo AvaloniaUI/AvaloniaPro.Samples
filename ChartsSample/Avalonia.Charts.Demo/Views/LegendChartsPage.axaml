@@ -1,0 +1,201 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+             x:CompileBindings="True" x:DataType="vm:LegendChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.LegendChartsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Position and align the chart legend to best fit your layout." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <TextBlock Text="Item legends can toggle real data items or series." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+
+            <!-- Floating Legend -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Floating Legend &amp; Alignment" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="FloatingLegendSample" 
+                                           IsTooltipEnabled="True" 
+                                           Title="Floating Legend" 
+                                           Height="300"
+                                           ShowLegend="True"
+                                           LegendPosition="Floating"
+                                           LegendOffset="20, 20"
+                                           ToggleSeriesVisibility="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Series A" ItemsSource="{Binding Data1}" />
+                            <charts:LineSeries Title="Series B" ItemsSource="{Binding Data2}" />
+                            <charts:LineSeries Title="Series C" ItemsSource="{Binding Data3}" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="LegendPosition='Floating' with LegendOffset='20,20'. Click items to toggle series." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Bottom Legend with Alignment -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Bottom Legend (Far Aligned)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="BottomLegendSample" 
+                                           IsTooltipEnabled="True" 
+                                           Title="Bottom 'Far' Aligned" 
+                                           Height="250"
+                                           ShowLegend="True"
+                                           LegendPosition="Bottom"
+                                           LegendAlignment="Far"
+                                           ToggleSeriesVisibility="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="2023" ItemsSource="{Binding Data1}" />
+                            <charts:BarSeries Title="2024" ItemsSource="{Binding Data2}" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="LegendPosition='Bottom' with LegendAlignment='Far'." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+            
+            <!-- Right Legend -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Right Legend (Center Aligned)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="RightLegendSample" 
+                                           IsTooltipEnabled="True" 
+                                           Title="Right Aligned" 
+                                           Height="250"
+                                           ShowLegend="True"
+                                           LegendPosition="Right"
+                                           LegendAlignment="Center"
+                                           ToggleSeriesVisibility="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="Revenue" ItemsSource="{Binding Data1}" />
+                            <charts:AreaSeries Title="Profit" ItemsSource="{Binding Data3}" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Standard Right-aligned legend." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Visibility Control -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Visibility Control" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    
+                    <WrapPanel>
+                        <Button Name="ToggleLegendBtn" Content="Toggle Legend" Command="{Binding ToggleLegendCommand}" Margin="0,0,10,8" />
+                        <Button Name="ToggleSeriesBtn" Content="Toggle Series 1" Command="{Binding ToggleSeries1Command}" Margin="0,0,0,8" />
+                    </WrapPanel>
+
+                    <charts:CartesianChart Name="RuntimeControlSample" 
+                                           IsTooltipEnabled="True" 
+                                           Title="Runtime Control" 
+                                           Height="250"
+                                           ShowLegend="{Binding IsLegendVisible}"
+                                           LegendPosition="Top"
+                                           ToggleSeriesVisibility="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Series 1" ItemsSource="{Binding Data1}" IsVisible="{Binding IsSeries1Visible}" />
+                            <charts:LineSeries Title="Series 2" ItemsSource="{Binding Data2}" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Use buttons to change rendering state at runtime." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Standalone ChartLegend -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Standalone ChartLegend Control" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="ChartLegend can be hosted outside a chart when you need a custom layout or an external summary strip." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                    <Border BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="12">
+                        <charts:ChartLegend Items="{Binding StandaloneLegendItems}"
+                                            Orientation="Horizontal"
+                                            MarkerSize="14"
+                                            ItemSpacing="18" />
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Pie Legend Toggling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Pie Legend Toggling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Pie legends expose hideable item entries. Click legend entries to toggle slices." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                    <charts:PieChart Title="Pie Item Legend"
+                                     Height="280"
+                                     ShowLegend="True"
+                                     LegendPosition="Right"
+                                     ToggleSeriesVisibility="True">
+                        <charts:PieChart.Series>
+                            <charts:PieSeries ItemsSource="{Binding Data1}"
+                                              IsSelectionEnabled="True"
+                                              SelectionMode="SingleDeselect"
+                                              ShowLabels="True"
+                                              SliceLabelFormat="Percentage" />
+                        </charts:PieChart.Series>
+                    </charts:PieChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Parliament Legend Toggling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Parliament Legend Toggling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="ParliamentChart uses a bespoke legend, but its party entries remain hideable." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                    <chartsEnterprise:ParliamentChart Title="Parliament Parties"
+                                                      Height="300"
+                                                      TotalSeats="110"
+                                                      Rows="5"
+                                                      Parties="{Binding ParliamentParties}"
+                                                      ShowLegend="True"
+                                                      LegendPosition="Right"
+                                                      ToggleSeriesVisibility="True" />
+                </StackPanel>
+            </Border>
+
+            <!-- Mekko Legend Toggling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Mekko Legend Toggling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Mekko segment legend entries are placed above the chart so the toggle affordance is visible on narrow layouts." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                    <chartsEnterprise:MekkoChart Title="Mekko Segments"
+                                                 Height="340"
+                                                 ItemsSource="{Binding MekkoData}"
+                                                 CategoryPath="Category"
+                                                 WidthPath="Width"
+                                                 SegmentsPath="Segments"
+                                                 ShowLegend="True"
+                                                 LegendPosition="Top"
+                                                 ToggleSeriesVisibility="True" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

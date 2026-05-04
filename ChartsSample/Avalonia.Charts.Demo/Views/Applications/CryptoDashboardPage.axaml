@@ -1,0 +1,435 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Applications"
+             mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="900"
+             x:Class="Avalonia.Charts.Demo.Views.Applications.CryptoDashboardPage"
+             x:CompileBindings="True" x:DataType="vm:CryptoDashboardViewModel">
+    <UserControl.Styles>
+        <StyleInclude Source="avares://Avalonia.Charts.Demo/Views/Applications/ApplicationStyles.axaml" />
+        
+        <!-- Responsive Styles -->
+        <Style Selector="UserControl.mobile Border.ResponsiveCard">
+             <Setter Property="Margin" Value="0" />
+        </Style>
+
+        <Style Selector="UserControl.mobile Border.SearchBar">
+             <Setter Property="MinWidth" Value="0" />
+             <Setter Property="MaxWidth" Value="1000" />
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="20" Margin="20,16">
+            
+            <!-- Header Section -->
+            <Grid x:Name="HeaderGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" MinWidth="200"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Left: Welcome Message -->
+                <StackPanel x:Name="HeaderTitlePanel" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0">
+                    <TextBlock Text="Welcome Back!" FontSize="13" Foreground="{DynamicResource TextMutedBrush}" Margin="0,0,0,2"/>
+                    <TextBlock Text="Mike Ross" FontSize="32" FontWeight="ExtraBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                </StackPanel>
+
+                <!-- Right: Search & Profile -->
+                <StackPanel x:Name="HeaderActionsPanel" Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <!-- Search Bar -->
+                    <Border Classes="SearchBar" MinWidth="180" MaxWidth="240">
+                        <Grid ColumnDefinitions="*,Auto" VerticalAlignment="Center">
+                            <TextBox Grid.Column="0"
+                                     Classes="SearchInput"
+                                     Text="{Binding SearchText}"
+                                     PlaceholderText="Search ..."
+                                     VerticalAlignment="Center"
+                                     VerticalContentAlignment="Center" />
+                            <Path Grid.Column="1"
+                                  Data="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                                  Fill="{DynamicResource TextMutedBrush}"
+                                  Width="18"
+                                  Height="18"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  Margin="8,0,0,0" />
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Profile Picture -->
+                    <Border Width="38" Height="38" CornerRadius="19" Background="{DynamicResource SearchBarBackgroundBrush}" VerticalAlignment="Center">
+                        <Path Data="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                              Fill="{DynamicResource TextSecondaryBrush}"
+                              Width="20"
+                              Height="20"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+            <!-- Charts Section -->
+            <!-- Top Row -->
+            <Grid x:Name="TopGrid" Classes="ResponsiveGrid" ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="20" RowSpacing="20">
+                <!-- Total Balance Card -->
+                <Border x:Name="BalanceCard" Classes="BalanceCard ResponsiveCard">
+                    <Grid RowDefinitions="Auto,Auto,Auto,*">
+                        <!-- Header Row -->
+                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="Total Balance" FontSize="13" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                <Button Classes="IconButton" VerticalAlignment="Center" Padding="0" Margin="4,0,0,0">
+                                    <Path Data="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+                                          Fill="{DynamicResource TextMutedBrush}" Width="16" Height="16" Stretch="Uniform" VerticalAlignment="Center"/>
+                                </Button>
+                            </StackPanel>
+                            <ComboBox Grid.Column="1" Classes="CurrencyCombo" ItemsSource="{Binding Currencies}" SelectedItem="{Binding SelectedCurrency}" Width="95" MinWidth="85"/>
+                        </Grid>
+
+                        <!-- Balance Amount -->
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="4" Margin="0,10,0,2">
+                            <TextBlock Text="{Binding CurrentCurrencySymbol}" FontSize="36" FontWeight="Bold" Foreground="{DynamicResource PrimaryGreenBrush}" VerticalAlignment="Top" Margin="0,2,0,0"/>
+                            <TextBlock Text="{Binding TotalBalance, StringFormat='{}{0:N2}'}" FontSize="36" FontWeight="Bold" Foreground="{DynamicResource PrimaryGreenBrush}"/>
+                        </StackPanel>
+
+                        <!-- Change Indicator -->
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="4" Margin="0,0,0,12">
+                            <TextBlock FontSize="13" FontWeight="SemiBold" Foreground="#22C55E">
+                                <Run Text="+"/><Run Text="{Binding CurrentCurrencySymbol}"/><Run Text="{Binding BalanceChange, StringFormat='{}{0:N0}'}"/>
+                            </TextBlock>
+                            <TextBlock FontSize="13" FontWeight="SemiBold" Foreground="#22C55E">
+                                <Run Text="("/><Run Text="{Binding BalanceChangePercentage, StringFormat='{}{0:F1}'}"/><Run Text="%)"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <!-- Area Chart -->
+                        <charts:SparklineChart Grid.Row="3" Height="120" SparklineType="Area" ItemsSource="{Binding TrendData}" ValuePath="Value" LineBrush="{DynamicResource PrimaryGreenBrush}" StrokeThickness="2" VerticalAlignment="Bottom" Margin="0,10,0,0" AreaFill="{DynamicResource BalanceSparklineFillBrush}"/>
+                    </Grid>
+                </Border>
+
+                <!-- BTC Price Chart -->
+                <Border x:Name="PriceChartCard" Classes="DashCard ResponsiveCard">
+                    <StackPanel Spacing="12">
+                        <!-- Header -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}">
+                                <Run Text="BTC" FontWeight="ExtraBold"/><Run Text=" - Price Chart" FontWeight="Normal" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            </TextBlock>
+                            <Border Grid.Column="1" Background="{DynamicResource TextPrimaryBrush}" CornerRadius="6" Padding="10,4" HorizontalAlignment="Right">
+                                <TextBlock Text="$52,430" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource CardBackgroundBrush}"/>
+                            </Border>
+                        </Grid>
+
+                        <!-- Technical Stats Section -->
+                        <Grid ColumnDefinitions="*,*,*,*" Margin="0,8">
+                            <StackPanel Grid.Column="0" Spacing="2">
+                                <TextBlock Text="Volume" FontSize="11" Foreground="{DynamicResource TextMutedBrush}"/>
+                                <TextBlock Text="$32.4B" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="2">
+                                <TextBlock Text="Mkt Cap" FontSize="11" Foreground="{DynamicResource TextMutedBrush}"/>
+                                <TextBlock Text="$1.2T" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Spacing="2">
+                                <TextBlock Text="24h High" FontSize="11" Foreground="{DynamicResource TextMutedBrush}"/>
+                                <TextBlock Text="$52,680" FontSize="14" FontWeight="Bold" Foreground="#22C55E"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="3" Spacing="2">
+                                <TextBlock Text="24h Low" FontSize="11" Foreground="{DynamicResource TextMutedBrush}"/>
+                                <TextBlock Text="$48,210" FontSize="14" FontWeight="Bold" Foreground="#EF4444"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Candlestick Chart with Indicators -->
+                        <charts:FinancialChart Height="220" IsTooltipEnabled="True">
+                            <charts:FinancialChart.Series>
+                                <charts:CandlestickSeries x:Name="BtcSeries" ItemsSource="{Binding BtcData}" HighPath="High" LowPath="Low" OpenPath="Open" ClosePath="Close" DatePath="Date" UpFill="#22C55E" DownFill="#EF4444" UpStroke="#22C55E" DownStroke="#EF4444"/>
+                                <chartsEnterprise:MovingAverageSeries SourceSeries="{Binding #BtcSeries}" Period="7" MovingAverageType="Exponential" Stroke="#627EEA" StrokeThickness="1.5" />
+                                <chartsEnterprise:MovingAverageSeries SourceSeries="{Binding #BtcSeries}" Period="25" MovingAverageType="Simple" Stroke="#F97316" StrokeThickness="1.5" Opacity="0.7"/>
+                            </charts:FinancialChart.Series>
+                        </charts:FinancialChart>
+
+                        <!-- Time Period Selector -->
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" Margin="-4,0">
+                            <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center">
+                                <Button Classes="TimePeriod" Content="1D" Padding="10,5"/>
+                                <Button Classes="TimePeriod" Content="3D" Padding="10,5"/>
+                                <Button Classes="TimePeriod" Content="5D" Padding="10,5"/>
+                                <Button Classes="TimePeriod" Content="1W" Padding="10,5"/>
+                                <Button Classes="TimePeriod" Content="2W" Padding="10,5"/>
+                                <Button Classes="TimePeriod Selected" Content="1M" Padding="10,5"/>
+                                <Button Classes="TimePeriod" Content="3M" Padding="10,5"/>
+                                <Button Classes="TimePeriod" Content="6M" Padding="10,5"/>
+                                <Button Classes="TimePeriod" Content="1Y" Padding="10,5"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Wallet & Trades Section -->
+            <!-- Bottom Row -->
+            <Grid x:Name="BottomGrid" Classes="ResponsiveGrid" ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="20" RowSpacing="20">
+                <!-- My Trades / Day -->
+                <Border x:Name="TradesCard" Classes="DashCard ResponsiveCard" MinHeight="300">
+                    <StackPanel Spacing="16">
+                        <!-- Header with Legend -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="My Trades" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                <TextBlock Text=" / Day" FontSize="18" Foreground="{DynamicResource TextMutedBrush}"/>
+                            </StackPanel>
+
+                            <!-- Legend -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <Border Width="12" Height="12" CornerRadius="3" Background="{DynamicResource PrimaryGreenLighterBrush}"/>
+                                    <TextBlock Text="00" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <Border Width="12" Height="12" CornerRadius="3" Background="{DynamicResource PrimaryGreenLightBrush}"/>
+                                    <TextBlock Text="01" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <Border Width="12" Height="12" CornerRadius="3" Background="{DynamicResource BorderMediumBrush}"/>
+                                    <TextBlock Text="02" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <Border Width="12" Height="12" CornerRadius="3" Background="{DynamicResource PrimaryGreenBrush}"/>
+                                    <TextBlock Text="03" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="4">
+                                    <Border Width="12" Height="12" CornerRadius="3" Background="{DynamicResource CardBackgroundDarkBrush}"/>
+                                    <TextBlock Text="&gt;03" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Calendar Heatmap -->
+                        <UniformGrid Columns="7" HorizontalAlignment="Center">
+                            <Border Classes="CalendarDay Level3" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="01" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay LevelHigh" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="02" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level2" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="03" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level1" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="04" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level2" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="05" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level1" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="06" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level3" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="07" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level2" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="08" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level2" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="09" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level1" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="10" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level1" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="11" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level2" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="12" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay LevelHigh" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="13" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level1" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="14" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level2" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="15" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level2" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="16" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level3" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="17" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level1" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="18" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level2" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="19" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level3" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="20" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level2" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="21" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level3" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="22" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level2" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="23" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay LevelHigh" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="24" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level3" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="25" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level1" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="26" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level3" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="27" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                            <Border Classes="CalendarDay Level2" Margin="3" Width="40" Height="40">
+                                <TextBlock Text="28" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Border>
+                        </UniformGrid>
+                    </StackPanel>
+                </Border>
+
+                <!-- My Wallet -->
+                <Border x:Name="WalletCard" Classes="DashCard ResponsiveCard" MinHeight="300">
+                    <StackPanel Spacing="12">
+                        <!-- Header -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="My Wallet" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                            <TextBlock Grid.Column="1" Text="See All" Classes="Link" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </Grid>
+
+                        <!-- Wallet Cards Grid - Responsive -->
+                        <Grid x:Name="WalletGrid" RowSpacing="12" ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="140"/>
+                                <ColumnDefinition Width="*" MinWidth="140"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- BTC Card - Green -->
+                            <Border x:Name="InnerBtcCard" Classes="WalletCardGreen">
+                                <StackPanel Spacing="8">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Border Width="36" Height="36" CornerRadius="18" Background="#F7931A">
+                                            <TextBlock Text="₿" FontSize="20" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="BTC" FontSize="14" FontWeight="Bold"/>
+                                            <TextBlock Text="4.485 BTC" FontSize="11" Opacity="0.8"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock Text="Balance" FontSize="10" Opacity="0.7"/>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock FontSize="14" FontWeight="Bold">
+                                                <Run Text="{Binding CurrentCurrencySymbol}"/><Run Text="{Binding WalletItems[0].Balance, StringFormat='{}{0:N0}'}"/>
+                                            </TextBlock>
+                                            <TextBlock Text="+4.6%" FontSize="11" Foreground="#86EFAC" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- ETH Card - White -->
+                            <Border x:Name="InnerEthCard" Grid.Row="0" Grid.Column="1" Classes="WalletCardWhite">
+                                <StackPanel Spacing="8">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Border Width="36" Height="36" CornerRadius="18" Background="#627EEA">
+                                            <TextBlock Text="Ξ" FontSize="20" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="ETH" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                            <TextBlock Text="11.20 ETH" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock Text="Balance" FontSize="10" Foreground="{DynamicResource TextMutedBrush}"/>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}">
+                                                <Run Text="{Binding CurrentCurrencySymbol}"/><Run Text="{Binding WalletItems[1].Balance, StringFormat='{}{0:N0}'}"/>
+                                            </TextBlock>
+                                            <TextBlock Text="+3.8%" FontSize="11" Foreground="#22C55E" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- XRP Card - White -->
+                            <Border x:Name="InnerXrpCard" Grid.Row="1" Grid.Column="0" Classes="WalletCardWhite">
+                                <StackPanel Spacing="8">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Border Width="36" Height="36" CornerRadius="18" Background="#23292F">
+                                            <TextBlock Text="✕" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="XRP" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                            <TextBlock Text="22934 XRP" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock Text="Balance" FontSize="10" Foreground="{DynamicResource TextMutedBrush}"/>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}">
+                                                <Run Text="{Binding CurrentCurrencySymbol}"/><Run Text="{Binding WalletItems[2].Balance, StringFormat='{}{0:N0}'}"/>
+                                            </TextBlock>
+                                            <TextBlock Text="-5.6%" FontSize="11" Foreground="#EF4444" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- LTC Card - Dark -->
+                            <Border x:Name="InnerLtcCard" Grid.Row="1" Grid.Column="1" Classes="WalletCardDark">
+                                <StackPanel Spacing="8">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Border Width="36" Height="36" CornerRadius="18" Background="#345D9D">
+                                            <TextBlock Text="Ł" FontSize="20" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="Litecoin" FontSize="14" FontWeight="Bold"/>
+                                            <TextBlock Text="448.5 LTC" FontSize="11" Classes="Muted"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock Text="Balance" FontSize="10" Classes="Muted"/>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock FontSize="14" FontWeight="Bold">
+                                                <Run Text="{Binding CurrentCurrencySymbol}"/><Run Text="{Binding WalletItems[3].Balance, StringFormat='{}{0:N0}'}"/>
+                                            </TextBlock>
+                                            <TextBlock Text="-5.6%" FontSize="11" Foreground="#F97316" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

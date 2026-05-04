@@ -1,0 +1,169 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="800"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.PlotBandsPage"
+             x:CompileBindings="True" x:DataType="vm:PlotBandsViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Highlight specific ranges or regions on your chart using plot bands."
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Horizontal Plot Bands -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Horizontal Plot Bands (Y-Axis)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="HorizontalBandsChart" Title="Temperature Zones" Height="300" ShowLegend="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Temperature (°C)">
+                                <charts:NumericalAxis.PlotBands>
+                                    <charts:ChartPlotBand Start="0" End="15" Fill="LightBlue" Text="Cold" Opacity="0.4" />
+                                    <charts:ChartPlotBand Start="15" End="25" Fill="LightGreen" Text="Optimal" Opacity="0.4" />
+                                    <charts:ChartPlotBand Start="25" End="40" Fill="LightCoral" Text="Hot" Opacity="0.4" />
+                                </charts:NumericalAxis.PlotBands>
+                            </charts:NumericalAxis>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Temperature" ItemsSource="{Binding HorizontalBandsData}"
+                                                 Stroke="DodgerBlue" StrokeThickness="3"
+                                                 MarkerSize="8" MarkerFill="White"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Bands highlight temperature ranges: Cold (0-15°C), Optimal (15-25°C), Hot (25-40°C)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Vertical Plot Bands -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Vertical Plot Bands (X-Axis)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="VerticalBandsChart" Title="Weekly Sales with Weekends Highlighted" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis>
+                                <charts:CategoryAxis.PlotBands>
+                                    <charts:ChartPlotBand Start="5" End="6" Fill="LightGray" Text="Weekend" Opacity="0.5" VerticalTextAlignment="Start" />
+                                </charts:CategoryAxis.PlotBands>
+                            </charts:CategoryAxis>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Sales" ItemsSource="{Binding VerticalBandsData}"
+                                                Fill="DodgerBlue" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Vertical bands highlight weekends (Saturday-Sunday)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Plot Band with Text -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Plot Bands with Text Labels" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="TextBandsChart" Title="Stock Price with Target Zone" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis>
+                                <charts:NumericalAxis.PlotBands>
+                                    <charts:ChartPlotBand Start="50" End="70" Fill="#4CAF50" Text="BUY ZONE" Foreground="White" TextFontSize="14" Opacity="0.3" HorizontalTextAlignment="End" VerticalTextAlignment="Start" />
+                                    <charts:ChartPlotBand Start="90" End="110" Fill="#F44336" Text="SELL ZONE" Foreground="White" TextFontSize="14" Opacity="0.3" HorizontalTextAlignment="End" VerticalTextAlignment="End" />
+                                </charts:NumericalAxis.PlotBands>
+                            </charts:NumericalAxis>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Stock Price" ItemsSource="{Binding TextBandsData}"
+                                                 Stroke="DarkBlue" StrokeThickness="2"
+                                                 MarkerSize="6" MarkerFill="DarkBlue"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Text labels positioned within bands using HorizontalTextAlignment and VerticalTextAlignment" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Repeating Plot Bands -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Repeating Plot Bands" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="RepeatingBandsChart" Title="Alternating Background" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis>
+                                <charts:CategoryAxis.PlotBands>
+                                    <charts:ChartPlotBand Start="0" End="0" Fill="LightBlue" Opacity="0.2" IsRepeating="True" RepeatEvery="2" RepeatUntil="12" />
+                                </charts:CategoryAxis.PlotBands>
+                            </charts:CategoryAxis>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Monthly Data" ItemsSource="{Binding RepeatingBandsData}"
+                                                Fill="Purple" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Bands repeat at regular intervals using IsRepeating, RepeatEvery, and RepeatUntil" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Above Series -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Render Above Series" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="AboveSeriesChart" Title="Warning Threshold (Above Series)" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis>
+                                <charts:NumericalAxis.PlotBands>
+                                    <charts:ChartPlotBand Start="80" End="100" Fill="#FF5722" Opacity="0.5" Text="DANGER" Foreground="White" RenderAboveSeries="True" />
+                                </charts:NumericalAxis.PlotBands>
+                            </charts:NumericalAxis>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="CPU Usage" ItemsSource="{Binding AboveSeriesData}"
+                                                 Fill="#7E2196F3"
+                                                 Stroke="DodgerBlue" StrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="RenderAboveSeries=True draws the band on top of the chart series" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Trend Analysis with Targets -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Trend Analysis with Targets" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="TrendAnalysisChart" Title="Sales Performance vs Target" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Sales Volume" Minimum="0" Maximum="140">
+                                <charts:NumericalAxis.PlotBands>
+                                    <charts:ChartPlotBand Start="100" End="120" Fill="LightGreen" Text="TARGET ZONE" Opacity="0.3" HorizontalTextAlignment="End" />
+                                </charts:NumericalAxis.PlotBands>
+                            </charts:NumericalAxis>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Actual Sales" ItemsSource="{Binding TrendData}" Stroke="SteelBlue" StrokeThickness="2" MarkerSize="6" ShowMarkers="True">
+                                <charts:LineSeries.Trendlines>
+                                    <charts:Trendline Type="Linear" Stroke="DarkOrange" StrokeThickness="2" IsVisible="True" />
+                                </charts:LineSeries.Trendlines>
+                            </charts:LineSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Combining PlotBand (Target) with Trendline to visualize performance" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,90 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="1200"
+             x:CompileBindings="True" x:DataType="vm:DualAxisViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.DualAxisPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Compare datasets with different scales using primary and secondary axes."
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Dual Axis Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Revenue vs Growth Rate" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="DualAxisChart" Title="Revenue vs Growth Rate" Height="350">
+                        <charts:CartesianChart.Series>
+                            <!-- Primary Axis Series -->
+                            <charts:BarSeries Title="Revenue" ItemsSource="{Binding RevenueGrowthData}"
+                                                CategoryPath="Year" ValuePath="Revenue"
+                                                Fill="SteelBlue" YAxisPosition="Primary" />
+                            
+                            <!-- Secondary Axis Series -->
+                            <charts:LineSeries Title="Growth %" ItemsSource="{Binding RevenueGrowthData}"
+                                                 CategoryPath="Year" ValuePath="Growth"
+                                                 Stroke="OrangeRed" StrokeThickness="3"
+                                                 MarkerSize="8" MarkerFill="OrangeRed"
+                                                 YAxisPosition="Secondary"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        
+                        <!-- Primary Axis -->
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Revenue ($K)" ShowGridLines="True" Minimum="0" Maximum="400" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <!-- Secondary Axis -->
+                        <charts:CartesianChart.SecondaryVerticalAxis>
+                            <charts:NumericalAxis Title="Growth (%)" TitleForeground="OrangeRed" ShowGridLines="False" Minimum="0" Maximum="30" />
+                        </charts:CartesianChart.SecondaryVerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="YAxisPosition=Primary|Secondary for series placement" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Rainfall and Flow Relationship -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Rainfall and Flow Relationship" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="RainfallFlowChart" Title="Rainfall vs Flow" Height="400"
+                                           ShowLegend="True" LegendPosition="Bottom">
+                        <charts:CartesianChart.Series>
+                            <!-- Flow (Primary Axis) -->
+                            <charts:AreaSeries Title="Flow" ItemsSource="{Binding RainfallFlowData}"
+                                                CategoryPath="Time" ValuePath="Flow"
+                                                Fill="#804CAF50" Stroke="#4CAF50" StrokeThickness="2"
+                                                YAxisPosition="Primary" />
+                            
+                            <!-- Rainfall (Secondary Axis) -->
+                            <charts:AreaSeries Title="Rainfall" ItemsSource="{Binding RainfallFlowData}"
+                                                 CategoryPath="Time" ValuePath="Rainfall"
+                                                 Fill="#802196F3" Stroke="#2196F3" StrokeThickness="2"
+                                                 YAxisPosition="Secondary" />
+                        </charts:CartesianChart.Series>
+                        
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="False" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        
+                        <!-- Primary Axis (Flow) -->
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Flow (m³/s)" ShowGridLines="True" Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <!-- Secondary Axis (Rainfall) -->
+                        <charts:CartesianChart.SecondaryVerticalAxis>
+                            <charts:NumericalAxis Title="Rainfall (mm)" TitleForeground="#2196F3" ShowGridLines="False" Minimum="0" />
+                        </charts:CartesianChart.SecondaryVerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

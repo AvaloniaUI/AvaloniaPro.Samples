@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:PieChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.PieChartsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Pie and Donut charts are circular charts divided into sectors to illustrate numerical proportion. They are useful for showing composition of a whole." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <!-- Pie Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Pie Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PieChart Name="PieChartSample" IsTooltipEnabled="True" Title="Market Share" Height="300">
+                        <charts:PieChart.Series>
+                            <charts:PieSeries ItemsSource="{Binding PieChartData}" LabelPath="Value" />
+                        </charts:PieChart.Series>
+                    </charts:PieChart>
+                    <TextBlock Text="PieChart with labeled segments" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Donut Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Donut Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PieChart Name="DonutChartSample" IsTooltipEnabled="True" Title="Revenue Distribution" Height="300" InnerRadiusFactor="0.6">
+                         <charts:PieChart.Series>
+                            <charts:PieSeries ItemsSource="{Binding DonutChartData}" LabelPath="Value" />
+                        </charts:PieChart.Series>
+                    </charts:PieChart>
+                    <TextBlock Text="PieChart with inner hole (InnerRadiusFactor)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Progress Donut Charts -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Progress Donut Charts" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <charts:ProgressDonutChart Value="75" Width="180" Height="180" IsTooltipEnabled="True" Title="Downloads" Margin="10" />
+                        <charts:ProgressDonutChart Value="42" Width="180" Height="180" IsTooltipEnabled="True" Title="Uploads" Margin="10" />
+                        <charts:ProgressDonutChart Value="90" Width="180" Height="180" IsTooltipEnabled="True" Title="Active" Margin="10" />
+                    </WrapPanel>
+                    <TextBlock Text="ProgressDonutChart for single value visualization" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Semi-Donut Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Semi-Donut Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:SemiDonutChart Name="SemiDonutChartSample" Height="200" 
+                                             ItemsSource="{Binding SemiDonutChartData}"
+                                             ValuePath="Value"
+                                             LabelPath="Label"
+                                             CenterValue="$980"
+                                             CenterLabel="Total Revenue" />
+                    <TextBlock Text="Half-circle donut for dashboard gauges" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Animated Donut Charts -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Animated Donut Charts" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <charts:ProgressDonutChart IsTooltipEnabled="True" Title="Downloads" Width="150" Height="180" Value="78" RingThickness="18" ValueBrush="#4285F4" IsValueAnimationEnabled="True" ShowGlow="True" Margin="15" />
+                        <charts:ProgressDonutChart IsTooltipEnabled="True" Title="Revenue" Width="150" Height="180" Value="92" RingThickness="18" ValueBrush="#34A853" IsValueAnimationEnabled="True" ShowGlow="True" Margin="15" />
+                        <charts:ProgressDonutChart IsTooltipEnabled="True" Title="Users" Width="150" Height="180" Value="56" RingThickness="18" ValueBrush="#EA4335" IsValueAnimationEnabled="True" ShowGlow="True" Margin="15" />
+                    </WrapPanel>
+                    <TextBlock Text="AnimatedDonut with smooth fill animations and glow" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

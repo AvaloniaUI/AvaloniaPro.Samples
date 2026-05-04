@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+             x:Class="Avalonia.Charts.Demo.Views.AxisTitlePage"
+             x:CompileBindings="True" x:DataType="vm:AxisTitleViewModel">
+    
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Customize axis titles to provide clear context for your data dimensions."
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            
+            <!-- Simple Axis Title -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Basic Axis Titles" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="2024" ItemsSource="{Binding BasicData}" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Product Categories" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Revenue (USD)" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Axis.Title property sets the text." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Styled Axis Title -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Styled Axis Titles" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Growth" ItemsSource="{Binding StyledData}" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Time Period" 
+                                                 TitleFontSize="18" 
+                                                 TitleForeground="#D35400" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Growth %" 
+                                                  TitleFontSize="20" 
+                                                  TitleForeground="#2E86C1" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Custom TitleFontSize and TitleForeground." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

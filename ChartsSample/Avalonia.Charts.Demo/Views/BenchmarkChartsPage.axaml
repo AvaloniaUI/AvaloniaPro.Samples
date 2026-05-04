@@ -1,0 +1,83 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1500"
+             x:CompileBindings="True" x:DataType="vm:BenchmarkChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.BenchmarkChartsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Test the rendering performance of the charting library with large datasets." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <TextBlock Text="Note: Timings include data generation and full initial render pass." FontStyle="Italic" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- 10K Points -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="10,000 Points" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" TextWrapping="Wrap" Margin="0,0,10,0" />
+                        <TextBlock Name="Time10K" Grid.Column="1" Text="{Binding Status10K}" FontFamily="Courier New" FontWeight="Bold" TextTrimming="CharacterEllipsis" />
+                    </Grid>
+                    <charts:CartesianChart Name="Chart10K" Height="300" IsAnimationEnabled="False">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="10K Points" ItemsSource="{Binding Data10K}"
+                                                 Stroke="DodgerBlue" StrokeThickness="1" ShowMarkers="False" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis LabelFormat="N0" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+            
+            <!-- 100K Points -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="100,000 Points" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" TextWrapping="Wrap" Margin="0,0,10,0" />
+                        <TextBlock Name="Time100K" Grid.Column="1" Text="{Binding Status100K}" FontFamily="Courier New" FontWeight="Bold" TextTrimming="CharacterEllipsis" />
+                    </Grid>
+                    <charts:CartesianChart Name="Chart100K" Height="300" IsAnimationEnabled="False">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="100K Points" ItemsSource="{Binding Data100K}"
+                                                 Stroke="DodgerBlue" StrokeThickness="1" ShowMarkers="False" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis LabelFormat="0,K" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+            
+            <!-- 1 Million Points -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="1,000,000 Points" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" TextWrapping="Wrap" Margin="0,0,10,0" />
+                        <TextBlock Name="Time1M" Grid.Column="1" Text="{Binding Status1M}" FontFamily="Courier New" FontWeight="Bold" TextTrimming="CharacterEllipsis" />
+                    </Grid>
+                    <charts:CartesianChart Name="Chart1M" Height="300" IsAnimationEnabled="False">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="1M Points" ItemsSource="{Binding Data1M}"
+                                                 Stroke="DodgerBlue" StrokeThickness="1" ShowMarkers="False" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis LabelFormat="0,K" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

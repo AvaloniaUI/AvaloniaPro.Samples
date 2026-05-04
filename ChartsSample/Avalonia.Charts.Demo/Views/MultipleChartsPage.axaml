@@ -1,0 +1,168 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="800"
+             x:CompileBindings="True" x:DataType="vm:MultipleChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.MultipleChartsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <!-- Header -->
+            <TextBlock Text="Charts that combine multiple series or different chart types to visualize complex data relationships." 
+                       Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap" Margin="0,0,0,10" />
+
+            <!-- Grouped Bar (Product Breakdown) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Dataset Series Layout By (Product Breakdown)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="ProductBreakdownChart" Title="Product Sales by Year" Height="300" ShowLegend="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Matcha Latte" ItemsSource="{Binding MatchaLatteData}" 
+                                              CategoryPath="Year" ValuePath="Sales" Fill="#5470C6" />
+                            <charts:BarSeries Title="Milk Tea" ItemsSource="{Binding MilkTeaData}" 
+                                              CategoryPath="Year" ValuePath="Sales" Fill="#91CC75" />
+                            <charts:BarSeries Title="Cheese Cocoa" ItemsSource="{Binding CheeseCocoaData}" 
+                                              CategoryPath="Year" ValuePath="Sales" Fill="#FAC858" />
+                            <charts:BarSeries Title="Walnut Brownie" ItemsSource="{Binding WalnutBrownieData}" 
+                                              CategoryPath="Year" ValuePath="Sales" Fill="#EE6666" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Multiple column groups showing breakdown of different products over years (ECharts style)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Grouped Bar Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Grouped Bar Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="GroupedBarChart" Title="Country Comparison" Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="2022" ItemsSource="{Binding GroupedBar2022}" Fill="#4A6A8A" />
+                            <charts:BarSeries Title="2023" ItemsSource="{Binding GroupedBar2023}" Fill="#6B5B7A" />
+                            <charts:BarSeries Title="2024" ItemsSource="{Binding GroupedBar2024}" Fill="#C76B7E" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Multiple bar series grouped by category for direct comparison" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Bar + Line Combo Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Bar + Line Combo Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="BarLineComboChart" Title="Sales with Trend Line" Height="300" ShowLegend="True">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Sales" ItemsSource="{Binding BarLineComboData}" Fill="#4A6A8A" />
+                            <charts:LineSeries Title="Trend" ItemsSource="{Binding BarLineComboData}" 
+                                               Stroke="#C76B7E" StrokeThickness="3" ShowMarkers="False" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Bar series with an overlaid line series to show trend" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Multiple Line Series -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Multiple Line Series" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="MultiLineChart" Title="Multi-Product Sales Trends" Height="300" ShowLegend="True">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Product A" ItemsSource="{Binding ProductAData}" 
+                                               Stroke="#4CAF50" StrokeThickness="2" MarkerSize="6"  ShowMarkers="True"/>
+                            <charts:LineSeries Title="Product B" ItemsSource="{Binding ProductBData}" 
+                                               Stroke="#2196F3" StrokeThickness="2" MarkerSize="6"  ShowMarkers="True"/>
+                            <charts:LineSeries Title="Product C" ItemsSource="{Binding ProductCData}" 
+                                               Stroke="#FF9800" StrokeThickness="2" MarkerSize="6"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Multiple line series comparing trends across categories" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Stacked + Line Combo -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Stacked Bar + Line Combo" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="StackedLineComboChart" Title="Sales Breakdown with Total" Height="300" ShowLegend="True">
+                        <charts:CartesianChart.Series>
+                            <charts:StackedBarSeries Title="Online" ItemsSource="{Binding OnlineData}" Fill="#4A6A8A" />
+                            <charts:StackedBarSeries Title="In-Store" ItemsSource="{Binding InStoreData}" Fill="#7EAAC8" />
+                            <charts:LineSeries Title="Total" ItemsSource="{Binding TotalData}" 
+                                               Stroke="#E53935" StrokeThickness="3" MarkerSize="8"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Stacked bar series with line showing total" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Area + Line Combo -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Area + Line Combo" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="AreaLineComboChart" Title="Traffic with Goal Line" Height="300" ShowLegend="True">
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="Traffic" ItemsSource="{Binding TrafficData}" 
+                                               Fill="#7E4CAF50" Stroke="#4CAF50" StrokeThickness="2" />
+                            <charts:LineSeries Title="Goal" ItemsSource="{Binding GoalData}" 
+                                               Stroke="#E53935" StrokeThickness="2" ShowMarkers="False" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Area series with line overlay showing target/goal" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- ComboChart Control -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="ComboChart Control" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:ComboChart Name="ComboChartDemo" Title="Revenue vs Target" Height="300" IsTooltipEnabled="True">
+                        <charts:ComboChart.Series>
+                            <charts:BarSeries Title="Revenue" ItemsSource="{Binding RevenueData}" Fill="#4A6A8A" />
+                            <charts:LineSeries Title="Target" ItemsSource="{Binding TargetData}" 
+                                               Stroke="#C76B7E" StrokeThickness="3" MarkerSize="6"  ShowMarkers="True"/>
+                        </charts:ComboChart.Series>
+                    </charts:ComboChart>
+                    <TextBlock Text="Built-in ComboChart combining Bar and Line series" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

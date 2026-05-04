@@ -1,0 +1,344 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:SelectionViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1400"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.SelectionPage">
+    
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Selection features enable users to interact with data points, highlighting specific values directly on the chart." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Single Selection -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Single Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="SingleSelectionChart" Height="250">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Category" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Sales" ItemsSource="{Binding SingleSelectionData}"
+                                                IsSelectionEnabled="True" SelectionMode="Single"
+                                                SelectionBrush="#DC3545"
+                                                SelectionStroke="#8B0000"
+                                                SelectionStrokeThickness="3" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Name="SingleSelectionStatus" Text="{Binding SingleSelectionStatus}" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="Only one bar can be selected at a time." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Single Deselect -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Single Deselect" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="SingleDeselectChart" Height="250">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Month" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Sales" />
+                        </charts:CartesianChart.VerticalAxis>
+                         <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Monthly Sales" ItemsSource="{Binding SingleDeselectData}"
+                                                IsSelectionEnabled="True" SelectionMode="SingleDeselect"
+                                                SelectionBrush="#28A745"
+                                                SelectionStroke="#155724"
+                                                SelectionStrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Name="SingleDeselectStatus" Text="{Binding SingleDeselectStatus}" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="SelectionMode=SingleDeselect." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Multiple Selection -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Multiple Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="MultipleSelectionChart" Height="250">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Product" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Units" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Products" ItemsSource="{Binding MultiSelectionData}"
+                                                IsSelectionEnabled="True" SelectionMode="Multiple"
+                                                SelectionBrush="#FFC107"
+                                                SelectionStroke="#856404"
+                                                SelectionStrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <StackPanel Spacing="6">
+                        <WrapPanel>
+                            <Button Name="ClearSelectionBtn" Content="Clear Selection" Margin="0,0,10,8" />
+                        </WrapPanel>
+                        <TextBlock Name="MultiSelectionStatus"
+                                   Text="{Binding MultiSelectionStatus}"
+                                   TextWrapping="Wrap"
+                                   FontStyle="Italic"
+                                   FontSize="12"
+                                   Foreground="{DynamicResource TextMutedBrush}" />
+                    </StackPanel>
+                    <TextBlock Text="Click multiple bars to select/deselect them. SelectionMode=Multiple." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Selection Events -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Selection Events" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="EventsChart" Height="250">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Item" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Items" ItemsSource="{Binding EventsData}"
+                                                IsSelectionEnabled="True" SelectionMode="SingleDeselect"
+                                                SelectionBrush="#6F42C1"
+                                                SelectionStroke="#4A235A"
+                                                SelectionStrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Name="EventLog" Text="{Binding EventLog}" TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="Demonstrates SelectionChanging and SelectionChanged events." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Pie Chart Selection -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Pie Chart Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PieChart Name="PieSelectionChart" Height="250" InnerRadiusFactor="0.5">
+                        <charts:PieChart.Series>
+                            <charts:PieSeries ItemsSource="{Binding PieSelectionData}"
+                                                IsSelectionEnabled="True"
+                                                SelectionMode="SingleDeselect"
+                                                SelectionBrush="#E67E22"
+                                                SelectionStroke="#873600"
+                                                SelectionStrokeThickness="3" />
+                        </charts:PieChart.Series>
+                    </charts:PieChart>
+                    <TextBlock Name="PieSelectionStatus" Text="{Binding PieSelectionStatus}" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="Click a slice to select it." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Sunburst Chart Selection -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Sunburst Chart Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:SunburstChart Name="SunburstSelectionChart" Height="300"
+                                            ItemsSource="{Binding SunburstSelectionData}"
+                                            ValuePath="Value"
+                                            LabelPath="Name"
+                                            ChildrenPath="Children"
+                                            IsSelectionEnabled="True"
+                                            SelectionMode="SingleDeselect"
+                                            SelectionBrush="#17A2B8"
+                                            SelectionStroke="#0C5460"
+                                            SelectionStrokeThickness="2" />
+                    <TextBlock Name="SunburstSelectionStatus" Text="{Binding SunburstSelectionStatus}" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="Click a segment to highlight it." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- TreeMap Chart Selection -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="TreeMap Chart Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:TreeMapChart Name="TreeMapSelectionChart" Height="300"
+                                           ItemsSource="{Binding TreeMapSelectionData}"
+                                           ValuePath="Value"
+                                           LabelPath="Name"
+                                           TileGap="2"
+                                           IsSelectionEnabled="True"
+                                           SelectionMode="SingleDeselect"
+                                           SelectionBrush="#6610F2"
+                                           SelectionStroke="#38006B"
+                                           SelectionStrokeThickness="3" />
+                    <TextBlock Name="TreeMapSelectionStatus" Text="{Binding TreeMapSelectionStatus}" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="Click a rectangle to select it." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Funnel Chart Selection -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Funnel Chart Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:FunnelChart Name="FunnelSelectionChart" Height="300"
+                                          ItemsSource="{Binding FunnelSelectionData}"
+                                          ValuePath="Value"
+                                          LabelPath="Name"
+                                          IsSelectionEnabled="True"
+                                          SelectionMode="SingleDeselect"
+                                          SelectionBrush="#FD7E14"
+                                          SelectionStroke="#8B4513"
+                                          SelectionStrokeThickness="2" />
+                    <TextBlock Name="FunnelSelectionStatus" Text="{Binding FunnelSelectionStatus}" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="Click a segment to select it." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Radar Chart Selection -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Radar Chart Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:RadarChart Name="RadarSelectionChart" Height="300" AxisCount="5">
+                        <charts:RadarChart.Series>
+                             <charts:RadarSeries Title="Metrics"
+                                                   ItemsSource="{Binding RadarSelectionData}"
+                                                   ValuePath="Value"
+                                                   IsSelectionEnabled="True"
+                                                   SelectionMode="SingleDeselect"
+                                                   SelectionBrush="#20C997"
+                                                   SelectionStroke="#0D5C4A"
+                                                   SelectionStrokeThickness="2"
+                                                   MarkerSize="10" />
+                        </charts:RadarChart.Series>
+                    </charts:RadarChart>
+                    <TextBlock Name="RadarSelectionStatus" Text="{Binding RadarSelectionStatus}" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="Click a vertex marker to select it." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Venn Diagram Selection -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Venn Diagram Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:VennDiagramChart Name="VennSelectionChart" Height="300"
+                                               ItemsSource="{Binding VennSelectionData}"
+                                               IsSelectionEnabled="True"
+                                               SelectionMode="SingleDeselect"
+                                               SelectionBrush="#6610F2"
+                                               SelectionStroke="#38006B"
+                                               SelectionStrokeThickness="3" />
+                    <TextBlock Name="VennSelectionStatus" Text="{Binding VennSelectionStatus}" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="Click a circle or intersection to select it." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Financial Chart Selection -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Financial Chart Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:FinancialChart Name="FinancialSelectionChart"
+                                           Title="Candlestick Selection"
+                                           Height="320"
+                                           IsHighlightEnabled="True"
+                                           AxisBrush="#475569"
+                                           GridLineBrush="#E2E8F0"
+                                           LabelForeground="#475569">
+                        <charts:FinancialChart.VerticalAxis>
+                            <charts:NumericalAxis LabelFormat="C0" />
+                        </charts:FinancialChart.VerticalAxis>
+                        <charts:FinancialChart.Series>
+                            <charts:CandlestickSeries ItemsSource="{Binding FinancialSelectionData}"
+                                                       DatePath="Date"
+                                                       HighPath="High"
+                                                       LowPath="Low"
+                                                       OpenPath="Open"
+                                                       ClosePath="Close"
+                                                       PointBrushPath="Brush"
+                                                       IsSelectionEnabled="True"
+                                                       SelectionMode="SingleDeselect"
+                                                       SelectionBrush="#FACC15"
+                                                       SelectionStroke="#854D0E"
+                                                       SelectionStrokeThickness="3"
+                                                       ShowMarkers="True"
+                                                       MarkerShape="Circle"
+                                                       MarkerSize="7" />
+                        </charts:FinancialChart.Series>
+                    </charts:FinancialChart>
+                    <TextBlock Text="Financial series use the same selection model as Cartesian series through fallback hit-region overlays." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- Point and Figure Selection -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Point and Figure Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:FinancialChart Name="PointAndFigureSelectionChart"
+                                           Title="Point &amp; Figure Selection"
+                                           Height="320"
+                                           IsHighlightEnabled="True"
+                                           GridLineBrush="#CBD5E1"
+                                           AxisBrush="#334155"
+                                           LabelForeground="#334155">
+                        <charts:FinancialChart.Series>
+                            <chartsEnterprise:PointAndFigureSeries ItemsSource="{Binding PointAndFigureSelectionData}"
+                                                                    DatePath="Date"
+                                                                    HighPath="High"
+                                                                    LowPath="Low"
+                                                                    OpenPath="Open"
+                                                                    ClosePath="Close"
+                                                                    BoxSize="1.5"
+                                                                    ReversalAmount="3"
+                                                                    PointBrushPath="Brush"
+                                                                    ShowMarkers="True"
+                                                                    MarkerSize="7"
+                                                                    IsSelectionEnabled="True"
+                                                                    SelectionMode="SingleDeselect"
+                                                                    SelectionBrush="#38BDF8"
+                                                                    SelectionStroke="#075985"
+                                                                    SelectionStrokeThickness="2" />
+                        </charts:FinancialChart.Series>
+                    </charts:FinancialChart>
+                    <TextBlock Text="PointAndFigureSeries participates in financial-chart selection and hover highlighting." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- Continuous DateTime Selection -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Continuous DateTime Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="ContinuousSelectionChart" Height="260">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis Title="Date"
+                                                 DateFormat="MMM dd"
+                                                 LabelFitMode="Auto"
+                                                 ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="25" Maximum="65" LabelFormat="0" ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Events"
+                                               ItemsSource="{Binding ContinuousSelectionData}"
+                                               CategoryPath="Date"
+                                               ValuePath="Value"
+                                               Stroke="#0EA5E9"
+                                               StrokeThickness="2"
+                                               ShowMarkers="True"
+                                               MarkerFill="#0EA5E9"
+                                               MarkerSize="7"
+                                               IsSelectionEnabled="True"
+                                               SelectionMode="SingleDeselect"
+                                               SelectionBrush="#FACC15"
+                                               SelectionStroke="#854D0E"
+                                               SelectionStrokeThickness="3" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Name="ContinuousSelectionStatus" Text="{Binding ContinuousSelectionStatus}" FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                    <TextBlock Text="LineSeries hit regions and selection markers follow the real DateTime positions." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

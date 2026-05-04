@@ -1,0 +1,153 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.TechnicalIndicatorsPage"
+             x:DataType="vm:TechnicalIndicatorsViewModel">
+
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Overlays that help analyze price trends and volatility." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Bollinger Bands Example -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Bollinger Bands" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="A volatility indicator comprising a simple moving average (SMA) and two standard deviation bands."
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    
+                    <charts:CartesianChart Height="400" ZoomMode="X" ShowLegend="True" LegendPosition="Top">
+                        <charts:CartesianChart.Series>
+                            <charts:CandlestickSeries Name="PriceSeriesBB"
+                                                 ItemsSource="{Binding StockData}"
+                                                 DatePath="Date"
+                                                 ValuePath="Close"
+                                                 HighPath="High" LowPath="Low" OpenPath="Open" ClosePath="Close"
+                                                 Title="Price" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.TechnicalIndicators>
+                            <chartsEnterprise:BollingerBandsIndicator TargetSeries="{Binding #PriceSeriesBB}"
+                                                            Period="20"
+                                                            StandardDeviations="2"
+                                                            Stroke="Blue"
+                                                            UpperBandStroke="Gray"
+                                                            LowerBandStroke="Gray" />
+                        </charts:CartesianChart.TechnicalIndicators>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis LabelFormat="MM/dd" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Moving Averages (SMA, EMA, WMA) Example -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Moving Averages" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Compare Simple (SMA), Exponential (EMA), and Weighted (WMA) moving averages."
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    
+                    <charts:CartesianChart Height="400" ZoomMode="X" ShowLegend="True" LegendPosition="Top">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Name="PriceSeriesMA"
+                                               ItemsSource="{Binding LargeData}"
+                                               CategoryPath="Category"
+                                               ValuePath="Value"
+                                               Title="Trend"
+                                               StrokeThickness="1"
+                                               MarkerSize="4"
+                                               Stroke="#505050"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.TechnicalIndicators>
+                            <chartsEnterprise:SMAIndicator TargetSeries="{Binding #PriceSeriesMA}"
+                                                 Period="50"
+                                                 Stroke="Orange"
+                                                 Title="SMA 50 (Dashed)"
+                                                 StrokeThickness="2">
+                                <chartsEnterprise:SMAIndicator.StrokeDashStyle>
+                                    <DashStyle Dashes="5,5"/>
+                                </chartsEnterprise:SMAIndicator.StrokeDashStyle>
+                            </chartsEnterprise:SMAIndicator>
+                            <chartsEnterprise:EMAIndicator TargetSeries="{Binding #PriceSeriesMA}"
+                                                 Period="20"
+                                                 Stroke="Red"
+                                                 Title="EMA 20"
+                                                 StrokeThickness="2" />
+                            <chartsEnterprise:WMAIndicator TargetSeries="{Binding #PriceSeriesMA}"
+                                                 Period="20"
+                                                 Stroke="Green"
+                                                 Title="WMA 20"
+                                                 StrokeThickness="2" />
+                        </charts:CartesianChart.TechnicalIndicators>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- MovingAverageSeries Overlay -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="MovingAverageSeries Overlay" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="MovingAverageSeries is a real series overlay, so it supports markers, labels, point brush paths, and hover highlight in addition to indicator-style overlays."
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+
+                    <charts:CartesianChart Height="420"
+                                           ZoomMode="X"
+                                           ShowLegend="True"
+                                           LegendPosition="Top">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis LabelFormat="MM/dd" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis LabelFormat="C0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:CandlestickSeries x:Name="OverlayPriceSeries"
+                                                       Title="Price"
+                                                       ItemsSource="{Binding StockData}"
+                                                       DatePath="Date"
+                                                       HighPath="High"
+                                                       LowPath="Low"
+                                                       OpenPath="Open"
+                                                       ClosePath="Close" />
+                            <chartsEnterprise:MovingAverageSeries Title="SMA 12"
+                                                                   SourceSeries="{Binding #OverlayPriceSeries}"
+                                                                   Period="12"
+                                                                   MovingAverageType="Simple"
+                                                                   Stroke="#2563EB"
+                                                                   StrokeThickness="2.5"
+                                                                   ShowMarkers="True"
+                                                                   MarkerShape="Circle"
+                                                                   MarkerSize="6"
+                                                                   MarkerFill="#DBEAFE"
+                                                                   MarkerStroke="#1D4ED8"
+                                                                   MarkerStrokeThickness="2"
+                                                                   IsHighlightEnabled="True" />
+                            <chartsEnterprise:MovingAverageSeries Title="EMA 20"
+                                                                   SourceSeries="{Binding #OverlayPriceSeries}"
+                                                                   Period="20"
+                                                                   MovingAverageType="Exponential"
+                                                                   Stroke="#F97316"
+                                                                   StrokeThickness="2.5"
+                                                                   ShowMarkers="True"
+                                                                   MarkerShape="Diamond"
+                                                                   MarkerSize="7"
+                                                                   MarkerFill="#FFEDD5"
+                                                                   MarkerStroke="#C2410C"
+                                                                   MarkerStrokeThickness="2"
+                                                                   IsHighlightEnabled="True" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

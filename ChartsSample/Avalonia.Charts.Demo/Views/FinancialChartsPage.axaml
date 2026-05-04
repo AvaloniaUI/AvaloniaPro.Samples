@@ -1,0 +1,298 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:FinancialChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.FinancialChartsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Financial charts such as Candlestick and OHLC are designed for analyzing financial data, stock prices, and market trends." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <!-- Candlestick Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Candlestick Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:FinancialChart Name="CandlestickChartSample" Title="Stock Price (ACME)" Height="300">
+                        <charts:FinancialChart.Series>
+                            <charts:CandlestickSeries ItemsSource="{Binding CandlestickData}"
+                                                        HighPath="High" LowPath="Low" 
+                                                        OpenPath="Open" ClosePath="Close" 
+                                                        DatePath="Date" />
+                        </charts:FinancialChart.Series>
+                    </charts:FinancialChart>
+                    <TextBlock Text="CandlestickSeries with bullish (green) and bearish (red) candles" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Candlestick with Axis Customization -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Candlestick with Axis Customization" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:FinancialChart Name="CustomizedCandlestickChart" Title="Custom Axes" Height="300">
+                        <charts:FinancialChart.VerticalAxis>
+                            <charts:NumericalAxis AxisLineStroke="#2196F3" AxisLineStrokeThickness="2"
+                                                  LabelForeground="#2196F3" LabelFormat="C0"
+                                                  GridLineBrush="#E3F2FD" ShowTickLines="True" TickLineStroke="#2196F3" />
+                        </charts:FinancialChart.VerticalAxis>
+                        <charts:FinancialChart.HorizontalAxis>
+                            <charts:CategoryAxis AxisLineStroke="#FF5722" AxisLineStrokeThickness="2"
+                                                 LabelForeground="#FF5722"
+                                                 ShowTickLines="True" TickLineStroke="#FF5722" ShowGridLines="False" />
+                        </charts:FinancialChart.HorizontalAxis>
+                        <charts:FinancialChart.Series>
+                            <charts:CandlestickSeries ItemsSource="{Binding CandlestickData}"
+                                                        HighPath="High" LowPath="Low"
+                                                        OpenPath="Open" ClosePath="Close"
+                                                        DatePath="Date" />
+                        </charts:FinancialChart.Series>
+                    </charts:FinancialChart>
+                    <TextBlock Text="FinancialChart now supports HorizontalAxis and VerticalAxis for full customization" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- OHLC Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="OHLC Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:FinancialChart Name="OhlcChartSample" Title="Commodity Futures" Height="300">
+                        <charts:FinancialChart.Series>
+                            <charts:OhlcSeries ItemsSource="{Binding OhlcData}"
+                                                 HighPath="High" LowPath="Low" 
+                                                 OpenPath="Open" ClosePath="Close" 
+                                                 DatePath="Date" />
+                        </charts:FinancialChart.Series>
+                    </charts:FinancialChart>
+                    <TextBlock Text="OhlcSeries with open/close tick marks" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Advanced Financial Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Advanced Financial Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="A focused data window keeps labels and markers readable while still showing per-point brushes, hover highlight, and selection." TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <charts:FinancialChart Title="Focused Candlestick Styling"
+                                           Height="340"
+                                           IsHighlightEnabled="True"
+                                           GridLineBrush="#CBD5E1"
+                                           AxisBrush="#475569"
+                                           LabelForeground="#475569"
+                                           PlotAreaBackground="#F8FAFC">
+                        <charts:FinancialChart.VerticalAxis>
+                            <charts:NumericalAxis LabelFormat="C0" />
+                        </charts:FinancialChart.VerticalAxis>
+                        <charts:FinancialChart.HorizontalAxis>
+                            <charts:DateTimeAxis LabelFormat="MMM dd" />
+                        </charts:FinancialChart.HorizontalAxis>
+                        <charts:FinancialChart.Series>
+                            <charts:CandlestickSeries Title="ACME"
+                                                       ItemsSource="{Binding StyledCandlestickData}"
+                                                       DatePath="Date"
+                                                       HighPath="High"
+                                                       LowPath="Low"
+                                                       OpenPath="Open"
+                                                       ClosePath="Close"
+                                                       PointBrushPath="Brush"
+                                                       ShowLabels="True"
+                                                       LabelFormat="{}{0:C0}"
+                                                       LabelForeground="#0F172A"
+                                                       LabelBackground="#EFF6FF"
+                                                       LabelCornerRadius="4"
+                                                       LabelPadding="5"
+                                                       LabelOffset="12"
+                                                       LabelFontSize="12"
+                                                       ShowMarkers="True"
+                                                       MarkerShape="Diamond"
+                                                       MarkerSize="7"
+                                                       MarkerFill="#FACC15"
+                                                       MarkerStroke="#854D0E"
+                                                       MarkerStrokeThickness="1.5"
+                                                       IsSelectionEnabled="True"
+                                                       SelectionMode="SingleDeselect"
+                                                       SelectionBrush="#F97316"
+                                                       SelectionStroke="#7C2D12"
+                                                       SelectionStrokeThickness="2" />
+                        </charts:FinancialChart.Series>
+                    </charts:FinancialChart>
+                </StackPanel>
+            </Border>
+
+            <!-- OHLC Labels and Markers -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="OHLC Labels and Markers" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:FinancialChart Title="Focused OHLC Close Markers"
+                                           Height="300"
+                                           IsHighlightEnabled="True"
+                                           AxisBrush="#334155"
+                                           GridLineBrush="#E2E8F0"
+                                           LabelForeground="#334155">
+                        <charts:FinancialChart.VerticalAxis>
+                            <charts:NumericalAxis LabelFormat="C0" />
+                        </charts:FinancialChart.VerticalAxis>
+                        <charts:FinancialChart.Series>
+                            <charts:OhlcSeries Title="Futures"
+                                               ItemsSource="{Binding StyledOhlcData}"
+                                               DatePath="Date"
+                                               HighPath="High"
+                                               LowPath="Low"
+                                               OpenPath="Open"
+                                               ClosePath="Close"
+                                               PointBrushPath="Brush"
+                                               ShowLabels="True"
+                                               LabelFormat="{}{0:C0}"
+                                               LabelForeground="#1E3A8A"
+                                               LabelBackground="#DBEAFE"
+                                               LabelOffset="8"
+                                               LabelFontSize="12"
+                                               ShowMarkers="True"
+                                               MarkerShape="Square"
+                                               MarkerSize="7"
+                                               MarkerFill="#38BDF8"
+                                               MarkerStroke="#075985"
+                                               MarkerStrokeThickness="1.5" />
+                        </charts:FinancialChart.Series>
+                    </charts:FinancialChart>
+                    <TextBlock Text="OHLC uses the same inherited label and marker family as Cartesian series." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Hilo Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Hilo Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="HiloChartSample" Title="Price Range" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis LabelFormat="MM/dd" Title="Date" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis LabelFormat="N0" Title="Price" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:HiloSeries ItemsSource="{Binding HiloData}"
+                                                 HighPath="High" LowPath="Low" 
+                                                 CategoryPath="Date"
+                                                 Stroke="#2196F3" StrokeThickness="3" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="HiloSeries showing high and low prices without open/close" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Renko Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Renko Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:RenkoChart Name="RenkoChartSample" Title="Price Movement" Height="300" BrickSize="5"
+                                         ItemsSource="{Binding RenkoData}"
+                                         ValuePath="Value" />
+                    <TextBlock Text="RenkoChart filtering noise with brick-based display" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Kagi Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Kagi Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:KagiChart Name="KagiChartSample" Title="Trend Reversal" Height="300" 
+                                        ReversalAmount="4"
+                                        ItemsSource="{Binding KagiData}"
+                                        ValuePath="Value" />
+                    <TextBlock Text="KagiChart showing price movements independent of time, with Yin/Yang coloring" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Waterfall Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Waterfall Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="WaterfallChartSample" Title="Quarterly P&amp;L Analysis" Height="300" ShowLegend="False">
+                        <charts:CartesianChart.HorizontalAxis><charts:CategoryAxis /></charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis><charts:NumericalAxis /></charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:WaterfallSeries Title="P&amp;L"
+                                                      ItemsSource="{Binding WaterfallData}"
+                                                      CategoryPath="Category" ValuePath="Value"
+                                                      TotalCategory="Net Income" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="WaterfallSeries showing cumulative effect of sequential values" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Heikin-Ashi Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Heikin-Ashi Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:HeikinAshiChart Name="HeikinAshiChartSample" Title="Smoothed Price Trend" Height="300" 
+                                              ItemsSource="{Binding HeikinAshiData}"
+                                              HighPath="High" LowPath="Low" 
+                                              OpenPath="Open" ClosePath="Close"
+                                              DatePath="Date" />
+                    <TextBlock Text="HeikinAshiChart with averaged candlesticks for clearer trend visualization" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Point and Figure Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Point and Figure Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:FinancialChart Name="PointAndFigureChartSample" Title="Trend Analysis" Height="300">
+                        <charts:FinancialChart.Series>
+                            <chartsEnterprise:PointAndFigureSeries ItemsSource="{Binding PointAndFigureData}"
+                                                           HighPath="High" LowPath="Low" 
+                                                           OpenPath="Open" ClosePath="Close" 
+                                                           DatePath="Date"
+                                                           BoxSize="2.0" ReversalAmount="3" />
+                        </charts:FinancialChart.Series>
+                    </charts:FinancialChart>
+                    <TextBlock Text="PointAndFigureSeries focusing on price changes (X for up, O for down)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Point and Figure Advanced Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Point and Figure Styling Surface" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:FinancialChart Title="Point &amp; Figure: Grid, Stroke, Labels, Markers"
+                                           Height="360"
+                                           IsHighlightEnabled="True"
+                                           GridLineBrush="#94A3B8"
+                                           AxisBrush="#475569"
+                                           LabelForeground="#475569">
+                        <charts:FinancialChart.Series>
+                            <chartsEnterprise:PointAndFigureSeries ItemsSource="{Binding PointAndFigureData}"
+                                                                    DatePath="Date"
+                                                                    HighPath="High"
+                                                                    LowPath="Low"
+                                                                    OpenPath="Open"
+                                                                    ClosePath="Close"
+                                                                    BoxSize="2"
+                                                                    ReversalAmount="3"
+                                                                    StrokeThickness="2.5"
+                                                                    XBrush="#16A34A"
+                                                                    OBrush="#DC2626"
+                                                                    PointBrushPath="Brush"
+                                                                    ShowLabels="True"
+                                                                    LabelForeground="#0F172A"
+                                                                    LabelBackground="#F8FAFC"
+                                                                    LabelPadding="3"
+                                                                    ShowMarkers="True"
+                                                                    MarkerShape="Circle"
+                                                                    MarkerSize="7"
+                                                                    MarkerStroke="#0F172A"
+                                                                    MarkerFill="#FACC15"
+                                                                    IsSelectionEnabled="True"
+                                                                    SelectionMode="SingleDeselect"
+                                                                    SelectionBrush="#38BDF8"
+                                                                    SelectionStroke="#0C4A6E"
+                                                                    SelectionStrokeThickness="2" />
+                        </charts:FinancialChart.Series>
+                    </charts:FinancialChart>
+                    <TextBlock Text="PointAndFigureSeries now honors inherited grid, stroke, fill fallback, labels, markers, selection, highlight, and PointBrushPath behavior." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
