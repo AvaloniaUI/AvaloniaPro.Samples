@@ -22,13 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AvaloniaUILicenseKeyProduct Include="Avalonia.Controls.Charts" />
-    <AvaloniaUILicenseKey Include="$(CHARTS_ACCELERATE_LICENSE_KEY)" Condition="'$(CHARTS_ACCELERATE_LICENSE_KEY)' != ''" />
-    <AvaloniaUILicenseKey Include="$(ACCELERATE_LICENSE_KEY)" Condition="'$(ACCELERATE_LICENSE_KEY)' != ''" />
-    <AvaloniaUILicenseKey Include="$(AvAccelerateKey)" Condition="'$(AvAccelerateKey)' != ''" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Avalonia.Android" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Controls.Charts" Version="$(AvaloniaControlsChartsVersion)" />
     <PackageReference Include="AvaloniaUI.Licensing" Version="$(AvaloniaLicensingVersion)" />

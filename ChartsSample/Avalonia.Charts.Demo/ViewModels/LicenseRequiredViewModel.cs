@@ -13,19 +13,19 @@ public sealed partial class LicenseRequiredViewModel : ViewModelBase
 
     public string ErrorMessage { get; }
 
-    public string PrimaryEnvironmentVariable => "CHARTS_ACCELERATE_LICENSE_KEY";
+    public string PrimaryEnvironmentVariable => "AVALONIA_LICENSE_KEY";
 
     public string AlternativeEnvironmentVariables =>
-        "Alternative names also supported: AvAccelerateKey, AccelerateLicenseKey, ACCELERATE_LICENSE_KEY.";
+        "This is the same license environment variable used by every Avalonia Pro sample.";
 
-    public string LocalOverrideFileName => "Directory.Build.props.user";
+    public string LocalOverrideFileName => "Directory.Build.props";
 
     public string LocalOverrideSnippet =>
         """
         <Project>
-          <PropertyGroup>
-            <ChartsAccelerateLicenseKey>your_key_here</ChartsAccelerateLicenseKey>
-          </PropertyGroup>
+          <ItemGroup>
+            <AvaloniaUILicenseKey Include="your_key_here" />
+          </ItemGroup>
         </Project>
         """;
 

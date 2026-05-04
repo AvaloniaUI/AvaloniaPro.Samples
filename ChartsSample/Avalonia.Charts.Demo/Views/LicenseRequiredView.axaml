@@ -89,7 +89,7 @@
                                                FontWeight="SemiBold"
                                                Foreground="{DynamicResource TextPrimaryBrush}" />
 
-                                    <TextBlock Text="For local development, create this ignored file next to Directory.Build.props in the repository root and place your key there."
+                                    <TextBlock Text="Alternatively, update the existing Directory.Build.props item in the repository root with your key."
                                                TextWrapping="Wrap"
                                                Foreground="{DynamicResource SecondaryTextBrush}" />
 
