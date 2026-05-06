@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="VirtualKeyboardSample.MainWindow"
+        Title="Virtual Keyboard Sample"
+        Width="800" Height="700">
+    <VirtualKeyboardScope InputMethods="en-US:kbd:standard, de:kbd:standard, zh:ime:rime"
+                          Margin="16">
+        <StackPanel Spacing="16">
+            <TextBlock Text="Virtual Keyboard Sample" FontSize="24" FontWeight="Bold" />
+            <TextBlock Text="Tap on any text field below to open the on-screen keyboard."
+                       TextWrapping="Wrap" Foreground="Gray" />
+
+            <TextBlock Text="Name" />
+            <TextBox PlaceholderText="Enter your name"
+                     TextInputOptions.ContentType="Normal" />
+
+            <TextBlock Text="Email" />
+            <TextBox PlaceholderText="Enter your email address"
+                     TextInputOptions.ContentType="Email" />
+
+            <TextBlock Text="Notes" />
+            <TextBox PlaceholderText="Type some notes here..."
+                     AcceptsReturn="True"
+                     MinHeight="100"
+                     TextWrapping="Wrap"
+                     TextInputOptions.ContentType="Normal" />
+        </StackPanel>
+    </VirtualKeyboardScope>
+</Window>
