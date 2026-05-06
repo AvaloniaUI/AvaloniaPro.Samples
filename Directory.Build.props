@@ -6,6 +6,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- Set the AVALONIA_LICENSE_KEY environment variable or paste your license key directly -->
-    <AvaloniaUILicenseKey Include="$(AVALONIA_LICENSE_KEY)" />
+    <AvaloniaUILicenseKey Include="$(ACCELERATE_LICENSE_KEY)" />
   </ItemGroup>
 </Project>
