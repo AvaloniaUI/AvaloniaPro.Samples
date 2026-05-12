@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:charts="https://avaloniaui.net/controls/charts"
-             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
              xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Applications"
              xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
              xmlns:converters="clr-namespace:Avalonia.Charts.Demo.Converters"

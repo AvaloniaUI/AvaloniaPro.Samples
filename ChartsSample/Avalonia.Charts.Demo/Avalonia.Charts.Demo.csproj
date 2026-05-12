@@ -4,7 +4,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <NoWarn>$(NoWarn);CS8669</NoWarn>
-    <AvaloniaControlsChartsVersion>12.0.0-beta3.1</AvaloniaControlsChartsVersion>
+    <AvaloniaControlsChartsVersion>12.0.0</AvaloniaControlsChartsVersion>
     <AvaloniaLicensingVersion>3.0.8</AvaloniaLicensingVersion>
   </PropertyGroup>
 

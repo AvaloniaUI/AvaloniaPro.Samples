@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
-    <AvaloniaControlsChartsVersion>12.0.0-beta3.1</AvaloniaControlsChartsVersion>
+    <AvaloniaControlsChartsVersion>12.0.0</AvaloniaControlsChartsVersion>
     <AvaloniaLicensingVersion>3.0.8</AvaloniaLicensingVersion>
   </PropertyGroup>
 

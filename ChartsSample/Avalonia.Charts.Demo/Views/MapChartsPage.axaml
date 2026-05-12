@@ -1,7 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:charts="https://avaloniaui.net/controls/charts"
-             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts/enterprise"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
              xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
              xmlns:models="clr-namespace:Avalonia.Charts.Demo.Models"
              xmlns:converters="clr-namespace:Avalonia.Charts.Demo.Converters"

@@ -7,7 +7,7 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>..\Avalonia.Charts.Demo\Assets\avalonia-logo.ico</ApplicationIcon>
-    <AvaloniaControlsChartsVersion>12.0.0-beta3.1</AvaloniaControlsChartsVersion>
+    <AvaloniaControlsChartsVersion>12.0.0</AvaloniaControlsChartsVersion>
     <AvaloniaLicensingVersion>3.0.8</AvaloniaLicensingVersion>
   </PropertyGroup>
 
