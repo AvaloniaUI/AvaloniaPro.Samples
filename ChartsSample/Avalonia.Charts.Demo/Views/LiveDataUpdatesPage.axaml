@@ -1,0 +1,256 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d"
+             d:DesignWidth="1000"
+             d:DesignHeight="900"
+             x:CompileBindings="True"
+             x:DataType="vm:LiveDataUpdatesViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.LiveDataUpdatesPage">
+    <UserControl.Styles>
+        <Style Selector="Button.live-action">
+            <Setter Property="MinWidth" Value="140" />
+            <Setter Property="Padding" Value="16,10" />
+            <Setter Property="Margin" Value="0,0,10,10" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </UserControl.Styles>
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="20">
+            <TextBlock Text="Demonstrates the live update contract directly: ObservableCollection add/remove/replace, ItemsSource replacement, and collection-backed configuration changes without recreating controls."
+                       TextWrapping="Wrap"
+                       Foreground="{DynamicResource TextMutedBrush}" />
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}"
+                    BorderThickness="2"
+                    Padding="16"
+                    CornerRadius="8">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Series.ItemsSource Updates"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Classes="live-action" Command="{Binding AddLinePointCommand}" Content="Add Point" />
+                        <Button Classes="live-action" Command="{Binding ReplaceLinePointCommand}" Content="Replace Point" />
+                        <Button Classes="live-action" Command="{Binding ResetLineDataCommand}" Content="Reset Data" />
+                        <Button Classes="live-action" Command="{Binding SwapLineSourceCommand}" Content="Swap Source" />
+                    </WrapPanel>
+                    <charts:CartesianChart Title="Revenue Trend"
+                                           Height="320"
+                                           IsAnimationEnabled="False"
+                                           ShowLegend="False"
+                                           Margin="0,4,0,0">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis LabelFormat="C0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries ItemsSource="{Binding LineData}"
+                                               CategoryPath="Category"
+                                               ValuePath="Value"
+                                               StrokeThickness="3"
+                                               ShowMarkers="True"
+                                               MarkerSize="8" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="{Binding LineUpdateSummary}"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}"
+                    BorderThickness="2"
+                    Padding="16"
+                    CornerRadius="8">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Live Sankey Updates"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="This button mutates only the Sankey ItemsSource collection."
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12"
+                               TextWrapping="Wrap" />
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Classes="live-action" Command="{Binding MutateSankeyCommand}" Content="Mutate Sankey" />
+                    </WrapPanel>
+                    <chartsEnterprise:SankeyChart Title="Live Funnel Flow"
+                                                  Height="280"
+                                                  IsAnimationEnabled="False"
+                                                  ItemsSource="{Binding LiveSankeyData}"
+                                                  SourcePath="Source"
+                                                  TargetPath="Target"
+                                                  ValuePath="Value" />
+                    <TextBlock Text="{Binding SankeyUpdateSummary}"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}"
+                    BorderThickness="2"
+                    Padding="16"
+                    CornerRadius="8">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Live Word Cloud Updates"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="This button mutates only the WordCloud ItemsSource collection."
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12"
+                               TextWrapping="Wrap" />
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Classes="live-action" Command="{Binding MutateWordCloudCommand}" Content="Mutate Word Cloud" />
+                    </WrapPanel>
+                    <chartsEnterprise:WordCloudChart Title="Live Keyword Weights"
+                                                     Height="280"
+                                                     IsAnimationEnabled="False"
+                                                     ItemsSource="{Binding LiveWordCloudData}"
+                                                     WordPath="Word"
+                                                     WeightPath="Weight"
+                                                     RotateWords="False" />
+                    <TextBlock Text="{Binding WordCloudUpdateSummary}"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}"
+                    BorderThickness="2"
+                    Padding="16"
+                    CornerRadius="8">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Live Venn Updates"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="This button mutates only the VennDiagram ItemsSource collection."
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12"
+                               TextWrapping="Wrap" />
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Classes="live-action" Command="{Binding MutateVennCommand}" Content="Mutate Venn" />
+                    </WrapPanel>
+                    <chartsEnterprise:VennDiagramChart Title="Live Capability Overlap"
+                                                       Height="280"
+                                                       IsAnimationEnabled="False"
+                                                       ItemsSource="{Binding LiveVennData}" />
+                    <TextBlock Text="{Binding VennUpdateSummary}"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}"
+                    BorderThickness="2"
+                    Padding="16"
+                    CornerRadius="8">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Live Organization Updates"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="This button mutates only the OrganizationChart ItemsSource tree."
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12"
+                               TextWrapping="Wrap" />
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Classes="live-action" Command="{Binding MutateOrganizationCommand}" Content="Mutate Organization" />
+                    </WrapPanel>
+                    <chartsEnterprise:OrganizationChart Title="Live Organization"
+                                                        Height="280"
+                                                        IsAnimationEnabled="False"
+                                                        ItemsSource="{Binding LiveOrganizationData}"
+                                                        LabelPath="Name"
+                                                        ChildrenPath="Reports" />
+                    <TextBlock Text="{Binding OrganizationUpdateSummary}"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}"
+                    BorderThickness="2"
+                    Padding="16"
+                    CornerRadius="8">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Chart-Level ItemsSource Updates"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Classes="live-action" Command="{Binding AddBubbleCommand}" Content="Add Bubble" />
+                        <Button Classes="live-action" Command="{Binding ResizeBubbleCommand}" Content="Replace Bubble" />
+                        <Button Classes="live-action" Command="{Binding RemoveBubbleCommand}" Content="Remove Bubble" />
+                        <Button Classes="live-action" Command="{Binding SwapBubbleSourceCommand}" Content="Swap Source" />
+                    </WrapPanel>
+                    <charts:BubbleCloud Title="Capability Footprint"
+                                        Height="320"
+                                        IsAnimationEnabled="False"
+                                        ItemsSource="{Binding BubbleCloudData}"
+                                        ValuePath="Value"
+                                        LabelPath="Name"
+                                        Margin="0,4,0,0" />
+                    <TextBlock Text="{Binding BubbleUpdateSummary}"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}"
+                    BorderThickness="2"
+                    Padding="16"
+                    CornerRadius="8">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Live Configuration Collections"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Classes="live-action" Command="{Binding RenameRevenueColumnCommand}" Content="Rename Header" />
+                        <Button Classes="live-action" Command="{Binding ToggleMarginColumnCommand}" Content="Toggle Margin Column" />
+                        <Button Classes="live-action" Command="{Binding ReplaceTableRowCommand}" Content="Replace Row" />
+                        <Button Classes="live-action" Command="{Binding SwapTableSourceCommand}" Content="Swap Dataset" />
+                    </WrapPanel>
+                    <charts:TableChart Title="Live Product Summary"
+                                       Height="360"
+                                       IsAnimationEnabled="False"
+                                       ItemsSource="{Binding TableRows}"
+                                       Columns="{Binding TableColumns}"
+                                       RowLabelPath="Product"
+                                       Margin="0,4,0,0" />
+                    <TextBlock Text="{Binding TableUpdateSummary}"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

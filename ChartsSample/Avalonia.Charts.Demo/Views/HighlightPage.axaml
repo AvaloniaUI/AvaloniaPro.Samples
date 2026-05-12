@@ -1,0 +1,145 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:HighlightViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.HighlightPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Hover highlighting dims non-hovered items. On radial charts (pie, donut), the hovered item also explodes outward."
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Donut with Explode Highlight -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Donut Chart - Explode on Hover" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Hover over a slice to explode it outward and dim the others." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <charts:PieChart Height="350" InnerRadiusFactor="0.5" ShowLegend="True" LegendPosition="Right">
+                        <charts:PieChart.Series>
+                            <charts:PieSeries ItemsSource="{Binding DonutData}"
+                                              ValuePath="Value" LabelPath="Category"
+                                              IsHighlightEnabled="True"
+                                              ShowLabels="True"
+                                              SliceLabelFormat="Percentage"
+                                              LabelPosition="Inside" />
+                        </charts:PieChart.Series>
+                    </charts:PieChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Pie with Explode Highlight -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Pie Chart - Explode on Hover" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PieChart Height="350">
+                        <charts:PieChart.Series>
+                            <charts:PieSeries ItemsSource="{Binding PieData}"
+                                              ValuePath="Value" LabelPath="Category"
+                                              IsHighlightEnabled="True"
+                                              ShowLabels="True"
+                                              SliceLabelFormat="CategoryAndPercentage" />
+                        </charts:PieChart.Series>
+                    </charts:PieChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Bar Chart Highlight -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Bar Chart - Highlight on Hover" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Hover over a bar to highlight it and dim the others." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Revenue"
+                                              ItemsSource="{Binding BarData}"
+                                              IsHighlightEnabled="True"
+                                              Fill="#4CAF50" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Multi-Series Highlight -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Multi-Series - Series Dimming" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Hover over a data point to dim the other series." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <charts:CartesianChart Height="300" ShowLegend="True" LegendPosition="Top">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="2023"
+                                               ItemsSource="{Binding LineData1}"
+                                               IsHighlightEnabled="True"
+                                               Stroke="#2196F3" StrokeThickness="2" ShowMarkers="True" />
+                            <charts:LineSeries Title="2024"
+                                               ItemsSource="{Binding LineData2}"
+                                               IsHighlightEnabled="True"
+                                               Stroke="#FF5722" StrokeThickness="2" ShowMarkers="True" />
+                            <charts:LineSeries Title="2025"
+                                               ItemsSource="{Binding LineData3}"
+                                               IsHighlightEnabled="True"
+                                               Stroke="#4CAF50" StrokeThickness="2" ShowMarkers="True" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Radar Highlight -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Radar Chart - Point Highlight" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:RadarChart Height="320"
+                                       AxisLabels="{Binding RadarLabels}"
+                                       IsTooltipEnabled="True">
+                        <charts:RadarChart.Series>
+                            <charts:RadarSeries Title="Product Fit"
+                                                ItemsSource="{Binding RadarData}"
+                                                FillOpacity="0.25"
+                                                Stroke="#2563EB"
+                                                MarkerSize="10"
+                                                ShowMarkers="True"
+                                                IsHighlightEnabled="True" />
+                        </charts:RadarChart.Series>
+                    </charts:RadarChart>
+                    <TextBlock Text="Radar markers participate in hover highlight instead of being Cartesian-only." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- TreeMap Highlight -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="TreeMap Highlight" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:TreeMapChart Title="TreeMap Hover"
+                                         Height="300"
+                                         ItemsSource="{Binding TreeMapData}"
+                                         LabelPath="Name"
+                                         ValuePath="Value"
+                                         IsHighlightEnabled="True" />
+                    <TextBlock Text="TreeMap demonstrates non-Cartesian hover highlight behavior." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Sunburst Highlight -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Sunburst Highlight" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:SunburstChart Title="Sunburst Hover"
+                                         Height="300"
+                                         ItemsSource="{Binding SunburstData}"
+                                         LabelPath="Name"
+                                         ValuePath="Value"
+                                         ChildrenPath="Children"
+                                         IsHighlightEnabled="True" />
+                    <TextBlock Text="Sunburst demonstrates hover highlight behavior across hierarchy rings." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

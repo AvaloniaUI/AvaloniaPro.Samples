@@ -1,0 +1,285 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:AxisCustomizationViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.AxisCustomizationPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Fine-tune axis appearance with custom labels, ranges, and styling options."
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+          
+            <!-- Label Rotation -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Label Rotation" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="LabelRotationChart" Title="45° Rotated Labels" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis LabelFitMode="CustomRotation" LabelRotation="45" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Sales" ItemsSource="{Binding SalesData}" Fill="#4CAF50" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="LabelFitMode.CustomRotation + LabelRotation: Use explicit rotation angles" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Label Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Label Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="LabelStylingChart" Title="Custom Label Appearance" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis LabelFontSize="14" LabelForeground="#E91E63" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis LabelFontSize="12" LabelForeground="#2196F3" LabelFormat="N0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Sales" ItemsSource="{Binding SalesData}" Stroke="#FF5722" StrokeThickness="2" MarkerSize="6"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="LabelFontSize, LabelForeground, LabelFormat: Customize label appearance" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Grid Lines Customization -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Grid Lines Customization" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="GridLinesChart" Title="Dashed Major Grid Lines" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="True" GridLineBrush="#BBDEFB" GridLineStrokeThickness="2">
+                                <charts:CategoryAxis.GridLineDashStyle>
+                                    <DashStyle Dashes="5,5"/>
+                                </charts:CategoryAxis.GridLineDashStyle>
+                            </charts:CategoryAxis>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis ShowGridLines="True" GridLineBrush="#C8E6C9" GridLineStrokeThickness="2">
+                                <charts:NumericalAxis.GridLineDashStyle>
+                                    <DashStyle Dashes="10,5"/>
+                                </charts:NumericalAxis.GridLineDashStyle>
+                            </charts:NumericalAxis>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="Data" ItemsSource="{Binding SalesData}" Fill="#7E2196F3" Stroke="#2196F3" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="GridLineBrush, GridLineStrokeThickness, GridLineDashStyle: Custom dashed major grid lines" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Minor Grid Lines -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Minor Grid Lines" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="MinorGridLinesChart" Title="Dashed Minor Grid Lines" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis ShowGridLines="True" GridLineBrush="#90A4AE"
+                                                     ShowMinorGridLines="True" MinorGridLineBrush="#CFD8DC" MinorTickCount="4">
+                                <charts:NumericalAxis.MinorGridLineDashStyle>
+                                    <DashStyle Dashes="2,2"/>
+                                </charts:NumericalAxis.MinorGridLineDashStyle>
+                            </charts:NumericalAxis>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Trend" ItemsSource="{Binding SalesData}" Stroke="#673AB7" StrokeThickness="2" MarkerSize="5"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="ShowMinorGridLines, MinorGridLineDashStyle, MinorTickCount: Add dashed minor grid lines" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Axis Range -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Axis Range" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="AxisRangeChart" Title="Custom Min/Max Range" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" Maximum="100" MajorStep="20" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Volume" ItemsSource="{Binding SalesData}" Fill="#00BCD4" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Minimum, Maximum, MajorStep: Set explicit axis bounds and intervals" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Label Format -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Label Format" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="LabelFormatChart" Title="Currency Format" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis LabelFormat="C0" Title="Revenue ($)" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Revenue" ItemsSource="{Binding QuarterlyData}" Fill="#4CAF50" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="LabelFormat: Format labels as currency (C), percent (P), or custom format" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Hidden Labels -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Hidden Labels" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="HiddenLabelsChart" Title="Labels Hidden on Y-Axis" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis ShowLabels="False" ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="Data" ItemsSource="{Binding SalesData}" Fill="#7E9C27B0" Stroke="#9C27B0" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="ShowLabels: Show or hide axis labels" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Hidden Axis -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Hidden Axis" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Use IsVisible to hide an entire axis (line, labels, gridlines, and title). Use ShowAxisLine to hide only the axis line while keeping labels and gridlines visible." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                    <charts:CartesianChart Name="HiddenAxisChart" Title="Y-Axis Hidden, X-Axis Line Hidden" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowAxisLine="False" ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis IsVisible="False" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Revenue" ItemsSource="{Binding SalesData}" Fill="#3F51B5" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="IsVisible: Hides everything (line + labels + gridlines + title). ShowAxisLine: Hides only the axis line." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- Axis Line Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Axis Line Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Customize each axis line independently with AxisLineStroke and AxisLineStrokeThickness." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                    <charts:CartesianChart Name="AxisLineStylingChart" Title="Custom Axis Line Colors &amp; Thickness" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis AxisLineStroke="#E91E63" AxisLineStrokeThickness="3" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis AxisLineStroke="#2196F3" AxisLineStrokeThickness="2" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Sales" ItemsSource="{Binding SalesData}" Stroke="#4CAF50" StrokeThickness="2" ShowMarkers="True" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="AxisLineStroke, AxisLineStrokeThickness: Style each axis line independently" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Dashed Axis Line -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Dashed Axis Line" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Use AxisLineDashStyle to create dashed or dotted axis lines." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                    <charts:CartesianChart Name="DashedAxisChart" Title="Dashed Axis Lines" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis AxisLineStroke="#FF5722" AxisLineStrokeThickness="2">
+                                <charts:CategoryAxis.AxisLineDashStyle>
+                                    <DashStyle Dashes="6,3"/>
+                                </charts:CategoryAxis.AxisLineDashStyle>
+                            </charts:CategoryAxis>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis AxisLineStroke="#9C27B0" AxisLineStrokeThickness="2">
+                                <charts:NumericalAxis.AxisLineDashStyle>
+                                    <DashStyle Dashes="2,2"/>
+                                </charts:NumericalAxis.AxisLineDashStyle>
+                            </charts:NumericalAxis>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="Data" ItemsSource="{Binding SalesData}" Fill="#7E2196F3" Stroke="#2196F3" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="AxisLineDashStyle: Apply dash patterns to axis lines (e.g., dashed, dotted)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Tick Marks -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Tick Marks" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Show tick marks at each label position with customizable length, color, and thickness." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                    <charts:CartesianChart Name="TickMarksChart" Title="Axis Tick Marks" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowTickLines="True" TickLineLength="6" TickLineStroke="#E91E63" TickLineStrokeThickness="2" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis ShowTickLines="True" TickLineLength="8" TickLineStroke="#3F51B5" TickLineStrokeThickness="1" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Revenue" ItemsSource="{Binding SalesData}" Fill="#00BCD4" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="ShowTickLines, TickLineLength, TickLineStroke, TickLineStrokeThickness: Customize tick marks" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- Title Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Axis Title Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="TitleStylingChart" Title="Custom Axis Titles" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Month" TitleFontSize="16" TitleForeground="#FF5722" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Units Sold" TitleFontSize="16" TitleForeground="#3F51B5" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Sales" ItemsSource="{Binding SalesData}" Stroke="#FF9800" StrokeThickness="3" MarkerSize="8"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Title, TitleFontSize, TitleForeground: Style the axis title" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Label Fit Mode -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Label Fit Mode" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="IntersectActionChart" Title="Auto Rotate for Long Labels" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis LabelFitMode="Rotate45" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Data" ItemsSource="{Binding SalesData}" Fill="#009688" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="LabelFitMode: None, Hide, Wrap, MultipleRows, Rotate45, Rotate90, CustomRotation, Auto" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

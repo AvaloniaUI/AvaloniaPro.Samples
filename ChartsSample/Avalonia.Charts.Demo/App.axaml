@@ -1,0 +1,71 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Avalonia.Charts.Demo.App"
+             RequestedThemeVariant="Default">
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="avares://Avalonia.Controls.Charts/Themes/Default.axaml" />
+    </Application.Styles>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource SystemAccentColor}" />
+            <SolidColorBrush x:Key="AccentMutedBrush" Color="{DynamicResource SystemAccentColor}" Opacity="0.75" />
+
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="PageBackgroundBrush" Color="#F8FAFC" />
+                    <SolidColorBrush x:Key="SecondaryTextBrush" Color="#64748B" />
+                    <SolidColorBrush x:Key="CardBorderBrush" Color="#E2E8F0" />
+                    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="CardBackgroundDarkBrush" Color="#1A1A1A" />
+                    <SolidColorBrush x:Key="TextMutedBrush" Color="#94A3B8" />
+                    <SolidColorBrush x:Key="SearchBarBackgroundBrush" Color="#F1F5F9" />
+                    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#0F172A" />
+                    <SolidColorBrush x:Key="PrimaryGreenBrush" Color="#2D9A8F" />
+                    <SolidColorBrush x:Key="PrimaryGreenLightBrush" Color="#E8F5F3" />
+                    <SolidColorBrush x:Key="BorderLightBrush" Color="#E2E8F0" />
+                    <SolidColorBrush x:Key="BorderMediumBrush" Color="#CBD5E1" />
+                    <SolidColorBrush x:Key="DemoCartesianAxisBrush" Color="#0F766E" />
+                    <SolidColorBrush x:Key="DemoCartesianGridLineBrush" Color="#99F6E4" />
+                    <SolidColorBrush x:Key="DemoCartesianLabelBrush" Color="#134E4A" />
+                    <SolidColorBrush x:Key="DemoCartesianPlotAreaBrush" Color="#F0FDFA" />
+                    <SolidColorBrush x:Key="DemoFinancialAxisBrush" Color="#7C2D12" />
+                    <SolidColorBrush x:Key="DemoFinancialGridLineBrush" Color="#FED7AA" />
+                    <SolidColorBrush x:Key="DemoFinancialLabelBrush" Color="#9A3412" />
+                    <SolidColorBrush x:Key="DemoFinancialPlotAreaBrush" Color="#FFF7ED" />
+                    <SolidColorBrush x:Key="DemoScientificPlotAreaBrush" Color="#F8FAFC" />
+                    <SolidColorBrush x:Key="DemoScientificLabelBrush" Color="#334155" />
+                    <SolidColorBrush x:Key="DemoSwimlaneLaneBackgroundBrush" Color="#F8FAFC" />
+                    <SolidColorBrush x:Key="DemoSwimlaneLaneSeparatorBrush" Color="#CBD5E1" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="PageBackgroundBrush" Color="#0F172A" />
+                    <SolidColorBrush x:Key="SecondaryTextBrush" Color="#CBD5E1" />
+                    <SolidColorBrush x:Key="CardBorderBrush" Color="#334155" />
+                    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#1E293B" />
+                    <SolidColorBrush x:Key="CardBackgroundDarkBrush" Color="#0F172A" />
+                    <SolidColorBrush x:Key="TextMutedBrush" Color="#94A3B8" />
+                    <SolidColorBrush x:Key="SearchBarBackgroundBrush" Color="#334155" />
+                    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F8FAFC" />
+                    <SolidColorBrush x:Key="PrimaryGreenBrush" Color="#34D399" />
+                    <SolidColorBrush x:Key="PrimaryGreenLightBrush" Color="#064E3B" />
+                    <SolidColorBrush x:Key="BorderLightBrush" Color="#334155" />
+                    <SolidColorBrush x:Key="BorderMediumBrush" Color="#475569" />
+                    <SolidColorBrush x:Key="DemoCartesianAxisBrush" Color="#5EEAD4" />
+                    <SolidColorBrush x:Key="DemoCartesianGridLineBrush" Color="#1F6F67" />
+                    <SolidColorBrush x:Key="DemoCartesianLabelBrush" Color="#99F6E4" />
+                    <SolidColorBrush x:Key="DemoCartesianPlotAreaBrush" Color="#082F2A" />
+                    <SolidColorBrush x:Key="DemoFinancialAxisBrush" Color="#FDBA74" />
+                    <SolidColorBrush x:Key="DemoFinancialGridLineBrush" Color="#7C2D12" />
+                    <SolidColorBrush x:Key="DemoFinancialLabelBrush" Color="#FED7AA" />
+                    <SolidColorBrush x:Key="DemoFinancialPlotAreaBrush" Color="#24130A" />
+                    <SolidColorBrush x:Key="DemoScientificPlotAreaBrush" Color="#111827" />
+                    <SolidColorBrush x:Key="DemoScientificLabelBrush" Color="#E2E8F0" />
+                    <SolidColorBrush x:Key="DemoSwimlaneLaneBackgroundBrush" Color="#1E293B" />
+                    <SolidColorBrush x:Key="DemoSwimlaneLaneSeparatorBrush" Color="#475569" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

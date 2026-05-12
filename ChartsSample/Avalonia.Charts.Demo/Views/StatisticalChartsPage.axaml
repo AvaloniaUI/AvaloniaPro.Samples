@@ -1,0 +1,429 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:Class="Avalonia.Charts.Demo.Views.StatisticalChartsPage"
+             x:CompileBindings="True" x:DataType="vm:StatisticalChartsViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Statistical charts like Box Plot, Histogram, and Error Bars help visualize data distribution and statistical properties." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <!-- Histogram -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Histogram" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="HistogramSample" Title="Score Distribution" Height="250">
+                        <charts:CartesianChart.HorizontalAxis><charts:CategoryAxis /></charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis><charts:NumericalAxis /></charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:HistogramSeries ItemsSource="{Binding HistogramData}" ValuePath="Score" BinCount="10" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="HistogramSeries for frequency distribution" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Box Plot -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Box Plot" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="BoxPlotChartSample" Title="Test Scores" Height="250">
+                        <charts:CartesianChart.HorizontalAxis><charts:CategoryAxis /></charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis><charts:NumericalAxis /></charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BoxPlotSeries Title="Test Scores"
+                                                    CategoryPath="Class"
+                                                    MinPath="Min"
+                                                    Q1Path="Q1"
+                                                    MedianPath="Median"
+                                                    Q3Path="Q3"
+                                                    MaxPath="Max"
+                                                    ItemsSource="{Binding BoxPlotData}" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="BoxPlotSeries showing min, max, median, quartiles" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Error Bar Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Error Bar Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="ErrorBarChartSample" Title="Measurement Uncertainty" Height="250">
+                        <charts:CartesianChart.HorizontalAxis><charts:CategoryAxis /></charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis><charts:NumericalAxis /></charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:ErrorBarSeries Title="Measurements"
+                                                     CategoryPath="Sample"
+                                                     ValuePath="Value"
+                                                     ErrorPath="Error"
+                                                     CapWidth="10"
+                                                     ShowMarkers="True"
+                                                     MarkerSize="8"
+                                                     ItemsSource="{Binding ErrorBarData}" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="ErrorBarSeries showing measurement uncertainty ranges" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Confidence Interval Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Confidence Interval Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="ConfidenceIntervalSample" Title="Model Performance (95% CI)" Height="300" ShowLegend="True">
+                        <charts:CartesianChart.HorizontalAxis><charts:CategoryAxis /></charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis><charts:NumericalAxis /></charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <!-- Model A -->
+                            <charts:AreaRangeSeries Title="Human CI"
+                                                      ItemsSource="{Binding ModelAData}"
+                                                      CategoryPath="Period"
+                                                      LowPath="Lower"
+                                                      HighPath="Upper"
+                                                      Fill="#3C646464"
+                                                      Stroke="{x:Null}" />
+                            <charts:LineSeries Title="Human"
+                                                 ItemsSource="{Binding ModelAData}"
+                                                 CategoryPath="Period"
+                                                 ValuePath="Value"
+                                                 Stroke="DimGray"
+                                                 StrokeThickness="2"
+                                                 MarkerSize="6"  ShowMarkers="True"/>
+                            
+                            <!-- Model B -->
+                            <charts:AreaRangeSeries Title="Model A CI"
+                                                      ItemsSource="{Binding ModelBData}"
+                                                      CategoryPath="Period"
+                                                      LowPath="Lower"
+                                                      HighPath="Upper"
+                                                      Fill="#324169E1"
+                                                      Stroke="{x:Null}" />
+                            <charts:LineSeries Title="Model A"
+                                                 ItemsSource="{Binding ModelBData}"
+                                                 CategoryPath="Period"
+                                                 ValuePath="Value"
+                                                 Stroke="RoyalBlue"
+                                                 StrokeThickness="2"
+                                                 MarkerSize="6"  ShowMarkers="True"/>
+                            
+                            <!-- Model C -->
+                            <charts:AreaRangeSeries Title="Model B CI"
+                                                      ItemsSource="{Binding ModelCData}"
+                                                      CategoryPath="Period"
+                                                      LowPath="Lower"
+                                                      HighPath="Upper"
+                                                      Fill="#3232CD32"
+                                                      Stroke="{x:Null}" />
+                            <charts:LineSeries Title="Model B"
+                                                 ItemsSource="{Binding ModelCData}"
+                                                 CategoryPath="Period"
+                                                 ValuePath="Value"
+                                                 Stroke="SeaGreen"
+                                                 StrokeThickness="2"
+                                                 MarkerSize="6"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Line series with shaded confidence interval bands using AreaRangeSeries" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Diverging Bar Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Diverging Bar Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:DivergingBarChart Name="DivergingBarSample" 
+                                                Title="Customer Satisfaction (vs Target)" 
+                                                Height="280"
+                                                LabelPath="Category"
+                                                ValuePath="Score"
+                                                Baseline="0"
+                                                ItemsSource="{Binding DivergingData}" />
+                    <TextBlock Text="DivergingBarChart showing values diverging from a baseline (positive/negative)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Violin Plot -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Violin Plot" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:ViolinPlotChart Name="ViolinPlotSample" 
+                                              Title="Response Times" 
+                                              Height="300"
+                                              CategoryPath="Category"
+                                              ValuesPath="Values"
+                                              ItemsSource="{Binding ViolinData}" />
+                    <TextBlock Text="ViolinPlotChart showing data distribution density" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Pareto Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Pareto Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:ParetoChart Name="ParetoChartSample" 
+                                          Title="Defect Analysis" 
+                                          Height="250" 
+                                          ValuePath="Count" 
+                                          LabelPath="Defect"
+                                          ItemsSource="{Binding ParetoData}" />
+                    <TextBlock Text="ParetoChart with bars and cumulative percentage line" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Bump Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Bump Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:BumpChart Name="BumpChartSample" 
+                                        Title="Ranking Changes" 
+                                        Height="300"
+                                        NamePath="Name"
+                                        RankingsPath="Ranks"
+                                        Periods="{Binding BumpPeriods}"
+                                        ItemsSource="{Binding BumpData}" />
+                    <TextBlock Text="BumpChart showing ranking changes over time" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Slope Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Slope Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:SlopeChart Name="SlopeChartSample" 
+                                         Title="Before vs After" 
+                                         Height="300"
+                                         LabelPath="Label"
+                                         StartValuePath="Before"
+                                         EndValuePath="After"
+                                         IsCurved="True"
+                                         ShowGridLines="True"
+                                         ShowXAxis="True"
+                                         ItemsSource="{Binding SlopeData}" />
+                    <TextBlock Text="SlopeChart for comparing two points in time" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Dumbbell Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Dumbbell Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:DumbbellChart Name="DumbbellChartSample"
+                                          Title="Before vs After"
+                                          Height="300"
+                                          ItemsSource="{Binding DumbbellData}"
+                                          LabelPath="Category"
+                                          LowValuePath="Before"
+                                          HighValuePath="After" />
+                    <TextBlock Text="DumbbellChart for comparing two values per category" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Mirror Bar Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Mirror Bar Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:MirrorBarChart Name="MirrorBarChartSample"
+                                           Title="Comparison"
+                                           Height="300"
+                                           ItemsSource="{Binding MirrorData}"
+                                           LabelPath="Category"
+                                           LeftValuePath="Male"
+                                           RightValuePath="Female" />
+                    <TextBlock Text="MirrorBarChart for side-by-side comparison" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Tornado Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Tornado Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:TornadoChart Name="TornadoChartSample"
+                                         Title="Sensitivity Analysis"
+                                         Height="300"
+                                         ItemsSource="{Binding TornadoData}"
+                                         LabelPath="Factor"
+                                         LeftValuePath="Low"
+                                         RightValuePath="High" />
+                    <TextBlock Text="TornadoChart for sensitivity analysis" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Multi-Category Slope Chart (Spline) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Multi-Category Slope Chart (Spline)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="MultiSlopeChartSample" 
+                                             Title="Trend Analysis" 
+                                             Height="300"
+                                             ShowLegend="True" 
+                                             LegendPosition="Top">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis ShowGridLines="False" IsVisible="False" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:SplineSeries Title="Blue" ItemsSource="{Binding MultiSlopeBlueData}" CategoryPath="Category" ValuePath="Value" 
+                                                   SplineTension="0.5" MarkerSize="15" StrokeThickness="3" Stroke="#2196F3" 
+                                                   MarkerFill="#2196F3" MarkerShape="Circle"  ShowMarkers="True"/>
+                            <charts:SplineSeries Title="Green" ItemsSource="{Binding MultiSlopeGreenData}" CategoryPath="Category" ValuePath="Value" 
+                                                   SplineTension="0.5" MarkerSize="15" StrokeThickness="3" Stroke="#4CAF50" 
+                                                   MarkerFill="#4CAF50" MarkerShape="Circle"  ShowMarkers="True"/>
+                            <charts:SplineSeries Title="Red" ItemsSource="{Binding MultiSlopeRedData}" CategoryPath="Category" ValuePath="Value" 
+                                                   SplineTension="0.5" MarkerSize="15" StrokeThickness="3" Stroke="#F44336" 
+                                                   MarkerFill="#F44336" MarkerShape="Circle"  ShowMarkers="True"/>
+                             <!-- Orange -->
+                             <charts:SplineSeries Title="Orange" ItemsSource="{Binding MultiSlopeOrangeData}" CategoryPath="Category" ValuePath="Value" 
+                                                   SplineTension="0.5" MarkerSize="15" StrokeThickness="3" Stroke="#FF9800"
+                                                   MarkerFill="#FF9800" MarkerShape="Circle"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Simulating a Multi-Stage Slope Chart using SplineSeries" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Contour Plot -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Contour Plot" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:ContourPlot Name="ContourPlotSample" 
+                                          Title="Terrain Elevation" 
+                                          Height="350" 
+                                          ContourLevels="10"
+                                          XPath="X"
+                                          YPath="Y"
+                                          ValuePath="Z"
+                                          ItemsSource="{Binding ContourData}" />
+                    <TextBlock Text="ContourPlot for topographic-style density visualization" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Density Plot -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Density Plot" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:DensityPlotChart Name="DensityPlotSample" 
+                                               Title="Age Distribution" 
+                                               Height="300" 
+                                               ShowArea="True" 
+                                               FillOpacity="0.4"
+                                               ItemsSource="{Binding DensityData}" />
+                    <TextBlock Text="DensityPlotChart using Kernel Density Estimation (KDE)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Beeswarm Plot -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Beeswarm Plot" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:BeeswarmPlotChart Name="BeeswarmPlotSample" 
+                                                Title="Test Scores by Group" 
+                                                Height="300"
+                                                CategoryPath="Category"
+                                                ValuePath="Value"
+                                                ItemsSource="{Binding BeeswarmData}" />
+                    <TextBlock Text="BeeswarmPlotChart with non-overlapping points" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Strip Plot -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Strip Plot" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:StripPlotChart Name="StripPlotSample" 
+                                             Title="Response Times" 
+                                             Height="300" 
+                                             JitterAmount="0.3" 
+                                             ShowMeanLine="True"
+                                             CategoryPath="Category"
+                                             ValuePath="Value"
+                                             ItemsSource="{Binding StripData}" />
+                    <TextBlock Text="StripPlotChart with jittering and mean lines" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Population Pyramid -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Population Pyramid" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PopulationPyramidChart Name="PopulationPyramidSample" 
+                                                     Title="Age Distribution by Gender" 
+                                                     Height="350"
+                                                     ShowLegend="True"
+                                                     LegendPosition="Bottom"
+                                                     AgeLabelPath="AgeGroup"
+                                                     MaleValuePath="Male"
+                                                     FemaleValuePath="Female"
+                                                     ItemsSource="{Binding PopulationData}" />
+                    <TextBlock Text="PopulationPyramidChart for demographic analysis" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Ridgeline Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Ridgeline Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:RidgelineChart Name="RidgelineChartSample" Title="Distribution Over Time" Height="350">
+                        <chartsEnterprise:RidgelineChart.Series>
+                            <!-- Note: RidgelineChart might not expose Series in XAML as easily if it's not a ContentProperty or similar. 
+                                 Assuming it behaves like CartesianChart. 
+                                 If it inherits form CartesianChart, it has Series property. -->
+                            <charts:AreaSeries Name="Series2020" ItemsSource="{Binding RidgelineData2020}" CategoryPath="X" ValuePath="Y" />
+                            <charts:AreaSeries Name="Series2021" ItemsSource="{Binding RidgelineData2021}" CategoryPath="X" ValuePath="Y" />
+                            <charts:AreaSeries Name="Series2022" ItemsSource="{Binding RidgelineData2022}" CategoryPath="X" ValuePath="Y" />
+                        </chartsEnterprise:RidgelineChart.Series>
+                    </chartsEnterprise:RidgelineChart>
+                    <TextBlock Text="RidgelineChart for distribution comparison" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Mekko Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Mekko Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:MekkoChart Name="MekkoChartSample" 
+                                         Title="Market Share" 
+                                         Height="300"
+                                         CategoryPath="Category"
+                                         WidthPath="Width"
+                                         SegmentsPath="Segments"
+                                         ItemsSource="{Binding MekkoData}" />
+                    <TextBlock Text="MekkoChart for market segmentation" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Parallel Coordinates Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Parallel Coordinates" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:ParallelCoordinatesChart Name="ParallelCoordinatesSample"
+                                                       Title="Multivariate Data"
+                                                       Height="300"
+                                                       ItemsSource="{Binding ParallelData}">
+                        <chartsEnterprise:ParallelCoordinatesChart.Axes>
+                            <chartsEnterprise:ParallelAxis Header="Speed" ValuePath="Speed" Minimum="0" Maximum="100" />
+                            <chartsEnterprise:ParallelAxis Header="Power" ValuePath="Power" Minimum="0" Maximum="100" />
+                            <chartsEnterprise:ParallelAxis Header="Efficiency" ValuePath="Efficiency" Minimum="0" Maximum="100" />
+                        </chartsEnterprise:ParallelCoordinatesChart.Axes>
+                    </chartsEnterprise:ParallelCoordinatesChart>
+                    <TextBlock Text="ParallelCoordinatesChart for multivariate analysis" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Venn Diagram -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Venn Diagram" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:VennDiagramChart Name="VennDiagramSample" 
+                                               Title="Feature Overlap" 
+                                               Height="350"
+                                               ItemsSource="{Binding VennData}" />
+                    <TextBlock Text="VennDiagramChart visualizing logical set relationships" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

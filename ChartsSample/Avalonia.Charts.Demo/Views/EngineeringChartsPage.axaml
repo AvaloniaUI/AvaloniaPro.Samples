@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:EngineeringChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.EngineeringChartsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Engineering charts like Carpet Plots, Smith Charts, and Wind Roses are specialized for technical and scientific data visualization." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <!-- Carpet Plot -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Carpet Plot" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:CarpetPlot Name="CarpetPlotSample" Title="Aerodynamics: Lift Coefficient" Height="400" CarpetOffset="0.4"
+                                         ItemsSource="{Binding CarpetData}"
+                                         AAxisPath="Mach" BAxisPath="Alpha" YAxisPath="Cl"
+                                         LabelForeground="{DynamicResource DemoScientificLabelBrush}"
+                                         PlotAreaBackground="{DynamicResource DemoScientificPlotAreaBrush}" />
+                    <TextBlock Text="Lift Coefficient (Cl) visualized against Mach Number (A) and Angle of Attack (B)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <TextBlock Text="The carpet plot shifts the B-axis horizontally (offset 0.4) to separate the curves." FontSize="10" Foreground="{DynamicResource TextMutedBrush}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Ternary Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Ternary Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:TernaryChart Name="TernaryChartSample" Title="Composition Analysis" Height="350"
+                                          ItemsSource="{Binding TernaryData}" APath="A" BPath="B" CPath="C"
+                                          ALabel="Polymer" BLabel="Solvent" CLabel="Additive"
+                                          DotSize="9" ShowGridLines="True" />
+                    <TextBlock Text="TernaryChart for three-component mixtures with custom component labels, grid, and point size." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- Wind Rose Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Wind Rose" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:WindRoseChart Name="WindRoseSample" Title="Wind Frequency Distribution" Height="400" 
+                                          ItemsSource="{Binding WindRoseData}"
+                                          DirectionPath="Dir" SpeedPath="Speed" ValuePath="Freq"
+                                          StartAngle="-90"/>
+                    <TextBlock Text="Stacked polar chart showing wind speed frequency by direction" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Smith Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Smith Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:SmithChart Name="SmithChartSample" Title="Antenna Impedance" Height="400" 
+                                       ItemsSource="{Binding SmithChartData}"
+                                       ResistancePath="R" ReactancePath="X"
+                                       StrokeThickness="3"/>
+                    <TextBlock Text="Impedance visualization (normalized Z) with a thicker trace for tuning/readability." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

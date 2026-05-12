@@ -1,0 +1,214 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:FlowChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.FlowChartsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Flow charts including Sankey, Chord, and Network diagrams visualize relationships, processes, and data flows between entities." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <!-- Process Flow Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Process Flow Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:FlowChart Name="FlowChartSample" Title="Troubleshooting Lamp" Height="400"
+                                        Nodes="{Binding FlowNodes}"
+                                        Edges="{Binding FlowEdges}" />
+                    <TextBlock Text="FlowChart for process diagrams and decision trees" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Sankey Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Sankey Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:SankeyChart Name="SankeySample" Title="Energy Flow" Height="350"
+                                          ItemsSource="{Binding SankeyData}"
+                                          SourcePath="Source"
+                                          TargetPath="Target"
+                                          ValuePath="Value" />
+                    <TextBlock Text="SankeyChart showing flow between nodes" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Chord Diagram -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Chord Diagram" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:ChordDiagramChart Name="ChordDiagramSample" Title="Trade Relations" Height="350"
+                                                ItemsSource="{Binding ChordData}"
+                                                SourcePath="Source"
+                                                TargetPath="Target"
+                                                ValuePath="Value" />
+                    <TextBlock Text="ChordDiagramChart for relationships between groups" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Arc Diagram -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Arc Diagram" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:ArcDiagramChart Name="ArcDiagramSample" Title="Connections" Height="300"
+                                              Nodes="{Binding ArcNodes}"
+                                              Links="{Binding ArcLinks}"
+                                              NodeIdPath="Id"
+                                              NodeLabelPath="Label"
+                                              SourcePath="Source"
+                                              TargetPath="Target"
+                                              LinkValuePath="Value" />
+                    <TextBlock Text="ArcDiagramChart for one-dimensional network" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Force-Directed Graph -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Force-Directed Graph" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:ForceDirectedGraph Name="ForceGraphSample" Title="Network Graph" Height="400"
+                                                 NodesSource="{Binding ForceNodes}"
+                                                 EdgesSource="{Binding ForceEdges}"
+                                                 NodeIdPath="Id"
+                                                 NodeLabelPath="Label"
+                                                 EdgeSourcePath="Source"
+                                                 EdgeTargetPath="Target" />
+                    <TextBlock Text="ForceDirectedGraph with physics simulation" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Network Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Network Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:NetworkChart Name="NetworkChartSample" Title="Social Network" Height="350"
+                                           Nodes="{Binding NetworkNodes}"
+                                           Edges="{Binding NetworkEdges}" />
+                    <TextBlock Text="NetworkChart with circular layout" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Alluvial Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Alluvial Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:AlluvialChart Name="AlluvialChartSample" Title="Category Flow" Height="350"
+                                            Nodes="{Binding AlluvialNodes}"
+                                            Links="{Binding AlluvialLinks}" />
+                    <TextBlock Text="AlluvialChart for categorical flow visualization" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Architecture Chart (Composed via FlowChart) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Architecture Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:FlowChart Name="ArchitectureChartSample" Title="Cloud Infrastructure" Height="400"
+                                        Nodes="{Binding ArchNodes}"
+                                        Edges="{Binding ArchEdges}"
+                                        Groups="{Binding ArchGroups}" />
+                    <TextBlock Text="Architecture-style diagram with icons and logical groupings using FlowChart." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Mindmap Chart (Composed via FlowChart) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Mindmap / Brainstorming" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:FlowChart Name="MindmapSample" Title="Project Alpha Brainstorm" Height="600"
+                                        Nodes="{Binding MindmapNodes}"
+                                        Edges="{Binding MindmapEdges}"
+                                        CornerRadius="20" />
+                    <TextBlock Text="Mindmap visualization utilizing non-directional edges and divergent layout." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Timeline Chart (Composed via FlowChart) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Timeline" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:FlowChart Name="TimelineSample" Title="History of Social Media Platform" Height="400"
+                                        Nodes="{Binding TimelineNodes}"
+                                        Edges="{Binding TimelineEdges}"
+                                        CornerRadius="5" />
+                    <TextBlock Text="Timeline visualization using Groups for time periods and Nodes for events." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- StreamGraphSeries -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="StreamGraphSeries" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="StreamGraphSample" Title="Traffic Volume Rhythm" Height="320"
+                                           ShowLegend="False">
+                        <charts:CartesianChart.Series>
+                            <charts:StreamGraphSeries Title="Traffic Volume"
+                                                      ItemsSource="{Binding StreamGraphSeries}"
+                                                      CategoryPath="Category"
+                                                      ValuePath="Value"
+                                                      PointBrushPath="Color"
+                                                      Stroke="#2F4B6C"
+                                                      StrokeThickness="1.5"
+                                                      FillOpacity="0.82"
+                                                      Smoothing="0.65" />
+                        </charts:CartesianChart.Series>
+
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="False" />
+                        </charts:CartesianChart.HorizontalAxis>
+
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis ShowGridLines="False" IsVisible="False" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Real StreamGraphSeries sample using the chart control directly, with per-point color transitions across the flow." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Simulated ThemeRiver -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Simulated ThemeRiver" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="ThemeRiverSample" Title="Data Stream" Height="400"
+                                           ShowLegend="True" LegendPosition="Bottom">
+                        <charts:CartesianChart.Series>
+                            <!-- Dummy Series (Transparent Spacer for Wiggle/Centering) -->
+                            <charts:StackedAreaSeries Title="" ItemsSource="{Binding ThemeRiverDummy}"
+                                                      CategoryPath="Category" ValuePath="Value"
+                                                      StackGroup="River"
+                                                      Fill="Transparent" 
+                                                      StrokeThickness="0" />
+                            
+                            <!-- Visible Data Series -->
+                            <charts:StackedAreaSeries Title="Stream A" ItemsSource="{Binding ThemeRiverSeriesA}"
+                                                      CategoryPath="Category" ValuePath="Value"
+                                                      StackGroup="River"
+                                                      Fill="#FF6B6B" Stroke="#E05555" StrokeThickness="1" />
+                                                      
+                            <charts:StackedAreaSeries Title="Stream B" ItemsSource="{Binding ThemeRiverSeriesB}"
+                                                      CategoryPath="Category" ValuePath="Value"
+                                                      StackGroup="River"
+                                                      Fill="#4ECDC4" Stroke="#3EBDB4" StrokeThickness="1" />
+                                                      
+                            <charts:StackedAreaSeries Title="Stream C" ItemsSource="{Binding ThemeRiverSeriesC}"
+                                                      CategoryPath="Category" ValuePath="Value"
+                                                      StackGroup="River"
+                                                      Fill="#FFE66D" Stroke="#EED55D" StrokeThickness="1" />
+                        </charts:CartesianChart.Series>
+                        
+                        <charts:CartesianChart.HorizontalAxis>
+                             <charts:CategoryAxis ShowGridLines="False" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        
+                        <charts:CartesianChart.VerticalAxis>
+                             <charts:NumericalAxis ShowGridLines="False" IsVisible="False" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="ThemeRiver-style layout built with StackedAreaSeries and a centered spacer offset for multiple streams." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

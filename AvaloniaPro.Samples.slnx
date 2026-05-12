@@ -1,4 +1,15 @@
 <Solution>
+  <Folder Name="/ChartsSample/">
+    <Project Path="ChartsSample/Avalonia.Charts.Demo.Android/Avalonia.Charts.Demo.Android.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="ChartsSample/Avalonia.Charts.Demo.Browser/Avalonia.Charts.Demo.Browser.csproj" />
+    <Project Path="ChartsSample/Avalonia.Charts.Demo.Desktop/Avalonia.Charts.Demo.Desktop.csproj" />
+    <Project Path="ChartsSample/Avalonia.Charts.Demo.iOS/Avalonia.Charts.Demo.iOS.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="ChartsSample/Avalonia.Charts.Demo/Avalonia.Charts.Demo.csproj" />
+  </Folder>
   <Folder Name="/MarkdownSample/">
     <Project Path="MarkdownSample/Avalonia.Controls.Markdown.Samples/Avalonia.Controls.Markdown.Samples.csproj" />
     <Project Path="MarkdownSample/MarkdownStreaming.Demo/MarkdownStreaming.Demo.csproj" />

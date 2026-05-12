@@ -1,0 +1,109 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:RadialChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.RadialChartsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Charts for displaying data in circular and polar coordinate systems." />
+
+            <!-- Radial Bar Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Radial Bar Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:RadialBarChart Name="RadialBarChartSample" Title="Performance Metrics" Height="350" 
+                                             ItemsSource="{Binding RadialBarData}"
+                                             CategoryPath="Label" ValuePath="Value" />
+                    <TextBlock Text="RadialBarChart (Nightingale/Rose) with variable-radius sectors" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Polar Area Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Polar Area Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PolarAreaChart Name="PolarAreaChartSample" Title="Skill Levels" Height="300" 
+                                             ItemsSource="{Binding PolarChartData}"
+                                             LabelPath="Label" ValuePath="Value" />
+                    <TextBlock Text="PolarAreaChart with equal-angle, variable-radius sectors" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Radar Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Radar Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:RadarChart Name="RadarChartSample" Title="Team Skills" Height="350" IsTooltipEnabled="True"
+                                         AxisLabels="{Binding RadarLabels}">
+                        <charts:RadarChart.Series>
+                            <charts:RadarSeries Title="Player A" ItemsSource="{Binding RadarSeries1}" FillOpacity="0.3" ShowMarkers="True" />
+                            <charts:RadarSeries Title="Player B" ItemsSource="{Binding RadarSeries2}" FillOpacity="0.3" ShowMarkers="True" />
+                        </charts:RadarChart.Series>
+                     </charts:RadarChart>
+                    <TextBlock Text="RadarChart (spider chart) with multiple overlapping series" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Nightingale Rose Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Nightingale Rose Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:NightingaleRoseChart Name="NightingaleRoseSample" Title="Monthly Sales" Height="350" ShowLabels="True" 
+                                                   ItemsSource="{Binding NightingaleData}"
+                                                   ValuePath="Value" LabelPath="Label" />
+                    <TextBlock Text="NightingaleRoseChart (coxcomb) with equal angles and variable radii" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Polar Chart (Spiral) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Polar Chart (Spiral)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PolarChart Height="300" Title="Archimedean Spiral">
+                        <charts:PolarLineSeries ItemsSource="{Binding SpiralData}"
+                                                  AnglePath="Angle"
+                                                  RadiusPath="Radius"
+                                                  Stroke="Blue"
+                                                  StrokeThickness="2" />
+                    </charts:PolarChart>
+                    <TextBlock Text="PolarChart with arbitrary angle/radius mapping" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Polar Chart (Rose Curve) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Polar Chart (Rose Curve)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PolarChart Height="300" Title="Rose Curve (4-Petal)">
+                        <charts:PolarLineSeries ItemsSource="{Binding RoseData}"
+                                                  AnglePath="Angle"
+                                                  RadiusPath="Radius"
+                                                  Stroke="Red"
+                                                  StrokeThickness="2"
+                                                  IsClosed="True" />
+                    </charts:PolarChart>
+                    <TextBlock Text="PolarChart showing mathematical curves" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Polar Chart (Cardioid) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Polar Chart (Cardioid)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PolarChart Height="300" Title="Cardioid w/ Markers">
+                        <charts:PolarLineSeries ItemsSource="{Binding CardioidData}"
+                                                  AnglePath="Angle"
+                                                  RadiusPath="Radius"
+                                                  Stroke="Green"
+                                                  StrokeThickness="2"
+                                                  ShowMarkers="True"
+                                                  MarkerSize="4"
+                                                  IsClosed="True" />
+                    </charts:PolarChart>
+                    <TextBlock Text="PolarChart with markers and closed path" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

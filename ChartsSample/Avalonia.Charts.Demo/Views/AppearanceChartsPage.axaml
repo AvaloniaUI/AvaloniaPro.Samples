@@ -1,0 +1,198 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Avalonia.Charts.Demo.Views.AppearanceChartsPage"
+             x:CompileBindings="True" x:DataType="vm:AppearanceChartsViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Customize the look and feel of your charts with gradients, backgrounds, and overlay content." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Gradient Palette & ColorByPoint -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Gradient Palette &amp; Brushes by Element" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart IsTooltipEnabled="True" Title="Product Performance" Height="250"
+                                           Palette="{Binding CustomPalette}">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Products" ItemsSource="{Binding GradientData}" ColorByPoint="True" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="BarSeries with ColorByPoint=true and custom Gradient Palette" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- PlotArea Background -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="PlotArea Background" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart IsTooltipEnabled="True" Title="Sales Report" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Revenue" ItemsSource="{Binding BackgroundData}" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.PlotAreaBackground>
+                            <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%" Opacity="0.2">
+                                <!-- Theme-aware gradient: subtle accent fade -->
+                                <GradientStop Color="{DynamicResource SystemAccentColor}" Offset="0" />
+                                <GradientStop Color="Transparent" Offset="1"/>
+                            </LinearGradientBrush>
+                        </charts:CartesianChart.PlotAreaBackground>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="PlotAreaBackground with theme-aware accent gradient" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- PlotArea Content (Watermark) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="PlotArea Content (Rich Overlay)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart IsTooltipEnabled="True" Title="Confidential Data" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Sensitive Data" ItemsSource="{Binding WatermarkData}" MarkerSize="6"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.PlotAreaContent>
+                            <Grid IsHitTestVisible="False">
+                                <!-- Centered Watermark -->
+                                <TextBlock Text="CONFIDENTIAL" 
+                                           FontSize="40" 
+                                           FontWeight="Bold" 
+                                           Opacity="0.1"
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Center"
+                                           RenderTransformOrigin="0.5,0.5">
+                                    <TextBlock.RenderTransform>
+                                        <RotateTransform Angle="-15"/>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                                
+                                <!-- Corner Copyright -->
+                                <TextBlock Text="© 2026 Avalonia Charts" 
+                                           FontSize="12" 
+                                           Opacity="0.5"
+                                           Margin="10"
+                                           VerticalAlignment="Bottom" 
+                                           HorizontalAlignment="Right" />
+                            </Grid>
+                        </charts:CartesianChart.PlotAreaContent>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="PlotAreaContent with centered watermark and corner copyright labels using a Grid overlay" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Cartesian Chart-Wide Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Cartesian Chart-Wide Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="AxisBrush, GridLineBrush, LabelForeground, and PlotAreaBackground style the Cartesian plot surface." TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <charts:CartesianChart Title="Cartesian"
+                                           Height="280"
+                                           AxisBrush="{DynamicResource DemoCartesianAxisBrush}"
+                                           GridLineBrush="{DynamicResource DemoCartesianGridLineBrush}"
+                                           LabelForeground="{DynamicResource DemoCartesianLabelBrush}"
+                                           PlotAreaBackground="{DynamicResource DemoCartesianPlotAreaBrush}">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis LabelFormat="N0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries ItemsSource="{Binding WatermarkData}"
+                                               Stroke="{DynamicResource DemoCartesianAxisBrush}"
+                                               StrokeThickness="3"
+                                               ShowMarkers="True"
+                                               MarkerFill="{DynamicResource DemoCartesianLabelBrush}" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Financial Chart-Wide Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Financial Chart-Wide Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="FinancialChart honors axis, grid, label, and plot-area styling without Cartesian-only assumptions." TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <charts:FinancialChart Title="Financial"
+                                           Height="280"
+                                           AxisBrush="{DynamicResource DemoFinancialAxisBrush}"
+                                           GridLineBrush="{DynamicResource DemoFinancialGridLineBrush}"
+                                           LabelForeground="{DynamicResource DemoFinancialLabelBrush}"
+                                           PlotAreaBackground="{DynamicResource DemoFinancialPlotAreaBrush}">
+                        <charts:FinancialChart.VerticalAxis>
+                            <charts:NumericalAxis LabelFormat="C0" />
+                        </charts:FinancialChart.VerticalAxis>
+                        <charts:FinancialChart.Series>
+                            <charts:CandlestickSeries ItemsSource="{Binding StyledFinancialData}"
+                                                       DatePath="Date"
+                                                       HighPath="High"
+                                                       LowPath="Low"
+                                                       OpenPath="Open"
+                                                       ClosePath="Close" />
+                        </charts:FinancialChart.Series>
+                    </charts:FinancialChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Polar Chart-Wide Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Polar Chart-Wide Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="PolarChart exposes grid and label styling for radial layouts." TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <charts:PolarChart Title="Polar"
+                                       Height="300"
+                                       GridLineBrush="#BFDBFE"
+                                       LabelForeground="#1E3A8A">
+                        <charts:PolarLineSeries ItemsSource="{Binding StyledPolarData}"
+                                                AnglePath="Angle"
+                                                RadiusPath="Radius"
+                                                Stroke="#2563EB"
+                                                StrokeThickness="3"
+                                                ShowMarkers="True"
+                                                MarkerSize="4"
+                                                IsClosed="True" />
+                    </charts:PolarChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Contour Plot Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Contour Plot Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="ContourPlot uses the chart-level axis and label brushes for its axes and title." TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <chartsEnterprise:ContourPlot Title="Contour"
+                                                  Height="300"
+                                                  AxisBrush="#6D28D9"
+                                                  LabelForeground="#4C1D95"
+                                                  ItemsSource="{Binding StyledContourData}"
+                                                  XPath="X"
+                                                  YPath="Y"
+                                                  ValuePath="Z"
+                                                  ContourLevels="8" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

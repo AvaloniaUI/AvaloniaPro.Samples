@@ -1,0 +1,84 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:Class="Avalonia.Charts.Demo.Views.TimelineChartsPage"
+             x:CompileBindings="True" x:DataType="vm:TimelineChartsViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Timeline charts like Gantt and Swimlane visualize chronological events, project schedules, and processes over time." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <!-- Gantt Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Gantt Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:GanttChart Name="GanttChartSample" 
+                                         Title="Project Timeline" 
+                                         Height="300"
+                                         ItemsSource="{Binding GanttTasks}"
+                                         TaskNamePath="Name"
+                                         StartPath="Start"
+                                         EndPath="End"
+                                         ProgressPath="Progress"
+                                         BarHeight="0.72"
+                                         RowHeight="44"
+                                         BarBrush="#93C5FD"
+                                         ProgressBrush="#2563EB" />
+                    <TextBlock Text="GanttChart with progress bars, custom row height, and styled task/progress brushes." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- Event Timeline -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Event Timeline" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:EventTimelineChart Name="EventTimelineSample" 
+                                                 Title="Product Launches" 
+                                                 Height="300"
+                                                 ItemsSource="{Binding TimelineEvents}"
+                                                 DatePath="Date"
+                                                 LabelPath="Event" />
+                    <TextBlock Text="EventTimelineChart for chronological events" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Spiral Timeline -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Spiral Timeline" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:SpiralTimeline Name="SpiralTimelineSample" 
+                                             Title="Annual Events" 
+                                             Height="400"
+                                             ItemsSource="{Binding SpiralEvents}"
+                                             ValuePath="Value"
+                                             LabelPath="Event" />
+                    <TextBlock Text="SpiralTimeline for cyclical time data" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Swimlane Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Swimlane Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:SwimlaneChart Name="SwimlaneSample" 
+                                            Title="Process Flow" 
+                                            Height="350"
+                                            ItemsSource="{Binding SwimlaneTasks}"
+                                            LanePath="Lane"
+                                            TaskNamePath="Task"
+                                            StartPath="Start"
+                                            EndPath="End"
+                                            BrushPath="Brush"
+                                            LaneHeight="90"
+                                            TaskHeight="34"
+                                            TaskSpacing="8"
+                                            TaskCornerRadius="8"
+                                            LaneSeparatorBrush="{DynamicResource DemoSwimlaneLaneSeparatorBrush}"
+                                            LaneBackgroundBrush="{DynamicResource DemoSwimlaneLaneBackgroundBrush}" />
+                    <TextBlock Text="SwimlaneChart with overlapping tasks, lane styling, task colors, and rounded task bars." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

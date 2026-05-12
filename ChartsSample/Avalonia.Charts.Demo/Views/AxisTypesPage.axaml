@@ -1,0 +1,105 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="1200"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.AxisTypesPage"
+             x:CompileBindings="True" x:DataType="vm:AxisTypesViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Explore the different axis types available, including Numerical, Category, DateTime, and Logarithmic, to best represent your data."
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Numerical Axis -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Numerical Axis" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Title="Numerical Data" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="XY Data" 
+                                                    ItemsSource="{Binding NumericalData}"
+                                                    CategoryPath="X" ValuePath="Y"
+                                                    Fill="DodgerBlue" MarkerSize="10"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis Title="X Value (Linear)" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Y Value (Linear)" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Standard linear scale for numerical data" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Category Axis -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Category Axis" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Title="Categorical Data" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Departments" 
+                                                ItemsSource="{Binding CategoryData}"
+                                                CategoryPath="Name" ValuePath="Value"
+                                                Fill="Purple"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Departments" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="String-based categories for non-numerical dimensions" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- DateTime Axis -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="DateTime Axis" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Title="Time Series" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Trend" 
+                                                 ItemsSource="{Binding DateTimeData}"
+                                                 CategoryPath="Date" ValuePath="Value"
+                                                 Stroke="Orange" StrokeThickness="2"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis Title="Date" DateFormat="MMM dd" MajorStepUnit="Day" MajorStep="1" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Time-based axis with automatic or custom date formatting" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+
+            <!-- Logarithmic Axis -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Logarithmic Axis" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Title="Exponential Growth" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Growth" 
+                                                 ItemsSource="{Binding LogData}"
+                                                 Stroke="Crimson" StrokeThickness="2"
+                                                 MarkerSize="8" MarkerFill="Crimson" ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:LogarithmicAxis Title="Log Scale (Base 10)" LogBase="10" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Logarithmic scale for data spanning multiple orders of magnitude" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

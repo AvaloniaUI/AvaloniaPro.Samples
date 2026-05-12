@@ -1,0 +1,193 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="900"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.ItemCustomizationPage"
+             x:CompileBindings="True" x:DataType="vm:ItemCustomizationViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Demonstrates how to apply custom brushes to individual data items using PointBrushPath." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Explicit Colors -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Explicit Item Coloring" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Fruit Sales"
+                                                ItemsSource="{Binding StandardItems}"
+                                                ValuePath="Value"
+                                                CategoryPath="Name"
+                                                PointBrushPath="Color" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Each item defines its own color explicitly in the data model." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Conditional Colors -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Conditional Coloring" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Profit/Loss"
+                                                ItemsSource="{Binding ConditionalItems}"
+                                                ValuePath="Value"
+                                                CategoryPath="Name"
+                                                PointBrushPath="Color" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Items are colored Green or Red based on their value (Positive/Negative)." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Scatter Point Customization -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Scatter Point Coloring" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="Random Data"
+                                                    ItemsSource="{Binding ScatterItems}"
+                                                    ValuePath="Value"
+                                                    CategoryPath="Name"
+                                                    PointBrushPath="Color"
+                                                    MarkerSize="15" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Points are colored dynamically to highlight outliers (Val > 80)." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Multi-colored Line -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Multi-colored Line" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Sensor Data"
+                                                 ItemsSource="{Binding LineItems}"
+                                                 ValuePath="Value"
+                                                 CategoryPath="Name"
+                                                 PointBrushPath="Color"
+                                                 StrokeThickness="4"
+                                                 ShowMarkers="True"
+                                                 MarkerSize="10" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="The line changes color based on the segment's end point color, useful for threshold alerts." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Gradient Brushes -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Gradient Brushes" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Trends"
+                                                ItemsSource="{Binding GradientItems}"
+                                                ValuePath="Value"
+                                                CategoryPath="Name"
+                                                PointBrushPath="Color" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="PointBrushPath supports full brushes, including LinearGradientBrush for premium visuals." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Pie Chart Customization -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Pie Chart Coloring" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+                    <TextBlock Text="Colors for each segment are bound from the data model." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12"/>
+                    <charts:PieChart Height="250" Title="Market Share" ShowLegend="True" LegendPosition="Bottom">
+                        <charts:PieChart.Series>
+                            <charts:PieSeries ItemsSource="{Binding PieItems}"
+                                          ValuePath="Value"
+                                          LabelPath="Name"
+                                          PointBrushPath="Color"/>
+                        </charts:PieChart.Series>
+                    </charts:PieChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Dash Style and Line Customization -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Dash Style &amp; Line Customization" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Dashed Line"
+                                                 ItemsSource="{Binding StandardItems}"
+                                                 ValuePath="Value"
+                                                 CategoryPath="Name"
+                                                 StrokeThickness="4"
+                                                 StrokeLineCap="Round"
+                                                 StrokeLineJoin="Round"
+                                                 ShowMarkers="True">
+                                <charts:LineSeries.StrokeDashStyle>
+                                    <DashStyle Dashes="5,5"/>
+                                </charts:LineSeries.StrokeDashStyle>
+                            </charts:LineSeries>
+                            <charts:StepLineSeries Title="Dotted Step"
+                                                     ItemsSource="{Binding StandardItems}"
+                                                     ValuePath="Value"
+                                                     CategoryPath="Name"
+                                                     StrokeThickness="3"
+                                                     StrokeLineCap="Square"
+                                                     StrokeLineJoin="Bevel">
+                                <charts:StepLineSeries.StrokeDashStyle>
+                                    <DashStyle Dashes="1,2"/>
+                                </charts:StepLineSeries.StrokeDashStyle>
+                            </charts:StepLineSeries>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Demonstrates StrokeDashStyle, StrokeLineCap, and StrokeLineJoin properties." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

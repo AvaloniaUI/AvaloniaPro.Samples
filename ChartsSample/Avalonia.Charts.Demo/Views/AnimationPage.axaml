@@ -1,0 +1,443 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="3000"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.AnimationPage"
+             x:CompileBindings="True" x:DataType="vm:AnimationViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="StackPanel.animation-field">
+            <Setter Property="MinWidth" Value="108" />
+            <Setter Property="Margin" Value="0,0,12,6" />
+        </Style>
+
+        <Style Selector="TextBlock.animation-field-label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <Style Selector="TextBox.animation-input">
+            <Setter Property="Width" Value="88" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+        </Style>
+
+        <Style Selector="Button.animation-action">
+            <Setter Property="MinWidth" Value="124" />
+            <Setter Property="Margin" Value="0,20,8,6" />
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Demonstrates entry animations, staggering, and dynamic value transitions." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Line Chart (Comparison) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding LineChart}">
+                    <TextBlock Text="Line Chart (Comparison)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+                    
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Delay (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding StaggerText}" PlaceholderText="0.3" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Command="{Binding UpdateDataCommand}" Content="Update Data" />
+                        <Button Classes="animation-action" Click="OnReplayLineAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <charts:CartesianChart x:Name="LineChartControl" Height="400"
+                                           AnimationDuration="{Binding Duration}"
+                                           IsAnimationEnabled="True"
+                                           ClipToBounds="False"
+                                           Margin="10">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Series 1" 
+                                               ItemsSource="{Binding Series1Data}"
+                                               ValuePath="Value" 
+                                               CategoryPath="Category"
+                                               StrokeThickness="3"
+                                               ShowMarkers="True"
+                                               MarkerSize="6"
+                                               AnimationDelay="{Binding Series1Delay}"/>
+                            
+                            <charts:LineSeries Title="Series 2" 
+                                               ItemsSource="{Binding Series2Data}" 
+                                               ValuePath="Value" 
+                                               CategoryPath="Category"
+                                               StrokeThickness="3"
+                                               ShowMarkers="True"
+                                               MarkerSize="6"
+                                               AnimationDelay="{Binding Series2Delay}"/>
+                            
+                            <charts:LineSeries Title="Series 3" 
+                                               ItemsSource="{Binding Series3Data}" 
+                                               ValuePath="Value" 
+                                               CategoryPath="Category"
+                                               StrokeThickness="3"
+                                               ShowMarkers="True"
+                                               MarkerSize="6"
+                                               AnimationDelay="{Binding Series3Delay}"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Area Chart (Comparison) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding AreaChart}">
+                    <TextBlock Text="Area Chart (Comparison)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Delay (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding StaggerText}" PlaceholderText="0.3" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Command="{Binding UpdateDataCommand}" Content="Update Data" />
+                        <Button Classes="animation-action" Click="OnReplayAreaAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <charts:CartesianChart x:Name="AreaChartControl" Height="400" 
+                                           AnimationDuration="{Binding Duration}"
+                                           IsAnimationEnabled="True"
+                                           ClipToBounds="False"
+                                           Margin="10">
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="Series 1" 
+                                               ItemsSource="{Binding Series1Data}"
+                                               ValuePath="Value" 
+                                               CategoryPath="Category"
+                                               Opacity="0.7"
+                                               AnimationDelay="{Binding Series1Delay}"/>
+                            
+                            <charts:AreaSeries Title="Series 2" 
+                                               ItemsSource="{Binding Series2Data}" 
+                                               ValuePath="Value" 
+                                               CategoryPath="Category"
+                                               Opacity="0.5"
+                                               AnimationDelay="{Binding Series2Delay}"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Histogram (Statistical) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding HistogramChart}">
+                    <TextBlock Text="Histogram (Statistical)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Command="{Binding UpdateDataCommand}" Content="Update Data" />
+                        <Button Classes="animation-action" Click="OnReplayHistogramAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <charts:CartesianChart x:Name="HistogramChartControl" Title="Score Distribution" Height="320"
+                                           AnimationDuration="{Binding Duration}"
+                                           IsAnimationEnabled="True"
+                                           Margin="10">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:HistogramSeries ItemsSource="{Binding HistogramData}"
+                                                    ValuePath="Score"
+                                                    BinCount="10" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Box Plot (Statistical) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding BoxPlotChart}">
+                    <TextBlock Text="Box Plot (Statistical)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Command="{Binding UpdateDataCommand}" Content="Update Data" />
+                        <Button Classes="animation-action" Click="OnReplayBoxPlotAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <charts:CartesianChart x:Name="BoxPlotChartControl" Title="Test Scores" Height="320"
+                                           AnimationDuration="{Binding Duration}"
+                                           IsAnimationEnabled="True"
+                                           Margin="10">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BoxPlotSeries Title="Test Scores"
+                                                  CategoryPath="Class"
+                                                  MinPath="Min"
+                                                  Q1Path="Q1"
+                                                  MedianPath="Median"
+                                                  Q3Path="Q3"
+                                                  MaxPath="Max"
+                                                  ItemsSource="{Binding BoxPlotData}" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Error Bars (Statistical) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding ErrorBarChart}">
+                    <TextBlock Text="Error Bars (Statistical)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Command="{Binding UpdateDataCommand}" Content="Update Data" />
+                        <Button Classes="animation-action" Click="OnReplayErrorBarAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <charts:CartesianChart x:Name="ErrorBarChartControl" Title="Measurement Uncertainty" Height="320"
+                                           AnimationDuration="{Binding Duration}"
+                                           IsAnimationEnabled="True"
+                                           Margin="10">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:ErrorBarSeries Title="Measurements"
+                                                   CategoryPath="Sample"
+                                                   ValuePath="Value"
+                                                   ErrorPath="Error"
+                                                   CapWidth="10"
+                                                   ShowMarkers="True"
+                                                   MarkerSize="8"
+                                                   ItemsSource="{Binding ErrorBarData}" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Pie Chart (Circular) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding PieChart}">
+                    <TextBlock Text="Pie Chart (Circular)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Click="OnReplayPieAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <charts:PieChart x:Name="PieChartControl" Height="400"
+                                     AnimationDuration="{Binding Duration}"
+                                     IsAnimationEnabled="True"
+                                     Margin="10">
+                        <charts:PieChart.Series>
+                            <charts:PieSeries ItemsSource="{Binding Series1Data}"
+                                              ValuePath="Value"
+                                              LabelPath="Category"
+                                              ShowLabels="True" />
+                        </charts:PieChart.Series>
+                    </charts:PieChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Donut Chart (Circular) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding DonutChart}">
+                    <TextBlock Text="Donut Chart (Circular)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Click="OnReplayDonutAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <charts:PieChart x:Name="DonutChartControl" Height="400"
+                                     AnimationDuration="{Binding Duration}"
+                                     IsAnimationEnabled="True"
+                                     InnerRadiusFactor="0.6"
+                                     Margin="10">
+                        <charts:PieChart.Series>
+                            <charts:PieSeries ItemsSource="{Binding Series1Data}"
+                                              ValuePath="Value"
+                                              LabelPath="Category"
+                                              ShowLabels="True" />
+                        </charts:PieChart.Series>
+                    </charts:PieChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Radar Chart (Polar) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding RadarChart}">
+                    <TextBlock Text="Radar Chart (Polar)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Click="OnReplayRadarAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <charts:RadarChart x:Name="RadarChartControl" Height="400"
+                                       AnimationDuration="{Binding Duration}"
+                                       IsAnimationEnabled="True"
+                                       Margin="10">
+                        <charts:RadarChart.Series>
+                            <charts:RadarSeries ItemsSource="{Binding Series1Data}"
+                                                ValuePath="Value" />
+                        </charts:RadarChart.Series>
+                    </charts:RadarChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Tree Map Chart (Hierarchical) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding TreeMapChart}">
+                    <TextBlock Text="Tree Map Chart (Hierarchical)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Click="OnReplayTreeMapAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <charts:TreeMapChart x:Name="TreeMapChartControl" Height="400"
+                                         AnimationDuration="{Binding Duration}"
+                                         IsAnimationEnabled="True"
+                                         ItemsSource="{Binding Series1Data}"
+                                         ValuePath="Value"
+                                         LabelPath="Category"
+                                         Margin="10"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Organization Chart (Network) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding OrgChart}">
+                    <TextBlock Text="Organization Chart (Network)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Click="OnReplayOrgAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <chartsEnterprise:OrganizationChart x:Name="OrgChartControl" Height="400"
+                                              AnimationDuration="{Binding Duration}"
+                                              IsAnimationEnabled="True"
+                                              ItemsSource="{Binding OrgData}"
+                                              LabelPath="Name"
+                                              ChildrenPath="Reports"
+                                              Margin="10"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Arc Diagram (Flow) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding ArcDiagramChart}">
+                    <TextBlock Text="Arc Diagram (Flow)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Command="{Binding UpdateDataCommand}" Content="Update Data" />
+                        <Button Classes="animation-action" Click="OnReplayArcDiagramAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <chartsEnterprise:ArcDiagramChart x:Name="ArcDiagramChartControl" Title="Workflow Connections" Height="320"
+                                                      AnimationDuration="{Binding Duration}"
+                                                      IsAnimationEnabled="True"
+                                                      Nodes="{Binding ArcNodes}"
+                                                      Links="{Binding ArcLinks}"
+                                                      NodeIdPath="Id"
+                                                      NodeLabelPath="Label"
+                                                      SourcePath="Source"
+                                                      TargetPath="Target"
+                                                      LinkValuePath="Value"
+                                                      Margin="10"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Liquid Fill Gauge -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15" DataContext="{Binding LiquidFillGauge}">
+                    <TextBlock Text="Liquid Fill Gauge" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+
+                    <WrapPanel HorizontalAlignment="Left">
+                        <StackPanel Classes="animation-field" Spacing="6">
+                            <TextBlock Classes="animation-field-label" Text="Duration (s)" />
+                            <TextBox Classes="animation-input" Text="{Binding DurationText}" PlaceholderText="1.0" />
+                        </StackPanel>
+
+                        <Button Classes="animation-action" Command="{Binding UpdateDataCommand}" Content="Update Data" />
+                        <Button Classes="animation-action" Click="OnReplayLiquidFillAnimation" Content="Replay Animation" />
+                    </WrapPanel>
+
+                    <charts:LiquidFillGauge x:Name="LiquidFillGaugeControl"
+                                            Title="Capacity"
+                                            Value="{Binding LiquidGaugeValue}"
+                                            Width="220"
+                                            Height="260"
+                                            AnimationDuration="{Binding Duration}"
+                                            IsAnimationEnabled="True"
+                                            IsWaveAnimationEnabled="True"
+                                            HorizontalAlignment="Center"
+                                            Margin="10"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

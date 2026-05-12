@@ -1,0 +1,149 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="800"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.SmartLabelsPage"
+             x:CompileBindings="True" x:DataType="vm:SmartLabelsViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Optimize data label positioning to prevent overlaps and improve legibility."
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- LabelFitMode: None -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="LabelFitMode.None (Default)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="NoneChart" Title="Labels May Overlap" Height="250">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis LabelFitMode="None" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Sales" ItemsSource="{Binding MonthlySales}" CategoryPath="Category" ValuePath="Value" Fill="DodgerBlue" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="No action - labels display as-is and may overlap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- LabelFitMode: Hide -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="LabelFitMode.Hide" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="HideChart" Title="Hidden Labels" Height="250">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis LabelFitMode="Hide" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Sales" ItemsSource="{Binding MonthlySales}" CategoryPath="Category" ValuePath="Value" Fill="DodgerBlue" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Hide overlapping labels - only shows labels that fit" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- LabelFitMode: Rotate45 -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="LabelFitMode.Rotate45" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="Rotate45Chart" Title="45° Rotated Labels" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis LabelFitMode="Rotate45" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Sales" ItemsSource="{Binding MonthlySales}" CategoryPath="Category" ValuePath="Value" Fill="DodgerBlue" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Rotate labels 45 degrees to prevent overlap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- LabelFitMode: Rotate90 -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="LabelFitMode.Rotate90" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="Rotate90Chart" Title="90° Rotated Labels" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis LabelFitMode="Rotate90" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Sales" ItemsSource="{Binding MonthlySales}" CategoryPath="Category" ValuePath="Value" Fill="DodgerBlue" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Rotate labels 90 degrees (vertical) for maximum space" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- LabelFitMode: MultipleRows -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="LabelFitMode.MultipleRows" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="MultiRowChart" Title="Multi-Row Labels" Height="280">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis LabelFitMode="MultipleRows" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                         <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Sales" ItemsSource="{Binding MonthlySales}" CategoryPath="Category" ValuePath="Value" Fill="DodgerBlue" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Display labels in alternating rows to avoid overlap" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- LabelFitMode: Wrap -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="LabelFitMode.Wrap" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="WrapChart" Title="Wrapped Labels" Height="280">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis LabelFitMode="Wrap" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Revenue" ItemsSource="{Binding CategoryRevenue}" CategoryPath="Category" ValuePath="Value" Fill="Purple" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Wrap long labels to multiple lines" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- LabelFitMode: CustomRotation -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="LabelFitMode.CustomRotation" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="ManualRotationChart" Title="Custom 30° Rotation" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis LabelFitMode="CustomRotation" LabelRotation="30" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                         <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Growth" ItemsSource="{Binding QuarterlyGrowth}" CategoryPath="Category" ValuePath="Value" Stroke="Green" StrokeThickness="3" MarkerSize="8" MarkerFill="Green"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Use LabelFitMode.CustomRotation with LabelRotation for arbitrary angles" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,209 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="2300"
+             x:CompileBindings="True" x:DataType="vm:ContinuousXAxisViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.ContinuousXAxisPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Continuous horizontal axes use the series category value as the real X value when the axis is DateTime, numerical, or logarithmic. Categorical axes still place values into even category slots."
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- DateTime Axis: Line and Step Line -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="DateTime Axis with Line and Step Line Series" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Title="Irregular DateTime Values" Height="340" ShowLegend="True" LegendPosition="Top">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis Title="Date"
+                                                 DateFormat="MMM dd"
+                                                 MajorStepUnit="Day"
+                                                 MajorStep="5"
+                                                 LabelFitMode="Auto"
+                                                 ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="20" Maximum="80" LabelFormat="0" ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Actual"
+                                               ItemsSource="{Binding DateTimeLineData}"
+                                               CategoryPath="Date" ValuePath="Value"
+                                               Stroke="#2E7D32" StrokeThickness="2"
+                                               MarkerFill="#2E7D32" MarkerSize="6" ShowMarkers="True" />
+                            <charts:StepLineSeries Title="Threshold"
+                                                   ItemsSource="{Binding DateTimeStepData}"
+                                                   CategoryPath="Date" ValuePath="Value"
+                                                   Stroke="#FF9800" StrokeThickness="2"
+                                                   MarkerFill="#FF9800" MarkerSize="6" ShowMarkers="True" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="The large gaps are visibly wider than one-day gaps, and the date labels align with real samples while the axis keeps automatic side padding. StepLineSeries does not need duplicated DateTime points."
+                               Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- DateTime Axis: Area -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="DateTime Axis with Area Series" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Title="Area With Irregular DateTime Values" Height="340">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis Title="Date"
+                                                 DateFormat="MMM dd"
+                                                 MajorStepUnit="Day"
+                                                 MajorStep="5"
+                                                 LabelFitMode="Auto"
+                                                 ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="0" Maximum="65" LabelFormat="0" ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="Capacity"
+                                               ItemsSource="{Binding DateTimeAreaData}"
+                                               CategoryPath="Date" ValuePath="Value"
+                                               Stroke="#2196F3" Fill="#2196F3"
+                                               FillOpacity="0.22" StrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="AreaSeries keeps the same continuous DateTime spacing; the fill intentionally extends to the axis baseline."
+                               Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- DateTime Axis: Spline -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="DateTime Axis with Spline Series" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Title="Smooth Irregular DateTime Values" Height="340" ShowLegend="True" LegendPosition="Top">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis Title="Date"
+                                                 DateFormat="MMM dd"
+                                                 MajorStepUnit="Day"
+                                                 MajorStep="5"
+                                                 LabelFitMode="Auto"
+                                                 ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="50" Maximum="90" LabelFormat="0" ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:SplineSeries Title="Signal"
+                                                 ItemsSource="{Binding DateTimeSplineData}"
+                                                 CategoryPath="Date" ValuePath="Value"
+                                                 Stroke="#D32F2F" StrokeThickness="2"
+                                                 MarkerFill="#D32F2F" MarkerSize="6" ShowMarkers="True" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Spline-based series use the same DateTime spacing as straight line and area series."
+                               Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- DateTime Axis: Spline Area -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="DateTime Axis with Spline Area Series" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Title="Smooth Area With Irregular DateTime Values" Height="340">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis Title="Date"
+                                                 DateFormat="MMM dd"
+                                                 MajorStepUnit="Day"
+                                                 MajorStep="5"
+                                                 LabelFitMode="Auto"
+                                                 ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="0" Maximum="75" LabelFormat="0" ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:SplineAreaSeries Title="Baseline"
+                                                     ItemsSource="{Binding DateTimeSplineAreaData}"
+                                                     CategoryPath="Date" ValuePath="Value"
+                                                     Stroke="#7B1FA2" Fill="#7B1FA2"
+                                                     FillOpacity="0.2" StrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="SplineAreaSeries combines the continuous DateTime spacing with a smooth filled area."
+                               Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- Numerical X Axis -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Numerical X Axis" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Title="Non-uniform Numerical X Values" Height="340" ShowLegend="True" LegendPosition="Top">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis Title="X Value" MajorStep="5" LabelFormat="0" LabelFitMode="Auto" ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="10" Maximum="80" LabelFormat="0" ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Samples"
+                                               ItemsSource="{Binding NumericLineData}"
+                                               CategoryPath="X" ValuePath="Y"
+                                               Stroke="#3949AB" StrokeThickness="2"
+                                               MarkerFill="#3949AB" MarkerSize="6" ShowMarkers="True" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="The samples use non-uniform numeric spacing; they are positioned by X value instead of by collection index."
+                               Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- Logarithmic X Axis -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Logarithmic X Axis" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Title="Positive Values on a Logarithmic X Axis" Height="340">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:LogarithmicAxis Title="X Value" MajorStep="10" LabelFormat="0" LabelFitMode="Auto" ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="10" Maximum="100" LabelFormat="0" ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Response"
+                                               ItemsSource="{Binding LogarithmicLineData}"
+                                               CategoryPath="X" ValuePath="Y"
+                                               Stroke="#C2185B" StrokeThickness="2"
+                                               MarkerFill="#C2185B" MarkerSize="6" ShowMarkers="True" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Line-like series can use positive category values against a logarithmic horizontal axis."
+                               Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- Category Axis Comparison -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Category Axis Comparison" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Title="Same Dates as Category Slots" Height="340">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Category" LabelFormat="MMM dd" LabelFitMode="Rotate45" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="20" Maximum="80" LabelFormat="0" ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Actual"
+                                               ItemsSource="{Binding CategoricalComparisonData}"
+                                               CategoryPath="Date" ValuePath="Value"
+                                               Stroke="#455A64" StrokeThickness="2"
+                                               MarkerFill="#455A64" MarkerSize="6" ShowMarkers="True" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="With CategoryAxis, the same irregular dates are intentionally spaced evenly as discrete categories."
+                               Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

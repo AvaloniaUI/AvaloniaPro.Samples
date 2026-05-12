@@ -1,0 +1,67 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.AccessibilityPage"
+             x:DataType="vm:AccessibilityViewModel"
+             x:CompileBindings="True">
+    
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Use pattern fills to assist users with color vision deficiencies, ensuring charts are readable without relying solely on color." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Pie Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Pie Chart with Patterns" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    
+                    <WrapPanel>
+                        <Button Content="Accessibility (Patterns)" Command="{Binding ApplyAccessibilityPatterns}" Margin="0,0,10,8" MaxWidth="240" />
+                        <Button Content="High Contrast (Solids)" Command="{Binding ApplyHighContrast}" Margin="0,0,10,8" MaxWidth="240" />
+                        <Button Content="Stripes Only" Command="{Binding ApplyStripesOnly}" Margin="0,0,10,8" MaxWidth="240" />
+                        <Button Content="Dots Only" Command="{Binding ApplyDotsOnly}" Margin="0,0,10,8" MaxWidth="240" />
+                        <Button Content="Black &amp; White" Command="{Binding ApplyBlackAndWhite}" Margin="0,0,0,8" MaxWidth="240" />
+                    </WrapPanel>
+
+                    <charts:PieChart Height="300" 
+                                       Title="Browser Market Share"
+                                       Palette="{Binding CurrentPalette}">
+                        <charts:PieChart.Series>
+                            <charts:PieSeries ItemsSource="{Binding PieData}"
+                                                ValuePath="Value" 
+                                                LabelPath="Category"
+                                                ShowLabels="True" />
+                        </charts:PieChart.Series>
+                    </charts:PieChart>
+                    <TextBlock Text="Pie chart demonstrating automatic pattern assignment. Use buttons above to toggle palettes." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+            
+            <!-- Bar Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Bar Chart with Patterns" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Height="300" Palette="{Binding CurrentPalette}">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                             <charts:BarSeries Title="Q1" ItemsSource="{Binding BarSeriesQ1}" ValuePath="Value" CategoryPath="Category" Stroke="Black" StrokeThickness="1" />
+                             <charts:BarSeries Title="Q2" ItemsSource="{Binding BarSeriesQ2}" ValuePath="Value" CategoryPath="Category" Stroke="Black" StrokeThickness="1" />
+                             <charts:BarSeries Title="Q3" ItemsSource="{Binding BarSeriesQ3}" ValuePath="Value" CategoryPath="Category" Stroke="Black" StrokeThickness="1" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Multi-series bar chart with distinct patterns per series" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

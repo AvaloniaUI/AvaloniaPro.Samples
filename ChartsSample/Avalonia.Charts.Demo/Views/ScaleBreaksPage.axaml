@@ -1,0 +1,151 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.ScaleBreaksPage"
+             x:CompileBindings="True" x:DataType="vm:ScaleBreaksViewModel">
+
+    <UserControl.DataContext>
+        <vm:ScaleBreaksViewModel/>
+    </UserControl.DataContext>
+
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <!-- Header -->
+            <TextBlock Text="Scale breaks allow skipping segments of the axis to hide gaps or visualize large outliers." 
+                       Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap" Margin="0,0,0,10" />
+
+            <!-- Toggleable Break -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Toggleable Break" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Use the checkbox to enable/disable the scale break (1,100 -> 99,900)." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    
+                    <CheckBox Content="Enable Break" IsChecked="{Binding IsBreakEnabled}" Margin="0,5"/>
+
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Data"
+                                               ItemsSource="{Binding Data}"
+                                               CategoryPath="Category"
+                                               ValuePath="Value"
+                                               Stroke="DodgerBlue"
+                                               StrokeThickness="2"
+                                               ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="True"/>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" Maximum="100200"
+                                                  ScaleBreaksSource="{Binding Breaks}"
+                                                  LabelFormat="N0"/>
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Multiple Breaks & Styling -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Multiple Breaks &amp; Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Example with two breaks and custom dashed lines." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Revenue"
+                                              ItemsSource="{Binding MultiBreakData}"
+                                              CategoryPath="Category"
+                                              ValuePath="Value"
+                                              Fill="{StaticResource SuggestionBrush}"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="False"/>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" Maximum="1000" LabelFormat="C0">
+                                <charts:NumericalAxis.ScaleBreaks>
+                                    <charts:ScaleBreak Start="250" End="450" StrokeThickness="2" Stroke="Orange"/>
+                                    <charts:ScaleBreak Start="600" End="800" StrokeThickness="1" Stroke="Gray"/>
+                                </charts:NumericalAxis.ScaleBreaks>
+                            </charts:NumericalAxis>
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Combo Chart (Mixed Series) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Combo Chart (Mixed Series)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Demonstrates that scale breaks apply consistently to multiple series types sharing the same axis." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+
+                    <charts:CartesianChart Height="300">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Revenue"
+                                              ItemsSource="{Binding ComboData}"
+                                              CategoryPath="Category"
+                                              ValuePath="Value"
+                                              Fill="{StaticResource AccentBrush}"/>
+                            <charts:LineSeries Title="Target"
+                                               ItemsSource="{Binding ComboLineData}"
+                                               CategoryPath="Category"
+                                               ValuePath="Value"
+                                               Stroke="Orange"
+                                               StrokeThickness="3"
+                                               ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="True"/>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" Maximum="700" LabelFormat="F0" ScaleBreaksSource="{Binding ComboBreaks}"/>
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Continuous X-Axis Break -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Continuous X Axis Break" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="A numerical horizontal axis can compress an unused X range while line-like series keep their true X positions."
+                               Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+
+                    <charts:CartesianChart Title="Sensor Readings With Skipped Time Range" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:NumericalAxis Title="Elapsed Time (ms)"
+                                                  Minimum="0"
+                                                  Maximum="160"
+                                                  MajorStep="20"
+                                                  LabelFormat="0"
+                                                  LabelFitMode="Auto"
+                                                  ShowGridLines="True">
+                                <charts:NumericalAxis.ScaleBreaks>
+                                    <charts:ScaleBreak Start="45" End="105" Stroke="#C2185B" StrokeThickness="2"/>
+                                </charts:NumericalAxis.ScaleBreaks>
+                            </charts:NumericalAxis>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="25" Maximum="80" LabelFormat="0" ShowGridLines="True"/>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Reading"
+                                               ItemsSource="{Binding ContinuousXBreakData}"
+                                               CategoryPath="X"
+                                               ValuePath="Y"
+                                               Stroke="#3949AB"
+                                               StrokeThickness="2"
+                                               MarkerFill="#3949AB"
+                                               MarkerSize="6"
+                                               ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,579 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="2400"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.TrendlinesPage"
+             x:CompileBindings="True" x:DataType="vm:TrendlinesViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Trendlines help visualize the general pattern or direction of data. Avalonia Charts supports 6 types of trendlines: Linear, Exponential, Logarithmic, Power, Polynomial, and Moving Average." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+
+            <!-- Trendline Types -->
+           
+            <!-- Linear Trendline -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Linear Trendline" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="A best-fit straight line used with simpler data sets that show a steady rate of change." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Revenue Growth" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Year" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Revenue (M)" Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Revenue" ItemsSource="{Binding LinearData}" 
+                                                CategoryPath="Category" ValuePath="Value"
+                                                StrokeThickness="2" ShowMarkers="True">
+                                <charts:LineSeries.Trendlines>
+                                    <charts:Trendline Type="Linear" Stroke="#E53935" StrokeThickness="2" ForwardForecast="1" />
+                                </charts:LineSeries.Trendlines>
+                            </charts:LineSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Linear trendline with forward forecast of 1 unit." FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Exponential Trendline -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Exponential Trendline" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="A curved line most useful when data values rise or fall at increasingly higher rates. Cannot be used with zero or negative values." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="User Growth" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Month" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Users" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:SplineSeries Title="Users" ItemsSource="{Binding ExponentialData}" 
+                                                CategoryPath="Category" ValuePath="Value"
+                                                StrokeThickness="2" ShowMarkers="True">
+                                <charts:LineSeries.Trendlines>
+                                    <charts:Trendline Type="Exponential" Stroke="#1E88E5" StrokeThickness="2" />
+                                </charts:LineSeries.Trendlines>
+                            </charts:SplineSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Exponential trendline for rapidly increasing data." FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Logarithmic Trendline -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Logarithmic Trendline" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="A best-fit curved line useful when the rate of change increases or decreases quickly and then levels out. Can use negative and positive values." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Learning Curve" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Practice Sessions" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Skill Level" Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Skill" ItemsSource="{Binding LogarithmicData}" 
+                                                CategoryPath="Category" ValuePath="Value"
+                                                StrokeThickness="2" ShowMarkers="True">
+                                <charts:LineSeries.Trendlines>
+                                    <charts:Trendline Type="Logarithmic" Stroke="#43A047" StrokeThickness="2" />
+                                </charts:LineSeries.Trendlines>
+                            </charts:LineSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Logarithmic trendline for data that increases quickly then levels off." FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Power Trendline -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Power Trendline" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="A curved line best used with data sets that compare measurements increasing at a specific rate (e.g., acceleration)." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Distance vs Time (Free Fall)" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Time (s)" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Distance (m)" Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="Distance" ItemsSource="{Binding PowerData}" 
+                                                CategoryPath="Category" ValuePath="Value">
+                                <charts:LineSeries.Trendlines>
+                                    <charts:Trendline Type="Power" Stroke="#FB8C00" StrokeThickness="2" />
+                                </charts:LineSeries.Trendlines>
+                            </charts:ScatterSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Power trendline fitting data that follows a power law (y = ax^b)." FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                </StackPanel>
+            </Border>
+            
+            <!-- Polynomial Trendline -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Polynomial Trendline (Order 2)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="A curved line used when data fluctuates. The polynomial order determines the number of fluctuations in the data." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Parabolic Data" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="X" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Y" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="Data" ItemsSource="{Binding PolynomialData}" 
+                                                CategoryPath="Category" ValuePath="Value">
+                                <charts:LineSeries.Trendlines>
+                                    <charts:Trendline Type="Polynomial" PolynomialOrder="2" Stroke="#8E24AA" StrokeThickness="2" />
+                                </charts:LineSeries.Trendlines>
+                            </charts:ScatterSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Polynomial trendline (Order 2) fitting a parabolic curve." FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Moving Average -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Moving Average (Period 3)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Smooths out fluctuations in data to show a pattern or trend more clearly. The period determines how many points to average." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Stock Price" Height="300">
+                        <charts:CartesianChart.HorizontalAxis>
+                             <charts:CategoryAxis Title="Day" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Price ($)" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                             <charts:LineSeries Title="Price" ItemsSource="{Binding RandomData}" 
+                                                CategoryPath="Category" ValuePath="Value"
+                                                StrokeThickness="2" ShowMarkers="True">
+                                <charts:LineSeries.Trendlines>
+                                    <charts:Trendline Type="MovingAverage" Period="3" Stroke="#00897B" StrokeThickness="3" />
+                                </charts:LineSeries.Trendlines>
+                            </charts:LineSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Moving Average (Period 3) smooths out fluctuations." FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Standalone ChartTrendlineSeries -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Standalone ChartTrendlineSeries" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="This sample uses the overlay series type directly, instead of the attached Trendline collection syntax."
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Explicit Overlay Series" Height="320" ShowLegend="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Index" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries x:Name="StandaloneTrendlineSource"
+                                                  Title="Observed Data"
+                                                  ItemsSource="{Binding StandaloneTrendlineData}"
+                                                  CategoryPath="Category"
+                                                  ValuePath="Value"
+                                                  Fill="#455A64"
+                                                  MarkerSize="8" />
+                            <charts:ChartTrendlineSeries Title="Polynomial Overlay"
+                                                         SourceSeries="{Binding #StandaloneTrendlineSource}"
+                                                         TrendlineType="Polynomial"
+                                                         PolynomialOrder="3"
+                                                         Stroke="#D32F2F"
+                                                         StrokeThickness="2.5"
+                                                         Extend="0.15" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Useful when the trendline should be treated as its own series in the legend or series collection." FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Customization -->
+            
+            <!-- Multiple Trendlines on Single Series -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Multiple Trendlines" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="You can add multiple trendlines to a single series to compare different trend types." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Sales Analysis - Multiple Trends" Height="350">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Quarter" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Sales (K)" Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Sales" ItemsSource="{Binding SalesData}" 
+                                                CategoryPath="Category" ValuePath="Value">
+                                <charts:BarSeries.Trendlines>
+                                    <charts:Trendline Type="Linear" Stroke="#E53935" StrokeThickness="2" />
+                                    <charts:Trendline Type="Polynomial" PolynomialOrder="2" Stroke="#1E88E5" StrokeThickness="2">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="4,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                    <charts:Trendline Type="MovingAverage" Period="2" Stroke="#43A047" StrokeThickness="2">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="2,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                </charts:BarSeries.Trendlines>
+                            </charts:BarSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <WrapPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                            <Border Width="20" Height="3" Background="#E53935" VerticalAlignment="Center" />
+                            <TextBlock Text="Linear" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                            <Border Width="20" Height="3" Background="#1E88E5" VerticalAlignment="Center" />
+                            <TextBlock Text="Polynomial (dashed)" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,0,8">
+                            <Border Width="20" Height="3" Background="#43A047" VerticalAlignment="Center" />
+                            <TextBlock Text="Moving Avg (dotted)" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Dash Patterns -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Custom Dash Patterns" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Use StrokeDashStyle to create custom line patterns for trendlines." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Dash Pattern Examples" Height="350">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="X" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Y" Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Data" ItemsSource="{Binding LinearData}" 
+                                                CategoryPath="Category" ValuePath="Value"
+                                                StrokeThickness="2" ShowMarkers="True">
+                                <charts:LineSeries.Trendlines>
+                                    <!-- Solid -->
+                                    <charts:Trendline Type="Linear" Stroke="#E53935" StrokeThickness="3" />
+                                    <!-- Dashed -->
+                                    <charts:Trendline Type="Linear" Stroke="#1E88E5" StrokeThickness="3" BackwardForecast="0.5">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="8,4"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                    <!-- Dotted -->
+                                    <charts:Trendline Type="Linear" Stroke="#43A047" StrokeThickness="3" ForwardForecast="0.5">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="2,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                    <!-- Dash-Dot -->
+                                    <charts:Trendline Type="Linear" Stroke="#FB8C00" StrokeThickness="3" ForwardForecast="1">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="8,2,2,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                </charts:LineSeries.Trendlines>
+                            </charts:LineSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <WrapPanel>
+                        <TextBlock Text="Solid" FontSize="12" Foreground="#E53935" Margin="0,0,15,8" />
+                        <TextBlock Text="Dashed (8,4)" FontSize="12" Foreground="#1E88E5" Margin="0,0,15,8" />
+                        <TextBlock Text="Dotted (2,2)" FontSize="12" Foreground="#43A047" Margin="0,0,15,8" />
+                        <TextBlock Text="Dash-Dot (8,2,2,2)" FontSize="12" Foreground="#FB8C00" Margin="0,0,0,8" />
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Forward/Backward Forecasting -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Forecasting (Forward &amp; Backward)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Extend trendlines beyond the data range to predict future or past values." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Revenue Forecast" Height="350">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Year" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Revenue (M)" Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Actual Revenue" ItemsSource="{Binding ForecastData}" 
+                                                CategoryPath="Category" ValuePath="Value">
+                                <charts:BarSeries.Trendlines>
+                                    <!-- Forward forecast only -->
+                                    <charts:Trendline Type="Linear" Stroke="#1E88E5" StrokeThickness="2" 
+                                                       ForwardForecast="2" BackwardForecast="0" />
+                                    <!-- Backward forecast only -->
+                                    <charts:Trendline Type="Linear" Stroke="#E53935" StrokeThickness="2" 
+                                                       ForwardForecast="0" BackwardForecast="1">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="4,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                </charts:BarSeries.Trendlines>
+                            </charts:BarSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <WrapPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                            <Border Width="20" Height="3" Background="#1E88E5" VerticalAlignment="Center" />
+                            <TextBlock Text="Forward Forecast (+2 units)" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,0,8">
+                            <Border Width="20" Height="3" Background="#E53935" VerticalAlignment="Center" />
+                            <TextBlock Text="Backward Forecast (-1 unit)" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Stroke Thickness Variations -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Stroke Thickness &amp; Colors" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Customize stroke thickness and colors to highlight different trends." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Customized Appearance" Height="350">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Month" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="Data" ItemsSource="{Binding ExponentialData}" 
+                                                CategoryPath="Category" ValuePath="Value"
+                                                FillOpacity="0.3">
+                                <charts:LineSeries.Trendlines>
+                                    <charts:Trendline Type="Exponential" Stroke="#FF5722" StrokeThickness="4" />
+                                </charts:LineSeries.Trendlines>
+                            </charts:AreaSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Thick exponential trendline (4px) with custom color." FontStyle="Italic" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Comparison -->
+          
+            <!-- All Types Comparison -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="All 6 Trendline Types on Same Data" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Compare how different trendline types fit the same dataset. Each type is suited for different data patterns." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Trendline Comparison" Height="400">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="X" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Y" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="Data Points" ItemsSource="{Binding ComparisonData}" 
+                                                CategoryPath="Category" ValuePath="Value"
+                                                MarkerSize="10">
+                                <charts:LineSeries.Trendlines>
+                                    <charts:Trendline Type="Linear" Stroke="#E53935" StrokeThickness="2" />
+                                    <charts:Trendline Type="Exponential" Stroke="#1E88E5" StrokeThickness="2">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="6,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                    <charts:Trendline Type="Logarithmic" Stroke="#43A047" StrokeThickness="2">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="4,4"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                    <charts:Trendline Type="Power" Stroke="#FB8C00" StrokeThickness="2">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="8,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                    <charts:Trendline Type="Polynomial" PolynomialOrder="3" Stroke="#8E24AA" StrokeThickness="2">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="2,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                    <charts:Trendline Type="MovingAverage" Period="2" Stroke="#00ACC1" StrokeThickness="2">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="10,2,2,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                </charts:LineSeries.Trendlines>
+                            </charts:ScatterSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <WrapPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                                <Border Width="20" Height="3" Background="#E53935" VerticalAlignment="Center" />
+                                <TextBlock Text="Linear" FontSize="11" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                                <Border Width="20" Height="3" Background="#1E88E5" VerticalAlignment="Center" />
+                                <TextBlock Text="Exponential" FontSize="11" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                                <Border Width="20" Height="3" Background="#43A047" VerticalAlignment="Center" />
+                                <TextBlock Text="Logarithmic" FontSize="11" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                                <Border Width="20" Height="3" Background="#FB8C00" VerticalAlignment="Center" />
+                                <TextBlock Text="Power" FontSize="11" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                                <Border Width="20" Height="3" Background="#8E24AA" VerticalAlignment="Center" />
+                                <TextBlock Text="Polynomial (3)" FontSize="11" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,0,8">
+                                <Border Width="20" Height="3" Background="#00ACC1" VerticalAlignment="Center" />
+                                <TextBlock Text="Moving Avg" FontSize="11" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Polynomial Order Comparison -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Polynomial Order Comparison" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Higher polynomial orders can fit more complex patterns but may overfit noisy data." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Polynomial Orders 2, 3, 4" Height="350">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="X" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Y" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="Noisy Data" ItemsSource="{Binding NoisyData}" 
+                                                CategoryPath="Category" ValuePath="Value"
+                                                MarkerSize="8">
+                                <charts:LineSeries.Trendlines>
+                                    <charts:Trendline Type="Polynomial" PolynomialOrder="2" Stroke="#E53935" StrokeThickness="2" />
+                                    <charts:Trendline Type="Polynomial" PolynomialOrder="3" Stroke="#1E88E5" StrokeThickness="2">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="6,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                    <charts:Trendline Type="Polynomial" PolynomialOrder="4" Stroke="#43A047" StrokeThickness="2">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="2,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                </charts:LineSeries.Trendlines>
+                            </charts:ScatterSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <WrapPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                            <Border Width="20" Height="3" Background="#E53935" VerticalAlignment="Center" />
+                            <TextBlock Text="Order 2 (Quadratic)" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                            <Border Width="20" Height="3" Background="#1E88E5" VerticalAlignment="Center" />
+                            <TextBlock Text="Order 3 (Cubic)" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,0,8">
+                            <Border Width="20" Height="3" Background="#43A047" VerticalAlignment="Center" />
+                            <TextBlock Text="Order 4 (Quartic)" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Moving Average Period Comparison -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="1" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Moving Average Period Comparison" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Larger periods create smoother lines but may lag behind rapid changes." 
+                               TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <charts:CartesianChart Title="Moving Average Periods 2, 3, 5" Height="350">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Day" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Price ($)" />
+                        </charts:CartesianChart.VerticalAxis>
+                        
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Daily Price" ItemsSource="{Binding ExtendedRandomData}" 
+                                                CategoryPath="Category" ValuePath="Value"
+                                                StrokeThickness="1" Stroke="Gray" ShowMarkers="True" MarkerSize="4">
+                                <charts:LineSeries.Trendlines>
+                                    <charts:Trendline Type="MovingAverage" Period="2" Stroke="#E53935" StrokeThickness="2" />
+                                    <charts:Trendline Type="MovingAverage" Period="3" Stroke="#1E88E5" StrokeThickness="2">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="6,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                    <charts:Trendline Type="MovingAverage" Period="5" Stroke="#43A047" StrokeThickness="2">
+                                        <charts:Trendline.StrokeDashStyle>
+                                            <DashStyle Dashes="2,2"/>
+                                        </charts:Trendline.StrokeDashStyle>
+                                    </charts:Trendline>
+                                </charts:LineSeries.Trendlines>
+                            </charts:LineSeries>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <WrapPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                            <Border Width="20" Height="3" Background="#E53935" VerticalAlignment="Center" />
+                            <TextBlock Text="Period 2 (Responsive)" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,20,8">
+                            <Border Width="20" Height="3" Background="#1E88E5" VerticalAlignment="Center" />
+                            <TextBlock Text="Period 3 (Balanced)" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="5" Margin="0,0,0,8">
+                            <Border Width="20" Height="3" Background="#43A047" VerticalAlignment="Center" />
+                            <TextBlock Text="Period 5 (Smooth)" FontSize="12" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

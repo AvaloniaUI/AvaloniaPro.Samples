@@ -1,0 +1,100 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:TooltipsViewModel" 
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1200"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.TooltipsPage">
+    
+    <ScrollViewer>
+            <StackPanel Spacing="20" Margin="20">
+                <StackPanel.Resources>
+                    <!-- Custom Tooltip Template -->
+                    <DataTemplate x:Key="CustomTooltipTemplate" x:CompileBindings="True" x:DataType="charts:TooltipDataContext">
+                        <Panel>
+                        <StackPanel Spacing="4" DataContext="{Binding DataItem}" x:CompileBindings="True" x:DataType="vm:ProductData">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <PathIcon Data="M6 2L3 6V20A2 2 0 0 0 5 22H19A2 2 0 0 0 21 20V6L18 2H6ZM16 10A4 4 0 0 1 8 10"
+                                          Width="16" Height="16" Foreground="{Binding $parent[TextBlock].Foreground}" />
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Border Height="1" Background="LightGray" Margin="0,2" />
+                            <TextBlock Text="{Binding UnitsSold, StringFormat='Units: {0}'}" FontSize="12" />
+                            <TextBlock Text="{Binding Price, StringFormat='Price: {0:C}'}" FontSize="12" />
+                            <TextBlock Text="{Binding Revenue, StringFormat='Revenue: {0:C}'}" FontSize="12" Foreground="LimeGreen" FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Panel>
+                    </DataTemplate>
+
+                </StackPanel.Resources>
+            
+            <TextBlock Text="Tooltips display detailed information about a specific data point when hovering over it." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            
+            <!-- Basic Tooltips -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Basic Tooltips" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="BasicTooltipsChart" Height="250" IsTooltipEnabled="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Month" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Sales" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Sales" ItemsSource="{Binding BasicTooltipData}" 
+                                                 CategoryPath="Month" ValuePath="Value"
+                                                 ShowMarkers="True" MarkerSize="10" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Hover over data points to see tooltips. IsTooltipEnabled=True on the chart." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Per-Series Tooltips -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Per-Series Control" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="PerSeriesTooltipsChart" Height="250" IsTooltipEnabled="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Quarter" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Revenue" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="2023 (Tooltip ON)" ItemsSource="{Binding Series1Data}" IsTooltipEnabled="True" />
+                            <charts:BarSeries Title="2024 (Tooltip OFF)" ItemsSource="{Binding Series2Data}" IsTooltipEnabled="False" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Series 1 has tooltips enabled, Series 2 has IsTooltipEnabled=False." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Custom Template Tooltips -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Custom Tooltip Template" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="CustomTooltipsChart" Height="250" IsTooltipEnabled="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Product" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Units Sold" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Products" ItemsSource="{Binding CustomTooltipData}"
+                                                CategoryPath="Name" ValuePath="UnitsSold"
+                                                TooltipTemplate="{StaticResource CustomTooltipTemplate}" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Uses a custom DataTemplate with styled content via TooltipTemplate property." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

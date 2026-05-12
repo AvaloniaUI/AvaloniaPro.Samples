@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:CompileBindings="True" x:DataType="vm:ExportingViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.ExportingPage">
+    
+    <ScrollViewer Padding="20">
+        <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+            <StackPanel Spacing="10">
+                <TextBlock Text="Export your charts to image formats like PNG and JPG." 
+                           TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" Margin="0,0,0,10"/>
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Export Sample" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}"/>
+                    <WrapPanel>
+                        <Button Name="ExportPngBtn" Content="Export to PNG" Click="OnExportPngClick" Margin="0,0,10,8" />
+                        <Button Name="ExportJpgBtn" Content="Export to JPG" Click="OnExportJpgClick" Margin="0,0,0,8" />
+                    </WrapPanel>
+                </StackPanel>
+                
+                <charts:CartesianChart Name="ExportChart" Title="Monthly Sales" Height="400">
+                     <charts:CartesianChart.Series>
+                         <charts:BarSeries Title="Revenue" ItemsSource="{Binding RevenueData}" Fill="SteelBlue" />
+                     </charts:CartesianChart.Series>
+                     <charts:CartesianChart.Annotations>
+                         <chartsEnterprise:LineAnnotation Value="250" Orientation="Horizontal" 
+                                                  Stroke="Red" StrokeThickness="2" 
+                                                  Label="Target">
+                            <chartsEnterprise:LineAnnotation.DashStyle>
+                                <DashStyle Dashes="2,2"/>
+                            </chartsEnterprise:LineAnnotation.DashStyle>
+                         </chartsEnterprise:LineAnnotation>
+                     </charts:CartesianChart.Annotations>
+                     <charts:CartesianChart.HorizontalAxis>
+                         <charts:CategoryAxis Title="Month" />
+                     </charts:CartesianChart.HorizontalAxis>
+                     <charts:CartesianChart.VerticalAxis>
+                         <charts:NumericalAxis Title="Revenue ($k)" Minimum="0" />
+                     </charts:CartesianChart.VerticalAxis>
+                </charts:CartesianChart>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</UserControl>

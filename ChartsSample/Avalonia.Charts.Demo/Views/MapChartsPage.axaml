@@ -1,0 +1,539 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             xmlns:models="clr-namespace:Avalonia.Charts.Demo.Models"
+             xmlns:converters="clr-namespace:Avalonia.Charts.Demo.Converters"
+             xmlns:collections="clr-namespace:System.Collections;assembly=System.Runtime"
+             x:CompileBindings="True" x:DataType="vm:MapChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.MapChartsPage">
+
+    <UserControl.Resources>
+        <converters:DictionaryValueConverter x:Key="DictionaryValueConverter" />
+        <DataTemplate x:Key="MapFallbackTooltip" x:CompileBindings="True" x:DataType="collections:IDictionary">
+            <StackPanel Spacing="4" MinWidth="120">
+                <TextBlock Text="{CompiledBinding ., Converter={StaticResource DictionaryValueConverter}, ConverterParameter=NAME}" FontWeight="Bold"/>
+                <TextBlock Text="No Data" Foreground="Gray" FontSize="11"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Map charts allow detailed geospatial data visualization using shapefiles, heatmaps, and markers." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <!-- Shape Layer (World Density) - Basic Choropleth -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Shape Layer" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Render GeoJSON data as geographical area shapes with color mapping based on data values." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <chartsEnterprise:ShapeMap Name="ShapeLayerSample" Title="World Population Density" Height="400" ShowLegend="True" LegendPosition="Bottom">
+                        <chartsEnterprise:ShapeMap.Layers>
+                            <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.World}"
+                                                 GeoJsonIdPath="ISO_A2"
+                                                 RegionPath="Code"
+                                                 ValuePath="Density"
+                                                 MinValue="0"
+                                                 MaxValue="500"
+                                                 LowBrush="#E8F5E9"
+                                                 HighBrush="#1B5E20"
+                                                 ShowLabels="True"
+                                                 LabelPath="Name"
+                                                 ItemsSource="{Binding ShapeLayerData}">
+                                <charts:ShapeLayer.TooltipTemplate>
+                                    <DataTemplate x:DataType="vm:MapChartsViewModel+CountryDensityData">
+                                        <Border Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                                                BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
+                                                BorderThickness="1"
+                                                Padding="10"
+                                                CornerRadius="6"
+                                                BoxShadow="0 2 8 0 #20000000">
+                                            <StackPanel Spacing="4">
+                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                                <TextBlock Text="{Binding Density, StringFormat='Density: {0:N1} people/km²'}" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </charts:ShapeLayer.TooltipTemplate>
+                            </charts:ShapeLayer>
+                        </chartsEnterprise:ShapeMap.Layers>
+                    </chartsEnterprise:ShapeMap>
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Choropleth Map Control" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="A simplified control for creating Choropleth maps with less boilerplate." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <chartsEnterprise:ChoroplethMap Name="ChoroplethSample" Title="Population Density (Wrapper)" Height="400">
+                        <chartsEnterprise:ChoroplethMap.DataLayer>
+                            <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.World}"
+                                                 GeoJsonIdPath="ISO_A2"
+                                                 MinValue="0"
+                                                 MaxValue="500"
+                                                 RegionPath="Code"
+                                                 ValuePath="Density"
+                                                 LowBrush="#E3F2FD"
+                                                 HighBrush="#1565C0"
+                                                 Stroke="#90A4AE"
+                                                 ItemsSource="{Binding ShapeLayerData}">
+                                <charts:ShapeLayer.TooltipTemplate>
+                                    <DataTemplate x:DataType="vm:MapChartsViewModel+CountryDensityData">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding Density, StringFormat='Density: {0:N1} people/km²'}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </charts:ShapeLayer.TooltipTemplate>
+                            </charts:ShapeLayer>
+                        </chartsEnterprise:ChoroplethMap.DataLayer>
+                    </chartsEnterprise:ChoroplethMap>
+                </StackPanel>
+            </Border>
+
+            <!-- Country-Specific (Spain) - Custom GeoJSON -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Country-Specific Map - Spain" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Use custom GeoJSON data to show specific countries with data labels. Demonstrates Spain's autonomous communities." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <chartsEnterprise:ShapeMap Name="SpainSample" Title="Spain - Autonomous Communities" Height="400" ShowLegend="True" LegendPosition="Bottom">
+                        <chartsEnterprise:ShapeMap.Layers>
+                            <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.Spain}"
+                                                 GeoJsonIdPath="name"
+                                                 RegionPath="Region"
+                                                 ValuePath="Population"
+                                                 MinValue="0"
+                                                 MaxValue="8000000"
+                                                 LowBrush="#FFF8E1"
+                                                 HighBrush="#E65100"
+                                                 Stroke="#5D4037"
+                                                 StrokeThickness="1.0"
+                                                 ShowLabels="True"
+                                                 LabelPath="ShortName"
+                                                 ItemsSource="{Binding SpainRegionsData}">
+                                <charts:ShapeLayer.TooltipTemplate>
+                                    <DataTemplate x:DataType="vm:MapChartsViewModel+RegionData">
+                                        <Border Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                                                BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
+                                                BorderThickness="1"
+                                                Padding="10"
+                                                CornerRadius="6"
+                                                BoxShadow="0 2 8 0 #20000000">
+                                            <StackPanel Spacing="4">
+                                                <TextBlock Text="{Binding Region}" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                                <TextBlock Text="{Binding Population, StringFormat='Population: {0:N0} people'}" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </charts:ShapeLayer.TooltipTemplate>
+                            </charts:ShapeLayer>
+                            <charts:MarkerLayer Markers="{Binding SpainMarkers}" />
+                        </chartsEnterprise:ShapeMap.Layers>
+                    </chartsEnterprise:ShapeMap>
+                </StackPanel>
+            </Border>
+
+            <!-- Markers Layer (Airports) - Point Data -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Markers Layer" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Display markers at specific geographic locations with customizable icons and labels." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <chartsEnterprise:ShapeMap Name="MarkersSample" Title="World Airports" Height="400" ShowLegend="False">
+                        <chartsEnterprise:ShapeMap.Layers>
+                            <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.World}"
+                                                 GeoJsonIdPath="ISO_A2"
+                                                 LowBrush="#ECEFF1"
+                                                 HighBrush="#ECEFF1"
+                                                 Stroke="#B0BEC5"
+                                                 StrokeThickness="0.3" />
+                            <charts:MarkerLayer Markers="{Binding AirportMarkers}" />
+                        </chartsEnterprise:ShapeMap.Layers>
+                    </chartsEnterprise:ShapeMap>
+                </StackPanel>
+            </Border>
+
+            <!-- Map Bubbles - Visualizing Magnitude -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Map Bubbles" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Add information to shapes with bubbles sized by data values like population or sales." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <chartsEnterprise:ShapeMap Name="BubbleSample" Title="Major Cities by Population" Height="400" ShowLegend="True" LegendPosition="Bottom">
+                        <chartsEnterprise:ShapeMap.Layers>
+                            <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.World}"
+                                                 GeoJsonIdPath="ISO_A2"
+                                                 LowBrush="#E3F2FD"
+                                                 HighBrush="#E3F2FD"
+                                                 StrokeThickness="0.3" />
+                            <charts:BubbleLayer LatitudePath="Lat"
+                                                  LongitudePath="Lon"
+                                                  SizePath="Population"
+                                                  LabelPath="City"
+                                                  MinBubbleSize="6"
+                                                  MaxBubbleSize="45"
+                                                  Fill="#B4F44336"
+                                                  ShowLabels="True"
+                                                  ItemsSource="{Binding CityBubbles}">
+                                <charts:BubbleLayer.TooltipTemplate>
+                                    <DataTemplate x:DataType="vm:MapChartsViewModel+CityData">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="{Binding City}" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding Population, StringFormat='Pop: {0:N1}M'}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </charts:BubbleLayer.TooltipTemplate>
+                            </charts:BubbleLayer>
+                        </chartsEnterprise:ShapeMap.Layers>
+                    </chartsEnterprise:ShapeMap>
+                </StackPanel>
+            </Border>
+
+            <!-- Routes and Connections - Paths -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Routes and Lines" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Show routes and connections between geographic points with curved or straight lines." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <chartsEnterprise:ShapeMap Name="RoutesSample" Title="International Trade Routes" Height="400" ShowLegend="False">
+                        <chartsEnterprise:ShapeMap.Layers>
+                            <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.World}"
+                                                 GeoJsonIdPath="ISO_A2"
+                                                 LowBrush="#263238"
+                                                 HighBrush="#263238"
+                                                 Stroke="#37474F"
+                                                 StrokeThickness="0.5" />
+                            <charts:LineLayer FromLatitudePath="FromLat"
+                                                FromLongitudePath="FromLon"
+                                                ToLatitudePath="ToLat"
+                                                ToLongitudePath="ToLon"
+                                                ValuePath="Volume"
+                                                IsCurved="True"
+                                                MinLineThickness="1"
+                                                MaxLineThickness="5"
+                                                Stroke="#00BCD4"
+                                                ShowEndpoints="True"
+                                                ItemsSource="{Binding TradeRoutes}">
+                                <charts:LineLayer.TooltipTemplate>
+                                    <DataTemplate x:DataType="vm:MapChartsViewModel+RouteData">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="Trade Route" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding Volume, StringFormat='Volume: {0:N1}M tons'}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </charts:LineLayer.TooltipTemplate>
+                            </charts:LineLayer>
+                        </chartsEnterprise:ShapeMap.Layers>
+                    </chartsEnterprise:ShapeMap>
+                </StackPanel>
+            </Border>
+
+            <!-- Heatmap Layer - Density Visualization -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Heatmap Layer" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Visualize data density with radial gradient overlays. Intensity determines color warmth and radius." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <chartsEnterprise:ShapeMap Name="HeatmapSample" Title="Global Earthquake Activity" Height="400" ShowLegend="False">
+                        <chartsEnterprise:ShapeMap.Layers>
+                            <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.World}"
+                                                 GeoJsonIdPath="ISO_A2"
+                                                 LowBrush="#F5F5F5"
+                                                 HighBrush="#F5F5F5"
+                                                 Stroke="#E0E0E0"
+                                                 StrokeThickness="0.3" />
+                            <charts:HeatmapLayer LatitudePath="Lat"
+                                                   LongitudePath="Lon"
+                                                   IntensityPath="Magnitude"
+                                                   MaxIntensity="9.0"
+                                                   Radius="50"
+                                                   LowBrush="#4000FF00"
+                                                   MediumBrush="#CCFFFF00"
+                                                   HighBrush="#FFFF0000"
+                                                   ItemsSource="{Binding EarthquakeData}">
+                                <charts:HeatmapLayer.TooltipTemplate>
+                                    <DataTemplate x:DataType="vm:MapChartsViewModel+EarthquakeItem">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="Earthquake" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding Magnitude, StringFormat='Magnitude: {0:N1}'}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </charts:HeatmapLayer.TooltipTemplate>
+                            </charts:HeatmapLayer>
+                        </chartsEnterprise:ShapeMap.Layers>
+                    </chartsEnterprise:ShapeMap>
+                </StackPanel>
+            </Border>
+
+            <!-- Interactive &amp; Selection - Advanced Interaction -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Interactive &amp; Selection" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Demonstrates selection, hover effects, interactive markers, legends, color mapping, and tooltips. Click countries to select them." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <Grid RowDefinitions="Auto,*">
+                        <TextBlock Name="SelectionStatusText" Text="{Binding SelectionMessage}" Margin="0,0,0,10" FontWeight="SemiBold"/>
+                        <chartsEnterprise:ShapeMap Grid.Row="1" Name="InteractiveSample" Title="Interactive World Map" Height="400" ShowLegend="True" LegendPosition="Bottom">
+                             <chartsEnterprise:ShapeMap.Layers>
+
+
+                                <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.World}"
+                                                     GeoJsonIdPath="ISO_A2"
+                                                     RegionPath="Code"
+                                                     ValuePath="Value"
+                                                     MinValue="0"
+                                                     MaxValue="100"
+                                                     LowBrush="#E3F2FD"
+                                                     HighBrush="#1565C0"
+                                                     Stroke="#BDBDBD"
+                                                     StrokeThickness="0.5"
+                                                     SelectionMode="Single"
+                                                     SelectionBrush="#FFC107"
+                                                     HoverBrush="#BBDEFB"
+                                                     ItemsSource="{Binding InteractiveMapData}"
+                                                     SelectedItem="{Binding SelectedCountry}">
+                                    <charts:ShapeLayer.ColorMappings>
+                                        <charts:RangeColorMapping From="0" To="30" Brush="#FFEBEE" Label="Low (&lt;30)" />
+                                        <charts:RangeColorMapping From="30" To="60" Brush="#FFCDD2" Label="Medium (30-60)" />
+                                        <charts:RangeColorMapping From="60" To="80" Brush="#EF9A9A" Label="High (60-80)" />
+                                        <charts:RangeColorMapping From="80" To="100" Brush="#E57373" Label="Very High (&gt;80)" />
+                                    </charts:ShapeLayer.ColorMappings>
+                                    <charts:ShapeLayer.Legend>
+                                        <charts:MapLegend Orientation="Horizontal" />
+                                    </charts:ShapeLayer.Legend>
+                                    <charts:ShapeLayer.TooltipTemplate>
+                                        <DataTemplate x:CompileBindings="True" x:DataType="vm:MapChartsViewModel+CountryData">
+                                            <StackPanel Spacing="6" MinWidth="180">
+                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14" />
+                                                <TextBlock Text="{Binding Region}" Foreground="Gray" FontSize="11" Margin="0,-4,0,4" />
+                                                <Grid ColumnDefinitions="Auto,8,*" RowDefinitions="Auto,Auto,Auto">
+                                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Population:" Foreground="Gray" FontSize="12" />
+                                                    <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Population, StringFormat='{}{0:N1}M'}" FontWeight="SemiBold" FontSize="12" />
+                                                    
+                                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="GDP:" Foreground="Gray" FontSize="12" />
+                                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding GDP, StringFormat='{}${0:N1}B'}" FontWeight="SemiBold" FontSize="12" />
+                                                    
+                                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Score:" Foreground="Gray" FontSize="12" />
+                                                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Value}" FontWeight="SemiBold" FontSize="12" />
+                                                </Grid>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </charts:ShapeLayer.TooltipTemplate>
+                                </charts:ShapeLayer>
+                                <charts:MarkerLayer LatitudePath="Latitude"
+                                                      LongitudePath="Longitude"
+                                                      LabelPath="Label"
+                                                      MarkerSize="15"
+                                                      MarkerType="Pin"
+                                                      Fill="Red"
+                                                      Stroke="White"
+                                                      ItemsSource="{Binding InteractiveMarkers}" />
+                             </chartsEnterprise:ShapeMap.Layers>
+                        </chartsEnterprise:ShapeMap>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Combined Layers - Multi-layer Composition -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Sublayers" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Combine multiple layers: shapes, bubbles, and routes for rich data visualization." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <chartsEnterprise:ShapeMap Name="CombinedSample" Title="Global Economic Overview" Height="450" ShowLegend="True" LegendPosition="Bottom">
+                        <chartsEnterprise:ShapeMap.Layers>
+                            <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.World}"
+                                                 GeoJsonIdPath="ISO_A2"
+                                                 RegionPath="Code"
+                                                 ValuePath="GDP"
+                                                 MinValue="0"
+                                                 MaxValue="25000"
+                                                 LowBrush="#FFF3E0"
+                                                 HighBrush="#E65100"
+                                                 StrokeThickness="0.3"
+                                                 ItemsSource="{Binding GdpData}" />
+                            <charts:BubbleLayer LatitudePath="Lat"
+                                                  LongitudePath="Lon"
+                                                  SizePath="MarketCap"
+                                                  LabelPath="Exchange"
+                                                  MinBubbleSize="8"
+                                                  MaxBubbleSize="35"
+                                                  Fill="#C82196F3"
+                                                  ShowLabels="True"
+                                                  ItemsSource="{Binding FinancialCenters}">
+                                <charts:BubbleLayer.TooltipTemplate>
+                                    <DataTemplate x:DataType="vm:MapChartsViewModel+ExchangeItem">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="{Binding Exchange}" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding MarketCap, StringFormat='Market Cap: ${0:N1}T'}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </charts:BubbleLayer.TooltipTemplate>
+                            </charts:BubbleLayer>
+                            <charts:LineLayer FromLatitudePath="FromLat"
+                                                FromLongitudePath="FromLon"
+                                                ToLatitudePath="ToLat"
+                                                ToLongitudePath="ToLon"
+                                                ValuePath="Flow"
+                                                IsCurved="True"
+                                                MinLineThickness="1"
+                                                MaxLineThickness="4"
+                                                Stroke="#9C27B0"
+                                                ShowEndpoints="False"
+                                                ItemsSource="{Binding InvestmentFlows}">
+                                <charts:LineLayer.TooltipTemplate>
+                                    <DataTemplate x:DataType="vm:MapChartsViewModel+InvestmentFlowItem">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock Text="Investment Flow" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding Flow, StringFormat='Flow: ${0:N1}B'}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </charts:LineLayer.TooltipTemplate>
+                            </charts:LineLayer>
+                        </chartsEnterprise:ShapeMap.Layers>
+                    </chartsEnterprise:ShapeMap>
+                </StackPanel>
+            </Border>
+
+            <!-- Dynamic Layers: add, remove, and rebind layer data at runtime -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Dynamic Map Layers" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Bind ShapeMap.Layers to a ViewModel collection, then add/remove layers, mutate vector data, and rebind marker sources at runtime." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" TextWrapping="Wrap" />
+                    <WrapPanel Orientation="Horizontal" ItemHeight="40" Margin="0,0,0,4">
+                        <Button Content="Add Route" Command="{Binding AddDynamicRouteCommand}" Margin="0,0,8,8" />
+                        <Button Content="Toggle Routes Layer" Command="{Binding ToggleDynamicRoutesCommand}" Margin="0,0,8,8" />
+                        <Button Content="Toggle Heat Layer" Command="{Binding ToggleDynamicHeatCommand}" Margin="0,0,8,8" />
+                        <Button Content="Swap Marker Source" Command="{Binding SwapDynamicMarkersCommand}" Margin="0,0,8,8" />
+                        <Button Content="Reset" Command="{Binding ResetDynamicLayersCommand}" Margin="0,0,0,8" />
+                    </WrapPanel>
+                    <TextBlock Text="{Binding DynamicLayerStatus}" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                    <chartsEnterprise:ShapeMap Name="DynamicLayersSample"
+                                                Title="Dynamic Operations Map"
+                                                Height="420"
+                                                ShowLegend="False"
+                                                Layers="{Binding DynamicMapLayers}" />
+                </StackPanel>
+            </Border>
+            
+            <!-- Map with Pie Charts Overlay -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Map with Pie Charts" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Overlay pie charts at specific geographic locations to show distribution data per region/city." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    <Grid>
+                        <chartsEnterprise:ShapeMap Name="PieMapSample" Title="City Market Segments" Height="450" ShowLegend="False">
+                            <chartsEnterprise:ShapeMap.Layers>
+                                <!-- Base Map Layer -->
+                                <charts:ShapeLayer GeoJson="{x:Static models:SampleGeoJsonData.World}" 
+                                                     GeoJsonIdPath="ISO_A2"
+                                                     StrokeThickness="0.5" 
+                                                     Stroke="#90A4AE"
+                                                     LowBrush="#E1F5FE" 
+                                                     HighBrush="#E1F5FE" />
+                                                     
+                                <!-- Pie Charts Layer -->
+                                <charts:PieChartMapLayer ItemsSource="{Binding CitiesWithPieData}"
+                                                           LatitudePath="Latitude"
+                                                           LongitudePath="Longitude"
+                                                           ValuesPath="Data"
+                                                           ValuePath="Value"
+                                                           LabelPath="Category"
+                                                           PieSize="40"
+                                                           Opacity="0.9"
+                                                           Palette="{Binding PieChartPalette}" />
+                            </chartsEnterprise:ShapeMap.Layers>
+                        </chartsEnterprise:ShapeMap>
+
+                        <!-- Legend Overlay -->
+                        <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                                Background="{DynamicResource SurfaceBackground}" 
+                                Padding="12" Margin="20" CornerRadius="6" 
+                                BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="1"
+                                BoxShadow="0 2 10 0 #20000000">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Market Segments" FontWeight="SemiBold" FontSize="12"/>
+                                <ItemsControl ItemsSource="{Binding PieChartLegend}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,2">
+                                                <Border Width="10" Height="10" Background="{Binding Fill}" CornerRadius="2"/>
+                                                <TextBlock Text="{Binding Label}" FontSize="11" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+    </Border>
+
+            <!-- Flight Seat Map (Non-Geographic) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Non-Geographic Map: Flight Seat Map" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Demonstrates using ShapeMap for arbitrary coordinate systems (like seating charts) with custom GeoJSON generation." Foreground="{DynamicResource TextMutedBrush}" FontSize="12" />
+                    
+                    <Grid RowDefinitions="Auto,400">
+                         <TextBlock Text="{Binding SeatSelectionMessage}" Margin="0,0,0,10" FontWeight="SemiBold"/>
+                         
+                         <chartsEnterprise:ShapeMap Grid.Row="1" Name="SeatMapSample" Title="Aircraft Seating Layout" ShowLegend="False">
+                            <chartsEnterprise:ShapeMap.Layers>
+                                <!-- Fuselage Layer (Background, Non-Selectable) -->
+                                <charts:ShapeLayer GeoJson="{Binding FuselageGeoJson}"
+                                                     GeoJsonIdPath="id"
+                                                     ValuePath="Class"
+                                                     Stroke="{DynamicResource SystemControlForegroundBaseMediumBrush}"
+                                                     StrokeThickness="1"
+                                                     SelectionMode="None">
+                                    <charts:ShapeLayer.ColorMappings>
+                                        <charts:EqualColorMapping Value="Fuselage" 
+                                                                    Brush="{DynamicResource SystemControlBackgroundBaseLowBrush}" 
+                                                                    Label="Fuselage" />
+                                    </charts:ShapeLayer.ColorMappings>
+                                </charts:ShapeLayer>
+
+                                <!-- Seats Layer (Foreground, Selectable) -->
+                                <charts:ShapeLayer GeoJson="{Binding SeatMapGeoJson}"
+                                                     GeoJsonIdPath="id"
+                                                     RegionPath="SeatNumber"
+                                                     ValuePath="Class"
+                                                     ItemsSource="{Binding SeatMapData}"
+                                                     Stroke="{DynamicResource SystemControlForegroundBaseMediumBrush}"
+                                                     StrokeThickness="1"
+                                                     SelectionMode="Multiple"
+                                                     SelectionBrush="{DynamicResource SystemControlErrorTextForegroundBrush}"
+                                                     SelectedItems="{Binding SelectedSeats}">
+                                    
+                                    <!-- Use ColorMappings to style by Class -->
+                                    <charts:ShapeLayer.ColorMappings>
+                                        <charts:EqualColorMapping Value="Fuselage" 
+                                                                    Brush="{DynamicResource SystemControlBackgroundBaseLowBrush}" 
+                                                                    Label="Fuselage" />
+                                        <charts:EqualColorMapping Value="Business" 
+                                                                    Brush="{DynamicResource SystemControlBackgroundAltHighBrush}" 
+                                                                    Label="Business Class" />
+                                        <charts:EqualColorMapping Value="Economy" 
+                                                                    Brush="{DynamicResource SystemControlBackgroundAltHighBrush}" 
+                                                                    Label="Economy Class" />
+                                    </charts:ShapeLayer.ColorMappings>
+
+                                    <charts:ShapeLayer.Legend>
+                                        <charts:MapLegend Orientation="Horizontal" />
+                                    </charts:ShapeLayer.Legend>
+
+                                    <charts:ShapeLayer.TooltipTemplate>
+                                        <DataTemplate x:CompileBindings="True" x:DataType="vm:MapChartsViewModel+SeatInfo">
+                                            <StackPanel Spacing="4">
+                                                <TextBlock Text="{Binding SeatNumber, StringFormat='Seat {0}'}" FontWeight="Bold"/>
+                                                <TextBlock Text="{Binding Class}" Foreground="#757575" FontSize="11" FontStyle="Italic"/>
+                                                <TextBlock Text="{Binding Price, StringFormat='${0}'}" FontWeight="SemiBold"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </charts:ShapeLayer.TooltipTemplate>
+                                </charts:ShapeLayer>
+                            </chartsEnterprise:ShapeMap.Layers>
+                        </chartsEnterprise:ShapeMap>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

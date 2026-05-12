@@ -1,0 +1,137 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels"
+             x:CompileBindings="True"
+             x:DataType="vm:LicenseRequiredViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.LicenseRequiredView">
+    <Grid RowDefinitions="Auto,*">
+        <Border Grid.Row="0"
+                Background="{DynamicResource CardBackgroundBrush}"
+                BorderBrush="{DynamicResource CardBorderBrush}"
+                BorderThickness="0,0,0,1"
+                Padding="12,12">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Text="Avalonia Charts Demo"
+                           VerticalAlignment="Center"
+                           FontWeight="SemiBold"
+                           FontSize="16" />
+
+                <Button Grid.Column="1"
+                        Content="Toggle Theme"
+                        Command="{Binding ToggleThemeCommand}" />
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="1"
+                      Background="{DynamicResource PageBackgroundBrush}">
+            <Grid Margin="20">
+                <Border MaxWidth="980"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Background="{DynamicResource CardBackgroundBrush}"
+                        BorderBrush="{DynamicResource CardBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="12"
+                        Padding="32">
+                    <StackPanel Spacing="24">
+                        <StackPanel Spacing="12">
+                            <TextBlock Text="Charts license required"
+                                       FontSize="30"
+                                       FontWeight="Bold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                            <TextBlock Text="The demo could not load any chart pages because a valid Avalonia Charts license key was not available during startup."
+                                       TextWrapping="Wrap"
+                                       FontSize="15"
+                                       LineHeight="22"
+                                       Foreground="{DynamicResource SecondaryTextBrush}" />
+                        </StackPanel>
+
+                        <Grid ColumnDefinitions="*,*"
+                              ColumnSpacing="16">
+                            <Border Background="{DynamicResource PrimaryGreenLightBrush}"
+                                    BorderBrush="{DynamicResource BorderLightBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="10"
+                                    Padding="20">
+                                <StackPanel Spacing="10">
+                                    <TextBlock Text="Recommended setup"
+                                               FontSize="18"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                    <TextBlock Text="Set this environment variable before building or launching the demo, then rebuild and relaunch."
+                                               TextWrapping="Wrap"
+                                               Foreground="{DynamicResource SecondaryTextBrush}" />
+
+                                    <TextBox IsReadOnly="True"
+                                             Text="{Binding PrimaryEnvironmentVariable}"
+                                             FontFamily="Consolas, Menlo, Monaco, monospace"
+                                             Background="{DynamicResource CardBackgroundBrush}"
+                                             BorderBrush="{DynamicResource BorderMediumBrush}" />
+
+                                    <TextBlock Text="{Binding AlternativeEnvironmentVariables}"
+                                               TextWrapping="Wrap"
+                                               FontSize="12"
+                                               Foreground="{DynamicResource TextMutedBrush}" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1"
+                                    Background="{DynamicResource CardBackgroundBrush}"
+                                    BorderBrush="{DynamicResource CardBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="10"
+                                    Padding="20">
+                                <StackPanel Spacing="10">
+                                    <TextBlock Text="Local override"
+                                               FontSize="18"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                    <TextBlock Text="Alternatively, update the existing Directory.Build.props item in the repository root with your key."
+                                               TextWrapping="Wrap"
+                                               Foreground="{DynamicResource SecondaryTextBrush}" />
+
+                                    <TextBlock Text="{Binding LocalOverrideFileName}"
+                                               FontFamily="Consolas, Menlo, Monaco, monospace"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                    <TextBox IsReadOnly="True"
+                                             AcceptsReturn="True"
+                                             TextWrapping="Wrap"
+                                             MinHeight="110"
+                                             Text="{Binding LocalOverrideSnippet}"
+                                             FontFamily="Consolas, Menlo, Monaco, monospace"
+                                             Background="{DynamicResource SearchBarBackgroundBrush}"
+                                             BorderBrush="{DynamicResource BorderMediumBrush}" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <Border Background="{DynamicResource CardBackgroundBrush}"
+                                BorderBrush="{DynamicResource CardBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="10"
+                                Padding="20">
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="Build error"
+                                           FontWeight="SemiBold"
+                                           Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox IsReadOnly="True"
+                                         AcceptsReturn="True"
+                                         TextWrapping="Wrap"
+                                         MinHeight="76"
+                                         Text="{Binding ErrorMessage}"
+                                         Background="{DynamicResource SearchBarBackgroundBrush}"
+                                         BorderBrush="{DynamicResource BorderMediumBrush}" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

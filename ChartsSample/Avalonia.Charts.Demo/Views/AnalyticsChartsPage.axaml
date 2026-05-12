@@ -1,0 +1,221 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:chartsEnterprise="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:Class="Avalonia.Charts.Demo.Views.AnalyticsChartsPage"
+             x:CompileBindings="True" x:DataType="vm:AnalyticsChartsViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Analytics charts including Waffle, Parliament, and Word Cloud provide specialized visualizations for data analysis and reporting." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+          
+            <!-- Waffle Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Waffle Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <WrapPanel HorizontalAlignment="Center">
+                        <charts:WaffleChart Title="Completion" Value="72" Width="150" Height="150" Rows="10" Columns="10" Margin="0,0,20,8" />
+                        <charts:WaffleChart Title="Progress" Value="45" Width="150" Height="150" Rows="10" Columns="10" Margin="0,0,0,8" />
+                    </WrapPanel>
+                    <TextBlock Text="WaffleChart for percentage visualization" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Parliament Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Parliament Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:ParliamentChart Title="Legislative Seats" Height="300" TotalSeats="350" Rows="5" ShowLegend="True" LegendPosition="Bottom"
+                                              Parties="{Binding ParliamentData}" />
+                    <TextBlock Text="ParliamentChart for visualizing legislative seat distributions" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Word Cloud -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Word Cloud" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:WordCloudChart Title="Popular Topics" Height="300" 
+                                             ItemsSource="{Binding WordCloudData}"
+                                             WordPath="Word" WeightPath="Count"/>
+                    <TextBlock Text="WordCloudChart with weighted text placement" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Calendar Heatmap -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Calendar Heatmap" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CalendarHeatmapChart Title="Activity" Height="200"
+                                                   ShowLegend="True"
+                                                   LegendPosition="Bottom"
+                                                   ItemsSource="{Binding CalendarData}"
+                                                   DatePath="Date" ValuePath="Count"/>
+                    <TextBlock Text="CalendarHeatmapChart for daily activity visualization" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Heatmap -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Heatmap" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:HeatmapChart Title="Correlation Matrix" Height="300" 
+                                           ItemsSource="{Binding HeatmapData}"
+                                           RowPath="Row" ColumnPath="Col" ValuePath="Val"/>
+                    <TextBlock Text="HeatmapChart with color-coded matrix cells" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- KPI Cards -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="KPI Cards" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <charts:KpiCard Title="Revenue" Width="180" Height="160" Margin="10" 
+                                          Value="{Binding Kpi1.Value}" Unit="{Binding Kpi1.Unit}" 
+                                          Delta="{Binding Kpi1.Delta}" Subtitle="{Binding Kpi1.Subtitle}"
+                                          SparklineData="{Binding Kpi1.SparklineData}"/>
+                        <charts:KpiCard Title="Users" Width="180" Height="160" Margin="10" 
+                                          Value="{Binding Kpi2.Value}" Unit="{Binding Kpi2.Unit}"
+                                          Delta="{Binding Kpi2.Delta}" Subtitle="{Binding Kpi2.Subtitle}"
+                                          SparklineData="{Binding Kpi2.SparklineData}"/>
+                        <charts:KpiCard Title="Bounce Rate" Width="180" Height="160" Margin="10" 
+                                          Value="{Binding Kpi3.Value}" Unit="{Binding Kpi3.Unit}"
+                                          Delta="{Binding Kpi3.Delta}" Subtitle="{Binding Kpi3.Subtitle}"
+                                          SparklineData="{Binding Kpi3.SparklineData}"
+                                          NegativeBrush="{Binding Kpi3.NegativeBrush}"/>
+                    </WrapPanel>
+                    <TextBlock Text="KpiCard for key metrics display" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Bullet Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Bullet Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <StackPanel Spacing="15" Margin="10">
+                        <charts:BulletChart Title="Revenue" Value="270" Target="250" MaxValue="300" Height="50" />
+                        <charts:BulletChart Title="Profit" Value="85" Target="100" MaxValue="150" Height="50" />
+                        <charts:BulletChart Title="New Customers" Value="450" Target="400" MaxValue="500" Height="50" />
+                    </StackPanel>
+                    <TextBlock Text="BulletChart for comparing actual performance against a target" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Funnel Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Funnel Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:FunnelChart Title="Sales Pipeline" Height="300" 
+                                          ItemsSource="{Binding FunnelData}" 
+                                          LabelPath="Stage" ValuePath="Value"/>
+                    <TextBlock Text="FunnelChart with progressively narrowing segments" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Pyramid Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Pyramid Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:PyramidChart Title="Population Distribution" Height="300"
+                                           ItemsSource="{Binding PyramidData}"
+                                           LabelPath="Age" ValuePath="Value"/>
+                    <TextBlock Text="PyramidChart with progressively wider segments" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Sparklines -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Sparkline Charts" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" Margin="10">
+                        <TextBlock Text="Line:" VerticalAlignment="Center" Margin="0,0,10,5" />
+                        <charts:SparklineChart Grid.Column="1" Height="40" SparklineType="Line" ItemsSource="{Binding SparklineData}"/>
+                        <TextBlock Grid.Row="1" Text="Area:" VerticalAlignment="Center" Margin="0,0,10,5" />
+                        <charts:SparklineChart Grid.Row="1" Grid.Column="1" Height="40" SparklineType="Area" ItemsSource="{Binding SparklineData}"/>
+                        <TextBlock Grid.Row="2" Text="Bar:" VerticalAlignment="Center" Margin="0,0,10,5" />
+                        <charts:SparklineChart Grid.Row="2" Grid.Column="1" Height="40" SparklineType="Bar" ItemsSource="{Binding SparklineData}"/>
+                        <TextBlock Grid.Row="3" Text="Win/Loss:" VerticalAlignment="Center" Margin="0,0,10,5" />
+                        <charts:SparklineChart Grid.Row="3" Grid.Column="1" Height="40" SparklineType="WinLoss" ItemsSource="{Binding SparklineWinLossData}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Matrix Sparkline (Table) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Matrix Sparkline" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    
+                    <Grid RowDefinitions="Auto,*">
+                        <!-- Header -->
+                        <Grid Grid.Row="0" ColumnDefinitions="40, 80, 80, 80, *" Margin="0,0,0,10">
+                            <TextBlock Text="ID" FontWeight="SemiBold" TextAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="Income" FontWeight="SemiBold" TextAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="Expenses" FontWeight="SemiBold" TextAlignment="Center"/>
+                            <TextBlock Grid.Column="3" Text="Debt" FontWeight="SemiBold" TextAlignment="Center"/>
+                            <TextBlock Grid.Column="4" Text="Trend" FontWeight="SemiBold" TextAlignment="Center"/>
+                        </Grid>
+                        
+                        <!-- Rows -->
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding MatrixSparklineData}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="0,0,0,1" Padding="0,8">
+                                        <Grid ColumnDefinitions="40, 80, 80, 80, *">
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Income, StringFormat='{}{0:C0}'}" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,0"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Expenses, StringFormat='{}{0:C0}'}" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,0"/>
+                                            <TextBlock Grid.Column="3" Text="{Binding Debt, StringFormat='{}{0:C0}'}" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,0"/>
+                                            <charts:SparklineChart Grid.Column="4" Height="30" SparklineType="Line" ItemsSource="{Binding Trend}" Margin="10,0"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                    
+                    <TextBlock Text="Table layout with embedded Sparkline charts for trend analysis" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Matrix Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Matrix Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:MatrixChart Title="Fruit Attributes" Height="300" 
+                                          ItemsSource="{Binding MatrixData}"
+                                          ColumnLabels="{Binding MatrixColumns}"
+                                          RowLabelPath="Attribute" ValuesPath="Values"
+                                          CellSize="28" CellGap="25"/>
+                    <TextBlock Text="MatrixChart for boolean/categorical grid visualization" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Table Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Table Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:TableChart Title="Product Comparison" Height="400"
+                                         ItemsSource="{Binding TableData}"
+                                         Columns="{Binding TableColumns}"
+                                         RowLabelPath="Product" />
+                    <TextBlock Text="TableChart with color-coded data cells" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Mosaic Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Mosaic Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <chartsEnterprise:MosaicChart Title="Sales by Region" Height="300" 
+                                          ItemsSource="{Binding MosaicData}"
+                                          GroupPath="Region"
+                                          SubGroupPath="Category"
+                                          ValuePath="Sales" />
+                    <TextBlock Text="MosaicChart showing multi-variable proportions" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

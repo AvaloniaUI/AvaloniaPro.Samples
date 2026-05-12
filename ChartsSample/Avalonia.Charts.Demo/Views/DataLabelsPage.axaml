@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1200"
+             x:CompileBindings="True" x:DataType="vm:DataLabelsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.DataLabelsPage">
+    
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Display exact values directly on your data points with customizable labels." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            
+            <!-- Basic Labels -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Basic Visibility" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="BasicLabelsChart" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries Title="Sales" ItemsSource="{Binding SalesData}"
+                                                CategoryPath="Category" ValuePath="Value"
+                                                ShowLabels="True" LabelOffset="5"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Quarter" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Revenue" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Enable ShowLabels on series to show data point values." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Styled Labels -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Formatting &amp; Styling" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="StyledLabelsChart" Height="250">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Profit" ItemsSource="{Binding ProfitData}"
+                                                 CategoryPath="Category" ValuePath="Value"
+                                                 ShowLabels="True" LabelFormat="{}{0:C0}"
+                                                 LabelFontSize="14" LabelForeground="White"
+                                                 LabelCornerRadius="4" LabelPadding="6,2">
+                                <charts:LineSeries.LabelBackground>
+                                    <SolidColorBrush Color="#2196F3" />
+                                </charts:LineSeries.LabelBackground>
+                            </charts:LineSeries>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Month" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Amount" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Custom LabelFormat, LabelFontSize, LabelForeground, LabelBackground, LabelCornerRadius, and LabelPadding." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

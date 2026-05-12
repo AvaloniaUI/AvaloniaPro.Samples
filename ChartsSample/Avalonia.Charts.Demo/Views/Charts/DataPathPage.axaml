@@ -1,0 +1,126 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="900"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.DataPathPage"
+             x:CompileBindings="True" x:DataType="vm:DataPathViewModel">
+
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Bind chart series to direct, nested, indexed, and dictionary-backed data paths while keeping the ValuePath and CategoryPath API."
+                       TextWrapping="Wrap"
+                       Foreground="{DynamicResource TextMutedBrush}" />
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Simple Property Paths" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Uses direct item properties: CategoryPath=&quot;Month&quot; and ValuePath=&quot;Sales&quot;."
+                               TextWrapping="Wrap"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12" />
+                    <charts:CartesianChart Height="280" Title="Direct Properties" ShowLegend="False">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries ItemsSource="{Binding SimplePathData}"
+                                              CategoryPath="Month"
+                                              ValuePath="Sales"
+                                              Fill="#3B82F6" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="False" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Nested Object Paths" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Uses nested properties: CategoryPath=&quot;Region.Name&quot; and ValuePath=&quot;Metrics.Revenue&quot;."
+                               TextWrapping="Wrap"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12" />
+                    <charts:CartesianChart Height="280" Title="Nested Properties" ShowLegend="False">
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries ItemsSource="{Binding NestedPathData}"
+                                              CategoryPath="Region.Name"
+                                              ValuePath="Metrics.Revenue"
+                                              Fill="#10B981" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="False" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Indexed Paths" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Uses collection indexes inside paths: CategoryPath=&quot;Groups[0].Name&quot; and ValuePath=&quot;Metrics.Values[1]&quot;."
+                               TextWrapping="Wrap"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12" />
+                    <charts:CartesianChart Height="280" Title="Indexed Members" ShowLegend="False">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries ItemsSource="{Binding IndexedPathData}"
+                                               CategoryPath="Groups[0].Name"
+                                               ValuePath="Metrics.Values[1]"
+                                               Stroke="#8B5CF6"
+                                               StrokeThickness="3"
+                                               ShowMarkers="True"
+                                               MarkerShape="Circle"
+                                               MarkerSize="10"
+                                               MarkerFill="#8B5CF6" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="False" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Dictionary and Indexed Paths" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Uses dictionary keys plus an indexed history item: CategoryPath=&quot;Profile.Name&quot; and ValuePath=&quot;Metrics.History[1].Value&quot;."
+                               TextWrapping="Wrap"
+                               Foreground="{DynamicResource TextMutedBrush}"
+                               FontStyle="Italic"
+                               FontSize="12" />
+                    <charts:CartesianChart Height="280" Title="Dictionary Data" ShowLegend="False">
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries ItemsSource="{Binding DictionaryPathData}"
+                                               CategoryPath="Profile.Name"
+                                               ValuePath="Metrics.History[1].Value"
+                                               Stroke="#F97316"
+                                               StrokeThickness="2"
+                                               Fill="#F97316"
+                                               FillOpacity="0.18" />
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis ShowGridLines="False" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Minimum="0" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

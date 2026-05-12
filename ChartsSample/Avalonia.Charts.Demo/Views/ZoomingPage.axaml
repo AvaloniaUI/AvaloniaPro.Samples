@@ -1,0 +1,317 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="using:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.ZoomingPage"
+             x:CompileBindings="True" x:DataType="vm:ZoomingViewModel">
+
+    <ScrollViewer x:Name="RootScrollViewer">
+        <StackPanel Spacing="30" Margin="20">
+
+            <!-- Summary -->
+            <StackPanel Spacing="5">
+                <TextBlock Text="Interactive zoom and pan capabilities using visual range selectors (ChartRangeSelector). Drag the chart to pan or use the grips to zoom."
+                           TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}"/>
+            </StackPanel>
+
+            <!-- Horizontal Range Selector -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Horizontal Range Selector" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Adjust the horizontal viewport using the grips at the bottom. The chart supports direct panning which stays in sync with the selector."
+                               TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+
+                    <charts:CartesianChart Name="ChartHorizontal" 
+                                             Title="Horizontal Zooming"
+                                             Height="300"
+                                             ZoomMode="X" 
+                                             IsZoomEnabled="True"
+                                             IsPanEnabled="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis Title="Timeline" LabelFormat="MMM dd" ShowGridLines="True"/>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Values" LabelFormat="N0" ShowGridLines="True"/>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries ItemsSource="{Binding ZoomData}" CategoryPath="Date" ValuePath="Value"
+                                               Stroke="#2196F3" Fill="#332196F3" StrokeThickness="2"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Vertical Range Selector -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Vertical Range Selector" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Adjust the vertical range using the selector on the right. Panning vertically updates the selector position."
+                               TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+
+                    <charts:CartesianChart Name="ChartVertical" 
+                                             Height="300"
+                                             ZoomMode="Y" 
+                                             IsZoomEnabled="True"
+                                             IsPanEnabled="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis LabelFormat="MMM dd" ShowGridLines="True"/>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Values" LabelFormat="N0" ShowGridLines="True"/>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries ItemsSource="{Binding ZoomData}" CategoryPath="Date" ValuePath="Value"
+                                               Stroke="#9C27B0" Fill="#339C27B0" StrokeThickness="2"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Bar Chart Zooming -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Bar Series Zooming" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Zooming support for BarSeries. Bars are correctly filtered and positioned based on the X-axis viewport."
+                               TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+
+                    <charts:CartesianChart Name="ChartBar" 
+                                             Title="Product Sales"
+                                             Height="300"
+                                             ZoomMode="X" 
+                                             IsZoomEnabled="True"
+                                             IsPanEnabled="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis LabelFormat="{}{0}" ShowGridLines="False"/>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Sales" LabelFormat="C0" ShowGridLines="True"/>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:BarSeries ItemsSource="{Binding ProductData}" CategoryPath="Product" ValuePath="Sales"
+                                              Fill="#4CAF50" Stroke="#2E7D32" StrokeThickness="1"
+                                              ShowLabels="True"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Bidirectional XY Selector -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Bidirectional XY Selector" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Full navigation control using both horizontal and vertical selectors. Dragging the chart area pans both axes simultaneously."
+                               TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Content="Back" Click="OnBackClick" Margin="0,0,10,10"/>
+                        <Button Content="Reset" Click="OnResetClick" Margin="0,0,10,10"/>
+                        <TextBlock Name="PanChartZoomInfo" VerticalAlignment="Center" Text="Zoom: X=100%, Y=100%" Margin="0,0,20,10"/>
+                        <CheckBox Name="ShowRangeSelectorCheckBox" 
+                                  Content="Show Range Selector" 
+                                  IsChecked="True" 
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,0,10"/>
+                    </WrapPanel>
+
+                    <charts:CartesianChart Name="ChartXY" 
+                                             Height="350"
+                                             ZoomMode="XY"
+                                             IsZoomEnabled="True"
+                                             IsPanEnabled="True"
+                                             ShowRangeSelector="{Binding #ShowRangeSelectorCheckBox.IsChecked}">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis LabelFormat="MMM dd" ShowGridLines="True"/>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis LabelFormat="N0" ShowGridLines="True"/>
+                        </charts:CartesianChart.VerticalAxis>
+                    <charts:CartesianChart.Series>
+                            <charts:LineSeries ItemsSource="{Binding ZoomData}" CategoryPath="Date" ValuePath="Value"
+                                               Stroke="#FF9800" StrokeThickness="2"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    
+                    <Border BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1" CornerRadius="4" Background="{DynamicResource CardBackgroundBrush}">
+                        <ScrollViewer Height="100">
+                             <StackPanel Name="ChartXYEventsContainer" Spacing="2" Margin="5">
+                                 <TextBlock Text="Interaction Events:" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource AccentBrush}"/>
+                             </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Custom Range Selector Theme -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Custom Range Selector Theme" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Example of styling the embedded range selector thumb, track, hover states and rectangular grips using resources and template-part styles."
+                               TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+
+                    <charts:CartesianChart Height="300"
+                                             ZoomMode="XY"
+                                             IsZoomEnabled="True"
+                                             IsPanEnabled="True">
+                        <charts:CartesianChart.Resources>
+                            <SolidColorBrush x:Key="ChartRangeSelectorTrackBackground" Color="#243241"/>
+                            <SolidColorBrush x:Key="ChartRangeSelectorThumbBackground" Color="#CC00BCD4"/>
+                            <SolidColorBrush x:Key="ChartRangeSelectorThumbBackgroundPointerOver" Color="#F000BCD4"/>
+                            <SolidColorBrush x:Key="ChartRangeSelectorGripBackground" Color="#F7FCFF"/>
+                            <SolidColorBrush x:Key="ChartRangeSelectorGripBackgroundPointerOver" Color="#FFFFFF"/>
+                            <SolidColorBrush x:Key="ChartRangeSelectorGripBorderBrush" Color="#00BCD4"/>
+                            <SolidColorBrush x:Key="ChartRangeSelectorGripBorderBrushPointerOver" Color="#00796B"/>
+                            <SolidColorBrush x:Key="ChartRangeSelectorGripLineBrush" Color="#00796B"/>
+                        </charts:CartesianChart.Resources>
+                        <charts:CartesianChart.Styles>
+                             <Style Selector="charts|ChartRangeSelector">
+                                 <Setter Property="GripSize" Value="34"/>
+                             </Style>
+                             <Style Selector="charts|ChartRangeSelector[Orientation=Horizontal] /template/ Border#PART_Track">
+                                 <Setter Property="Height" Value="10"/>
+                                 <Setter Property="CornerRadius" Value="2"/>
+                             </Style>
+                             <Style Selector="charts|ChartRangeSelector[Orientation=Vertical] /template/ Border#PART_Track">
+                                 <Setter Property="Width" Value="10"/>
+                                 <Setter Property="CornerRadius" Value="2"/>
+                             </Style>
+                             <Style Selector="charts|ChartRangeSelector[Orientation=Horizontal] /template/ Border#PART_Thumb">
+                                 <Setter Property="Height" Value="16"/>
+                                 <Setter Property="CornerRadius" Value="2"/>
+                             </Style>
+                             <Style Selector="charts|ChartRangeSelector[Orientation=Vertical] /template/ Border#PART_Thumb">
+                                 <Setter Property="Width" Value="16"/>
+                                 <Setter Property="CornerRadius" Value="2"/>
+                             </Style>
+                             <Style Selector="charts|ChartRangeSelector /template/ Border#PART_StartGrip">
+                                 <Setter Property="CornerRadius" Value="3"/>
+                             </Style>
+                             <Style Selector="charts|ChartRangeSelector /template/ Border#PART_EndGrip">
+                                 <Setter Property="CornerRadius" Value="3"/>
+                             </Style>
+                             <Style Selector="charts|ChartRangeSelector /template/ Border#PART_StartGrip Line">
+                                 <Setter Property="StrokeThickness" Value="2"/>
+                             </Style>
+                             <Style Selector="charts|ChartRangeSelector /template/ Border#PART_EndGrip Line">
+                                 <Setter Property="StrokeThickness" Value="2"/>
+                             </Style>
+                        </charts:CartesianChart.Styles>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis LabelFormat="MMM dd" ShowGridLines="True"/>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                             <charts:NumericalAxis ShowGridLines="True"/>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries ItemsSource="{Binding ZoomData}" CategoryPath="Date" ValuePath="Value"
+                                               Stroke="#00BCD4" Fill="#3300BCD4" StrokeThickness="2"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Title & Zoom -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Titles &amp; Zoom" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Bidirectional zoom with Axis Titles to verify selector positioning."
+                               TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+                    
+                    <charts:CartesianChart Height="400"
+                                             ZoomMode="XY"
+                                             IsZoomEnabled="True"
+                                             IsPanEnabled="True">
+                         <charts:CartesianChart.HorizontalAxis>
+                             <charts:DateTimeAxis 
+                                 Title="Timeline (X-Axis)" 
+                                 DateFormat="MMM dd"
+                                 ShowLabels="True"/>
+                         </charts:CartesianChart.HorizontalAxis>
+                         <charts:CartesianChart.VerticalAxis>
+                             <charts:NumericalAxis 
+                                 Title="Values (Y-Axis)" 
+                                 ShowLabels="True"/>
+                         </charts:CartesianChart.VerticalAxis>
+                         <charts:CartesianChart.Series>
+                             <charts:AreaSeries ItemsSource="{Binding ZoomData}" CategoryPath="Date" ValuePath="Value"
+                                                Stroke="#9C27B0" Fill="#339C27B0" StrokeThickness="2"/>
+                         </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Continuous DateTime Range Selector -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Continuous DateTime Range Selector" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Irregular timestamps keep their real spacing while wheel zoom, panning, and the range selector stay synchronized."
+                               TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+
+                    <charts:CartesianChart Title="Irregular Timeline Zoom"
+                                             Height="320"
+                                             ZoomMode="X"
+                                             IsZoomEnabled="True"
+                                             IsPanEnabled="True"
+                                             ShowRangeSelector="True">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis Title="Timestamp"
+                                                 DateFormat="MMM dd HH:mm"
+                                                 LabelFitMode="Auto"
+                                                 ShowGridLines="True"/>
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="25" Maximum="80" LabelFormat="0" ShowGridLines="True"/>
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Signal"
+                                               ItemsSource="{Binding IrregularDateTimeZoomData}"
+                                               CategoryPath="Date"
+                                               ValuePath="Value"
+                                               Stroke="#2E7D32"
+                                               StrokeThickness="2"
+                                               MarkerFill="#2E7D32"
+                                               MarkerSize="6"
+                                               ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Standalone ChartRangeSelector -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Standalone ChartRangeSelector" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Direct use of the selector control outside a chart. Drag the thumb or grips to change the selected range."
+                               TextWrapping="Wrap" FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="24">
+                        <StackPanel Grid.Column="0" Spacing="10">
+                            <charts:ChartRangeSelector Minimum="0"
+                                                       Maximum="100"
+                                                       SelectedMinimum="{Binding StandaloneRangeStart}"
+                                                       SelectedMaximum="{Binding StandaloneRangeEnd}"
+                                                       Width="420"
+                                                       SmallChange="5" />
+                            <TextBlock Text="{Binding StandaloneRangeSummary}" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Spacing="10" HorizontalAlignment="Center">
+                            <charts:ChartRangeSelector Orientation="Vertical"
+                                                       Minimum="0"
+                                                       Maximum="100"
+                                                       SelectedMinimum="{Binding StandaloneVerticalRangeStart}"
+                                                       SelectedMaximum="{Binding StandaloneVerticalRangeEnd}"
+                                                       Height="180"
+                                                       Width="40"
+                                                       SmallChange="5" />
+                            <TextBlock Text="{Binding StandaloneVerticalRangeSummary}" FontSize="12" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

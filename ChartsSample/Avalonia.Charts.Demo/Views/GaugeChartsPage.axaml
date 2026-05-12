@@ -1,0 +1,131 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             x:CompileBindings="True" x:DataType="vm:GaugeChartsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.GaugeChartsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Gauge charts including Radial and Linear gauges are perfect for displaying single value metrics against a scale." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <!-- Simple Gauge Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Simple Gauge Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:GaugeChart Name="GaugeChartSample" Value="72" Width="320" Height="220" />
+                    <TextBlock Text="GaugeChart with needle and arc track" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Circular Gauge Charts -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Circular Gauge Charts" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <charts:CircularGaugeChart Value="72" Width="220" Height="220" Title="CPU" Margin="10" />
+                        <charts:CircularGaugeChart Value="45" Width="220" Height="220" Title="Memory" Margin="10" />
+                        <charts:CircularGaugeChart Value="88" Width="220" Height="220" Title="Disk" Margin="10" />
+                    </WrapPanel>
+                    <TextBlock Text="CircularGaugeChart for performance metrics" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Liquid Fill Gauge -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Liquid Fill Gauge" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <charts:LiquidFillGauge Value="35" Width="140" Height="180" Title="CPU Usage" Margin="15" />
+                        <charts:LiquidFillGauge Value="68" Width="140" Height="180" Title="Memory" Margin="15" />
+                        <charts:LiquidFillGauge Value="85" Width="140" Height="180" Title="Storage" Margin="15" />
+                    </WrapPanel>
+                    <TextBlock Text="LiquidFillGauge with animated wave effect and gradient" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Gradient Ring Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Gradient Ring Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:GradientRingChart Name="GradientRingChartSample" Title="Project Progress" Height="350" 
+                                                ItemsSource="{Binding RingData}"
+                                                LabelPath="Name" ValuePath="Progress" MaxValue="100" />
+                    <TextBlock Text="GradientRingChart with colorful gradient-filled rings" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Linear Gauge Chart -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Linear Gauge Chart" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <StackPanel Spacing="15" Margin="10">
+                        <charts:LinearGaugeChart Title="Temperature" Value="72" MinValue="0" MaxValue="100" Height="60"
+                                                   NeedleBrush="#F44336">
+                            <charts:LinearGaugeChart.ValueBrush>
+                                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,0%">
+                                    <GradientStop Offset="0" Color="#4CAF50" />
+                                    <GradientStop Offset="0.5" Color="#FFEB3B" />
+                                    <GradientStop Offset="1" Color="#F44336" />
+                                </LinearGradientBrush>
+                            </charts:LinearGaugeChart.ValueBrush>
+                        </charts:LinearGaugeChart>
+                        
+                        <charts:LinearGaugeChart Title="Humidity" Value="45" MinValue="0" MaxValue="100" Height="60"
+                                                   NeedleBrush="#00BCD4">
+                            <charts:LinearGaugeChart.ValueBrush>
+                                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,0%">
+                                    <GradientStop Offset="0" Color="#2196F3" />
+                                    <GradientStop Offset="1" Color="#00BCD4" />
+                                </LinearGradientBrush>
+                            </charts:LinearGaugeChart.ValueBrush>
+                        </charts:LinearGaugeChart>
+                        
+                        <charts:LinearGaugeChart Title="Pressure" Value="88" MinValue="0" MaxValue="100" Height="60"
+                                                   NeedleBrush="#E91E63">
+                            <charts:LinearGaugeChart.ValueBrush>
+                                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,0%">
+                                    <GradientStop Offset="0" Color="#9C27B0" />
+                                    <GradientStop Offset="1" Color="#E91E63" />
+                                </LinearGradientBrush>
+                            </charts:LinearGaugeChart.ValueBrush>
+                        </charts:LinearGaugeChart>
+                    </StackPanel>
+                    <TextBlock Text="LinearGaugeChart for horizontal progress indicators" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Linear Gauge with Ticks -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Linear Gauge with Ticks" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <StackPanel Spacing="15" Margin="10">
+                        <charts:LinearGaugeChart Title="Performance" Value="65" MinValue="0" MaxValue="100" Height="80"
+                                                   ShowMajorTicks="True" ShowMinorTicks="True"
+                                                   MajorTickInterval="20" MinorTickCount="3"
+                                                   NeedleBrush="#43A047">
+                            <charts:LinearGaugeChart.ValueBrush>
+                                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,0%">
+                                    <GradientStop Offset="0" Color="#66BB6A" />
+                                    <GradientStop Offset="1" Color="#43A047" />
+                                </LinearGradientBrush>
+                            </charts:LinearGaugeChart.ValueBrush>
+                        </charts:LinearGaugeChart>
+                        
+                        <charts:LinearGaugeChart Title="Load" Value="82" MinValue="0" MaxValue="100" Height="80"
+                                                   ShowMajorTicks="True" ShowMinorTicks="False"
+                                                   MajorTickInterval="25"
+                                                   NeedleBrush="#FF5722">
+                            <charts:LinearGaugeChart.ValueBrush>
+                                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,0%">
+                                    <GradientStop Offset="0" Color="#FF9800" />
+                                    <GradientStop Offset="1" Color="#FF5722" />
+                                </LinearGradientBrush>
+                            </charts:LinearGaugeChart.ValueBrush>
+                        </charts:LinearGaugeChart>
+                    </StackPanel>
+                    <TextBlock Text="LinearGaugeChart with major and minor tick marks" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

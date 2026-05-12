@@ -1,0 +1,267 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="800"
+             x:CompileBindings="True" x:DataType="vm:MarkersViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.MarkersPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <!-- Header -->
+            <TextBlock Text="Customize data point markers with different shapes to enhance data visualization and distinguish series." 
+                       Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap" Margin="0,0,0,10" />
+
+            <!-- All Marker Types Overview -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="All Marker Types" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="AllMarkersChart" Title="Marker Shape Comparison" Height="320" ShowLegend="True" LegendPosition="Bottom" HorizontalAlignment="Stretch">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Circle" ItemsSource="{Binding CircleMarkerData}" 
+                                               MarkerShape="Circle" MarkerSize="10" 
+                                               Stroke="DodgerBlue" MarkerFill="DodgerBlue" StrokeThickness="2"  ShowMarkers="True"/>
+                            <charts:LineSeries Title="Square" ItemsSource="{Binding SquareMarkerData}" 
+                                               MarkerShape="Square" MarkerSize="10" 
+                                               Stroke="Green" MarkerFill="Green" StrokeThickness="2"  ShowMarkers="True"/>
+                            <charts:LineSeries Title="Diamond" ItemsSource="{Binding DiamondMarkerData}" 
+                                               MarkerShape="Diamond" MarkerSize="12" 
+                                               Stroke="Orange" MarkerFill="Orange" StrokeThickness="2"  ShowMarkers="True"/>
+                            <charts:LineSeries Title="Triangle" ItemsSource="{Binding TriangleMarkerData}" 
+                                               MarkerShape="Triangle" MarkerSize="10" 
+                                               Stroke="Purple" MarkerFill="Purple" StrokeThickness="2"  ShowMarkers="True"/>
+                            <charts:LineSeries Title="Pentagon" ItemsSource="{Binding PentagonMarkerData}" 
+                                               MarkerShape="Pentagon" MarkerSize="10" 
+                                               Stroke="Crimson" MarkerFill="Crimson" StrokeThickness="2"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Supported shapes: Circle, Square, Rectangle, Diamond, Triangle, InvertedTriangle, Cross, Pentagon, VerticalLine, HorizontalLine" 
+                               Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <!-- Circle Marker -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Circle Marker" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="CircleMarkerChart" Title="Circle Markers" Height="200">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Data" ItemsSource="{Binding CircleChartData}" 
+                                               MarkerShape="Circle" MarkerSize="12" 
+                                               Stroke="DodgerBlue" MarkerFill="LightBlue" StrokeThickness="2"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="MarkerShape=Circle - The default marker shape" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Square/Rectangle Marker -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Square/Rectangle Marker" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="SquareMarkerChart" Title="Square Markers" Height="200">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Data" ItemsSource="{Binding SquareChartData}" 
+                                               MarkerShape="Square" MarkerSize="10" 
+                                               Stroke="Green" MarkerFill="LightGreen" StrokeThickness="2"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="MarkerShape=Square or MarkerShape=Rectangle" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Diamond Marker -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Diamond Marker" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="DiamondMarkerChart" Title="Diamond Markers" Height="200">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Data" ItemsSource="{Binding DiamondChartData}" 
+                                               MarkerShape="Diamond" MarkerSize="12" 
+                                               Stroke="Orange" MarkerFill="Gold" StrokeThickness="2"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="MarkerShape=Diamond - Rotated square shape" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Triangle Markers -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Triangle Markers" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="TriangleMarkerChart" Title="Triangle vs Inverted Triangle" Height="220" ShowLegend="True" LegendPosition="Bottom" HorizontalAlignment="Stretch">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Up Trend" ItemsSource="{Binding UpTrendData}" 
+                                               MarkerShape="Triangle" MarkerSize="10" 
+                                               Stroke="Green" MarkerFill="LightGreen" StrokeThickness="2"  ShowMarkers="True"/>
+                            <charts:LineSeries Title="Down Trend" ItemsSource="{Binding DownTrendData}" 
+                                               MarkerShape="InvertedTriangle" MarkerSize="10" 
+                                               Stroke="Red" MarkerFill="LightCoral" StrokeThickness="2"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="MarkerShape=Triangle (up) and MarkerShape=InvertedTriangle (down)" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Cross Marker -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Cross Marker" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="CrossMarkerChart" Title="Cross Markers" Height="200">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Data" ItemsSource="{Binding CrossChartData}" 
+                                               MarkerShape="Cross" MarkerSize="12" 
+                                               Stroke="Purple" MarkerFill="Purple" StrokeThickness="2"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="MarkerShape=Cross - X-shaped marker" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Pentagon Marker -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Pentagon Marker" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="PentagonMarkerChart" Title="Pentagon Markers" Height="200">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Data" ItemsSource="{Binding PentagonChartData}" 
+                                               MarkerShape="Pentagon" MarkerSize="12" 
+                                               Stroke="Crimson" MarkerFill="LightPink" StrokeThickness="2"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="MarkerShape=Pentagon - Five-sided polygon" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Line Markers -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Line Markers" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="LineMarkerChart" Title="Vertical vs Horizontal Line Markers" Height="220" ShowLegend="True" LegendPosition="Bottom" HorizontalAlignment="Stretch">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Vertical" ItemsSource="{Binding VerticalLineData}" 
+                                               MarkerShape="VerticalLine" MarkerSize="14" 
+                                               Stroke="Teal" MarkerFill="Teal" StrokeThickness="2"  ShowMarkers="True"/>
+                            <charts:LineSeries Title="Horizontal" ItemsSource="{Binding HorizontalLineData}" 
+                                               MarkerShape="HorizontalLine" MarkerSize="14" 
+                                               Stroke="Indigo" MarkerFill="Indigo" StrokeThickness="2"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="MarkerShape=VerticalLine and MarkerShape=HorizontalLine" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Marker Customization -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Marker Customization" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="CustomMarkerChart" Title="Custom Marker Sizes and Colors" Height="260" ShowLegend="True" LegendPosition="Bottom" HorizontalAlignment="Stretch">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Small (6px)" ItemsSource="{Binding SmallMarkerData}" 
+                                               MarkerShape="Circle" MarkerSize="6" 
+                                               Stroke="DodgerBlue" MarkerFill="DodgerBlue" StrokeThickness="2"  ShowMarkers="True"/>
+                            <charts:LineSeries Title="Medium (10px)" ItemsSource="{Binding MediumMarkerData}" 
+                                               MarkerShape="Diamond" MarkerSize="10" 
+                                               Stroke="Orange" MarkerFill="Gold" StrokeThickness="2"  ShowMarkers="True"/>
+                            <charts:LineSeries Title="Large (16px)" ItemsSource="{Binding LargeMarkerData}" 
+                                               MarkerShape="Pentagon" MarkerSize="16" 
+                                               Stroke="Green" MarkerFill="LightGreen" StrokeThickness="2"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Customize MarkerSize, MarkerFill, and MarkerStroke for each series" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Marker Stroke Thickness -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Marker Stroke Thickness" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="MarkerStrokeThicknessChart" Title="Outline Thickness Comparison" Height="260" ShowLegend="True" LegendPosition="Bottom" HorizontalAlignment="Stretch">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="1px Stroke"
+                                                  ItemsSource="{Binding CircleChartData}"
+                                                  MarkerSize="12"
+                                                  MarkerFill="White"
+                                                  Stroke="DodgerBlue"
+                                                  MarkerStrokeThickness="1" />
+                            <charts:ScatterSeries Title="3px Stroke"
+                                                  ItemsSource="{Binding SquareChartData}"
+                                                  MarkerSize="12"
+                                                  MarkerFill="White"
+                                                  Stroke="DodgerBlue"
+                                                  MarkerStrokeThickness="3" />
+                            <charts:ScatterSeries Title="5px Stroke"
+                                                  ItemsSource="{Binding DiamondChartData}"
+                                                  MarkerSize="12"
+                                                  MarkerFill="White"
+                                                  Stroke="DodgerBlue"
+                                                  MarkerStrokeThickness="5" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                    <TextBlock Text="MarkerStrokeThickness changes the outline weight without changing the marker size." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

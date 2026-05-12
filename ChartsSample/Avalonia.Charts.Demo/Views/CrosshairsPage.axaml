@@ -1,0 +1,107 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:CompileBindings="True" x:DataType="vm:CrosshairsViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.CrosshairsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="20">
+            <TextBlock Text="Enable crosshairs to track value coordinates across the chart area." 
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}" />
+            <!-- Crosshairs -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Default Crosshairs" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="CrosshairChart" Height="300"
+                                             CrosshairMode="Both" 
+                                             ShowCrosshairLabels="True"
+                                             CrosshairStroke="OrangeRed" 
+                                             CrosshairStrokeThickness="2">
+                    <charts:CartesianChart.Series>
+                        <charts:LineSeries Title="Series 1" ItemsSource="{Binding CrosshairData}"
+                                             Stroke="OrangeRed" StrokeThickness="2"
+                                             MarkerSize="6" MarkerFill="OrangeRed"
+                                             MarkerShape="{x:Static charts:MarkerShape.Circle}"  ShowMarkers="True"/>
+                    </charts:CartesianChart.Series>
+                    <charts:CartesianChart.HorizontalAxis>
+                        <charts:CategoryAxis Title="Category" />
+                    </charts:CartesianChart.HorizontalAxis>
+                    <charts:CartesianChart.VerticalAxis>
+                        <charts:NumericalAxis Title="Value" />
+                    </charts:CartesianChart.VerticalAxis>
+                </charts:CartesianChart>
+                    <TextBlock Text="Standard styling with orange-red stroke." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Customized Crosshairs -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Customized Crosshairs" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Name="CustomCrosshairChart" Height="300"
+                                             CrosshairMode="Both" 
+                                             ShowCrosshairLabels="True"
+                                             CrosshairStroke="DodgerBlue" 
+                                             CrosshairStrokeThickness="3"
+                                             CrosshairLabelBackground="DodgerBlue"
+                                             CrosshairLabelForeground="White"
+                                             CrosshairLabelFontSize="14">
+                        <charts:CartesianChart.CrosshairDashStyle>
+                            <DashStyle Dashes="10, 5" Offset="0" />
+                        </charts:CartesianChart.CrosshairDashStyle>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Series 2" ItemsSource="{Binding CrosshairData}"
+                                                 Stroke="DodgerBlue" StrokeThickness="2"
+                                                 MarkerSize="6" MarkerFill="DodgerBlue"
+                                                 MarkerShape="{x:Static charts:MarkerShape.Square}"  ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:CategoryAxis Title="Category" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Custom colors, font size (14), thickness (3), and dash style (10, 5)." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" />
+                </StackPanel>
+            </Border>
+
+            <!-- Continuous DateTime Crosshairs -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Continuous DateTime Crosshairs" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <charts:CartesianChart Height="300"
+                                             CrosshairMode="Both"
+                                             ShowCrosshairLabels="True"
+                                             CrosshairStroke="#2E7D32"
+                                             CrosshairStrokeThickness="2">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Signal"
+                                               ItemsSource="{Binding ContinuousDateTimeData}"
+                                               CategoryPath="Date"
+                                               ValuePath="Value"
+                                               Stroke="#2E7D32"
+                                               StrokeThickness="2"
+                                               MarkerFill="#2E7D32"
+                                               MarkerSize="6"
+                                               ShowMarkers="True"/>
+                        </charts:CartesianChart.Series>
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis Title="Timestamp"
+                                                 DateFormat="MMM dd HH:mm"
+                                                 LabelFitMode="Auto"
+                                                 ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="35" Maximum="70" LabelFormat="0" ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                    </charts:CartesianChart>
+                    <TextBlock Text="Crosshair labels report the continuous DateTime value under the pointer, not the nearest category slot." Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" FontSize="12" TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

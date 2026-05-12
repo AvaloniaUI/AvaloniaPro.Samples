@@ -1,0 +1,148 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:charts="https://avaloniaui.net/controls/charts"
+             xmlns:vm="clr-namespace:Avalonia.Charts.Demo.ViewModels.Charts"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1200"
+             x:CompileBindings="True" x:DataType="vm:TrackballViewModel"
+             x:Class="Avalonia.Charts.Demo.Views.Charts.TrackballPage">
+    <ScrollViewer>
+        <StackPanel Spacing="30" Margin="20">
+            <!-- Summary -->
+            <StackPanel Spacing="5">
+                <TextBlock Text="The trackball snaps to the nearest data points on the X-axis as you move the pointer." 
+                           TextWrapping="Wrap" Foreground="{DynamicResource TextMutedBrush}"/>
+            </StackPanel>
+
+            <!-- Vertical Comparison (Grouped) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Vertical Comparison (Grouped Tooltip)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Snaps to category and shows all series in one tooltip." FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+                    <charts:CartesianChart Height="250" 
+                                             TrackballMode="Vertical"
+                                             TrackballDisplayMode="GroupAllPoints"
+                                             IsTooltipEnabled="False">
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="Target" ItemsSource="{Binding Data1}" ValuePath="Value" CategoryPath="Category" Fill="{DynamicResource AccentMutedBrush}" Stroke="{DynamicResource AccentBrush}" StrokeThickness="2" />
+                            <charts:LineSeries Title="Actual" ItemsSource="{Binding Data2}" ValuePath="Value" CategoryPath="Category" Stroke="Orange" StrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Vertical Inspection (Floating) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Vertical Inspection (Floating Tooltips)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Snaps to category but tooltips follow each point individually." FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+                    <charts:CartesianChart Height="250" 
+                                             TrackballMode="Vertical"
+                                             TrackballDisplayMode="FloatAllPoints"
+                                             IsTooltipEnabled="False">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Sensor A" ItemsSource="{Binding Data1}" ValuePath="Value" CategoryPath="Category" Stroke="DodgerBlue" StrokeThickness="2" />
+                            <charts:LineSeries Title="Sensor B" ItemsSource="{Binding Data2}" ValuePath="Value" CategoryPath="Category" Stroke="Red" StrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Horizontal Comparison (Grouped) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Horizontal Comparison (Grouped Tooltip)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Snaps to value globally but compares all series for that category." FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+                    <charts:CartesianChart Height="250" 
+                                             TrackballMode="Horizontal"
+                                             TrackballDisplayMode="GroupAllPoints"
+                                             IsTooltipEnabled="False">
+                        <charts:CartesianChart.Series>
+                            <charts:AreaSeries Title="Target" ItemsSource="{Binding Data1}" ValuePath="Value" CategoryPath="Category" Fill="LightBlue" FillOpacity="0.3" Stroke="DodgerBlue" StrokeThickness="2" />
+                            <charts:LineSeries Title="Actual" ItemsSource="{Binding Data2}" ValuePath="Value" CategoryPath="Category" Stroke="Red" StrokeThickness="2" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Horizontal Inspection (Floating) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Horizontal Inspection (Floating Tooltips)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Snaps to value globally with individual floating tooltips." FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+                    <charts:CartesianChart Height="250" 
+                                             TrackballMode="Horizontal"
+                                             TrackballDisplayMode="FloatAllPoints"
+                                             IsTooltipEnabled="False">
+                        <charts:CartesianChart.Series>
+                            <charts:ScatterSeries Title="Score A" ItemsSource="{Binding Data1}" ValuePath="Value" CategoryPath="Category" Fill="MediumVioletRed" />
+                            <charts:ScatterSeries Title="Score B" ItemsSource="{Binding Data2}" ValuePath="Value" CategoryPath="Category" Fill="SeaGreen" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Horizontal Inspection (LineSeries) -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Horizontal Inspection (LineSeries)" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="LineSeries with floating tooltips - trackball adds highlight markers." FontSize="12" Foreground="{DynamicResource TextMutedBrush}"/>
+                    <charts:CartesianChart Height="250" 
+                                             TrackballMode="Horizontal"
+                                             TrackballDisplayMode="FloatAllPoints"
+                                             IsTooltipEnabled="False">
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Revenue" ItemsSource="{Binding Data1}" ValuePath="Value" CategoryPath="Category" Stroke="DodgerBlue" StrokeThickness="2" ShowMarkers="True" />
+                            <charts:LineSeries Title="Expenses" ItemsSource="{Binding Data2}" ValuePath="Value" CategoryPath="Category" Stroke="Orange" StrokeThickness="2" ShowMarkers="True" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Continuous DateTime Trackball -->
+            <Border BorderBrush="{DynamicResource AccentMutedBrush}" BorderThickness="2" Padding="15" CornerRadius="8">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="Continuous DateTime Trackball" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="Snaps grouped tooltips to irregular DateTime samples using the same continuous X spacing as rendering." FontSize="12" Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap"/>
+                    <charts:CartesianChart Height="280"
+                                             TrackballMode="Vertical"
+                                             TrackballDisplayMode="GroupAllPoints"
+                                             IsTooltipEnabled="False"
+                                             ShowLegend="True"
+                                             LegendPosition="Top">
+                        <charts:CartesianChart.HorizontalAxis>
+                            <charts:DateTimeAxis Title="Date"
+                                                 DateFormat="MMM dd"
+                                                 LabelFitMode="Auto"
+                                                 ShowGridLines="True" />
+                        </charts:CartesianChart.HorizontalAxis>
+                        <charts:CartesianChart.VerticalAxis>
+                            <charts:NumericalAxis Title="Value" Minimum="20" Maximum="65" LabelFormat="0" ShowGridLines="True" />
+                        </charts:CartesianChart.VerticalAxis>
+                        <charts:CartesianChart.Series>
+                            <charts:LineSeries Title="Target"
+                                               ItemsSource="{Binding ContinuousData1}"
+                                               ValuePath="Value"
+                                               CategoryPath="Date"
+                                               Stroke="DodgerBlue"
+                                               StrokeThickness="2"
+                                               ShowMarkers="True"
+                                               MarkerFill="DodgerBlue"
+                                               MarkerSize="6" />
+                            <charts:LineSeries Title="Actual"
+                                               ItemsSource="{Binding ContinuousData2}"
+                                               ValuePath="Value"
+                                               CategoryPath="Date"
+                                               Stroke="Orange"
+                                               StrokeThickness="2"
+                                               ShowMarkers="True"
+                                               MarkerFill="Orange"
+                                               MarkerSize="6" />
+                        </charts:CartesianChart.Series>
+                    </charts:CartesianChart>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
