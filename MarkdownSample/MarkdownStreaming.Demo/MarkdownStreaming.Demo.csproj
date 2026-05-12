@@ -1,28 +1,30 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <RootNamespace>MarkdownStreaming.Demo</RootNamespace>
+    <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
+    <NoWarn>$(NoWarn);IL2026;IL2072;IL2075</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Controls.TreeDataGrid" Version="12.0.0" />
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0" />
+    <PackageReference Include="AvaloniaUI.Licensing" Version="$(AvaloniaLicensingVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Developer Tools integration -->
-    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.*" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="Avalonia.Controls.Documents" Version="$(DocumentsPackageVersion)" />
+    <PackageReference Include="Avalonia.Controls.Markdown" Version="$(DocumentsPackageVersion)" />
+    <PackageReference Include="Avalonia.Controls.Markdown.TextMate" Version="$(DocumentsPackageVersion)" />
   </ItemGroup>
+
 </Project>

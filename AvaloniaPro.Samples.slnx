@@ -10,8 +10,14 @@
     </Project>
     <Project Path="ChartsSample/Avalonia.Charts.Demo/Avalonia.Charts.Demo.csproj" />
   </Folder>
+  <Folder Name="/MarkdownSample/">
+    <Project Path="MarkdownSample/Avalonia.Controls.Markdown.Samples/Avalonia.Controls.Markdown.Samples.csproj" />
+    <Project Path="MarkdownSample/MarkdownStreaming.Demo/MarkdownStreaming.Demo.csproj" />
+  </Folder>
   <Folder Name="/MediaPlayerSample/">
-    <Project Path="MediaPlayerSample/Avalonia.Media.Demo.Android/Avalonia.Media.Demo.Android.csproj" />
+    <Project Path="MediaPlayerSample/Avalonia.Media.Demo.Android/Avalonia.Media.Demo.Android.csproj">
+      <Deploy Solution="Debug|*" />
+    </Project>
     <Project Path="MediaPlayerSample/Avalonia.Media.Demo.Desktop/Avalonia.Media.Demo.Desktop.csproj" />
     <Project Path="MediaPlayerSample/Avalonia.Media.Demo.iOS/Avalonia.Media.Demo.iOS.csproj" />
     <Project Path="MediaPlayerSample/Avalonia.Media.Demo/Avalonia.Media.Demo.csproj" />
@@ -31,6 +37,10 @@
     <Project Path="NativeWebViewAndDialogSample/NativeWebViewAndDialogSample.iOS/NativeWebViewAndDialogSample.iOS.csproj" />
     <Project Path="NativeWebViewAndDialogSample/NativeWebViewAndDialogSample/NativeWebViewAndDialogSample.csproj" />
   </Folder>
+  <Folder Name="/RichTextEditorSample/">
+    <Project Path="RichTextEditorSample/DocumentViewer.Demo/DocumentViewer.Demo.csproj" />
+    <Project Path="RichTextEditorSample/RichTextEditor.Demo/RichTextEditor.Demo.csproj" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".gitattributes" />
     <File Path=".gitignore" />
@@ -41,6 +51,9 @@
   <Folder Name="/TreeDataGrid/">
     <Project Path="TreeDataGrid/FlatTreeDataGridSample/FlatTreeDataGridSample.csproj" />
     <Project Path="TreeDataGrid/HierarchicalTreeDataGridSample/HierarchicalTreeDataGridSample.csproj" />
+  </Folder>
+  <Folder Name="/VirtualKeyboardSample/">
+    <Project Path="VirtualKeyboardSample/VirtualKeyboardSample.csproj" />
   </Folder>
   <Folder Name="/WebAuthenticationBrokerSample/">
     <Project Path="WebAuthenticationBrokerSample/WebAuthenticationBrokerSample.Desktop/WebAuthenticationBrokerSample.Desktop.csproj" />

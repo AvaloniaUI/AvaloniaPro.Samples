@@ -1,0 +1,37 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:textMate="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.Markdown.TextMate"
+        xmlns:local="clr-namespace:Avalonia.Controls.Samples"
+        mc:Ignorable="d"
+        d:DesignWidth="800"
+        d:DesignHeight="800"
+        x:Class="Avalonia.Controls.Samples.MainWindow"
+        Title="Avalonia.Controls.Markdown.Samples">
+  <Window.Resources>
+    <ResourceDictionary>
+      <textMate:TextMateHighlighter x:Key="textMateHighlighter" />
+      <local:CustomImageLoader x:Key="customImageLoader" />
+    </ResourceDictionary>
+  </Window.Resources>
+  <Window.Styles>
+    <Style Selector="MarkdownCodeBlock">
+      <Setter Property="Highlighter" Value="{StaticResource textMateHighlighter}"/>
+    </Style>
+    <Style Selector="MarkdownImage">
+      <Setter Property="ImageLoader" Value="{StaticResource customImageLoader}"/>
+    </Style>
+  </Window.Styles>
+  <TabControl x:Name="tabControl">
+    <TabControl.Items>
+      <TabItem Header="Playground">
+        <Grid ColumnDefinitions="* Auto *">
+          <TextBox x:Name="txtBox" CornerRadius="0" BorderThickness="0" AcceptsReturn="True" Margin="12"/>
+          <GridSplitter Grid.Column="1" Width="2" VerticalAlignment="Stretch" Background="Black"/>
+          <Markdown Grid.Column="2" Text="{Binding #txtBox.Text}" Margin="12" />
+        </Grid>
+      </TabItem>
+    </TabControl.Items>
+  </TabControl>
+</Window>

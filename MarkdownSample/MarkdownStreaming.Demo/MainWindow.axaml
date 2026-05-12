@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:textMate="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.Markdown.TextMate"
+        mc:Ignorable="d"
+        d:DesignWidth="900"
+        d:DesignHeight="700"
+        x:Class="MarkdownStreaming.Demo.MainWindow"
+        Title="Markdown Streaming Demo"
+        Width="900" Height="700">
+  <Window.Resources>
+    <ResourceDictionary>
+      <textMate:TextMateHighlighter x:Key="textMateHighlighter" />
+    </ResourceDictionary>
+  </Window.Resources>
+  <Window.Styles>
+    <Style Selector="MarkdownCodeBlock">
+      <Setter Property="Highlighter" Value="{StaticResource textMateHighlighter}"/>
+    </Style>
+  </Window.Styles>
+  <Grid RowDefinitions="Auto,*,Auto">
+
+    <!-- Toolbar -->
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="12,8">
+      <Button x:Name="btnStart" Content="Start Streaming" Click="OnStartClick" />
+      <Button x:Name="btnStop" Content="Stop" Click="OnStopClick" IsEnabled="False" />
+      <Button x:Name="btnReset" Content="Reset" Click="OnResetClick" />
+      <Separator />
+      <TextBlock VerticalAlignment="Center" Text="Speed (tokens/sec):" />
+      <NumericUpDown x:Name="nudSpeed" Value="60" Minimum="1" Maximum="500" Width="120"
+                     Increment="10" />
+    </StackPanel>
+
+    <!-- Markdown viewer -->
+    <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,1">
+      <Markdown x:Name="markdownView" Margin="16" AutoScrollToEnd="True" />
+    </Border>
+
+    <!-- Status bar -->
+    <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="16" Margin="12,6">
+      <TextBlock x:Name="txtStatus" Text="Ready" />
+      <TextBlock x:Name="txtLength" Text="Length: 0" />
+      <TextBlock x:Name="txtUpdates" Text="Updates: 0" />
+    </StackPanel>
+  </Grid>
+</Window>
