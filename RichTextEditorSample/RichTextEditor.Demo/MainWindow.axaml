@@ -1,0 +1,73 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="RichTextEditor.Demo.MainWindow"
+        Title="RichTextEditor Demo"
+        Width="1200" Height="800"
+        MinWidth="600" MinHeight="600">
+
+  <Window.Styles>
+    <Style Selector="TableCell">
+      <Setter Property="Padding" Value="4"/>
+    </Style>
+  </Window.Styles>
+
+  <DockPanel>
+    <!-- Menu Bar -->
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="_File">
+        <MenuItem Header="_New" InputGesture="Ctrl+N" Click="NewDocument_Click" />
+        <Separator />
+        <MenuItem Header="_Open RTF..." InputGesture="Ctrl+O" Click="OpenRtf_Click" />
+        <MenuItem Header="Open _DOCX..." Click="OpenDocx_Click" />
+        <MenuItem Header="Open _XAML..." Click="OpenXaml_Click" />
+        <MenuItem Header="Open _Text..." Click="OpenText_Click" />
+        <Separator />
+        <MenuItem Header="_Save as RTF..." InputGesture="Ctrl+S" Click="SaveRtf_Click" />
+        <MenuItem Header="Save as D_OCX..." Click="SaveDocx_Click" />
+        <MenuItem Header="Save as XA_ML..." Click="SaveXaml_Click" />
+        <MenuItem Header="Save as _Text..." Click="SaveText_Click" />
+        <Separator />
+        <MenuItem Header="E_xit" Click="Exit_Click" />
+      </MenuItem>
+      <MenuItem Header="_Edit">
+        <MenuItem Header="_Undo" InputGesture="Ctrl+Z" Click="Undo_Click" />
+        <MenuItem Header="_Redo" InputGesture="Ctrl+Y" Click="Redo_Click" />
+      </MenuItem>
+    </Menu>
+
+    <!-- Status Bar -->
+    <Border DockPanel.Dock="Bottom"
+            Background="#FFF0F0F0"
+            BorderBrush="#FFCCCCCC"
+            BorderThickness="0,1,0,0"
+            Padding="8,4">
+      <Grid ColumnDefinitions="Auto,20,Auto,*,Auto">
+        <TextBlock x:Name="WordCountText"
+                   Grid.Column="0"
+                   Text="Words: 0"
+                   FontSize="11"
+                   VerticalAlignment="Center" />
+        <TextBlock x:Name="CharCountText"
+                   Grid.Column="2"
+                   Text="Characters: 0"
+                   FontSize="11"
+                   VerticalAlignment="Center" />
+        <TextBlock x:Name="CursorPositionText"
+                   Grid.Column="4"
+                   Text="Offset: 0"
+                   FontSize="11"
+                   VerticalAlignment="Center" />
+      </Grid>
+    </Border>
+
+    <!-- Editor -->
+    <RichTextEditor x:Name="Editor"
+                    ShowToolbar="True"
+                    AcceptsTab="True"
+                    SelectionBrush="#60086F9E">
+    
+        
+    </RichTextEditor>
+  </DockPanel>
+
+</Window>

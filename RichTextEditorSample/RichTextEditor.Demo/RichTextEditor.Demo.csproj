@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <StartupObject>RichTextEditor.Demo.Program</StartupObject>
+    <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
+    <NoWarn>$(NoWarn);IL2026;IL2072;IL2075</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1" />
+    <PackageReference Include="AvaloniaUI.Licensing" Version="$(AvaloniaLicensingVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Controls.Documents" Version="$(DocumentsPackageVersion)" />
+    <PackageReference Include="Avalonia.Controls.Documents.Serialization.Docx" Version="$(DocumentsPackageVersion)" />
+    <PackageReference Include="Avalonia.Controls.Documents.Serialization.Rtf" Version="$(DocumentsPackageVersion)" />
+    <PackageReference Include="Avalonia.Controls.Documents.Serialization.Xaml" Version="$(DocumentsPackageVersion)" />
+    <PackageReference Include="Avalonia.Controls.RichTextEditor" Version="$(DocumentsPackageVersion)" />
+  </ItemGroup>
+  
+</Project>

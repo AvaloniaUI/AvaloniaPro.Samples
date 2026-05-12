@@ -1,0 +1,422 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
+        x:Class="DocumentViewer.Demo.MainWindow"
+        Title="Document Viewer Guide — Demo" Width="1000" Height="700">
+
+    <Window.Styles>
+        <!-- Theming with Styles (guide section) -->
+        <Style Selector="FlowDocumentScrollViewer.themed">
+            <Setter Property="Padding" Value="24" />
+        </Style>
+    </Window.Styles>
+
+    <TabControl Margin="8">
+
+        <!-- ============================================================ -->
+        <!-- 1. Minimal XAML Example                                      -->
+        <!-- ============================================================ -->
+        <TabItem Header="Minimal">
+            <FlowDocumentScrollViewer Padding="20">
+                <FlowDocument FontSize="14">
+                    <Paragraph FontSize="24" FontWeight="Bold">
+                        <RichRun Text="Welcome" />
+                    </Paragraph>
+                    <Paragraph>
+                        <RichRun Text="This document is displayed in a read-only viewer." />
+                    </Paragraph>
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
+        </TabItem>
+
+        <!-- ============================================================ -->
+        <!-- 2. Document Structure — all block and inline types           -->
+        <!-- ============================================================ -->
+        <TabItem Header="Structure">
+            <FlowDocumentScrollViewer Padding="20">
+                <FlowDocument FontSize="14">
+                    <!-- Paragraph with mixed inlines -->
+                    <Paragraph FontSize="20" FontWeight="Bold">
+                        <RichRun Text="All Element Types" />
+                    </Paragraph>
+
+                    <Paragraph>
+                        <RichRun Text="Normal text, " />
+                        <RichBold>
+                            <RichRun Text="bold" />
+                        </RichBold>
+                        <RichRun Text=", " />
+                        <RichItalic>
+                            <RichRun Text="italic" />
+                        </RichItalic>
+                        <RichRun Text=", " />
+                        <RichUnderline>
+                            <RichRun Text="underline" />
+                        </RichUnderline>
+                        <RichRun Text=", " />
+                        <RichSuperscript>
+                            <RichRun Text="super" />
+                        </RichSuperscript>
+                        <RichRun Text=", " />
+                        <RichSubscript>
+                            <RichRun Text="sub" />
+                        </RichSubscript>
+                        <RichRun Text=", and " />
+                        <RichSpan FontWeight="Bold" FontStyle="Italic">
+                            <RichRun Text="bold italic span" />
+                        </RichSpan>
+                        <RichRun Text="." />
+                    </Paragraph>
+
+                    <!-- Line break -->
+                    <Paragraph>
+                        <RichRun Text="Line one" />
+                        <RichLineBreak />
+                        <RichRun Text="Line two (explicit line break)" />
+                    </Paragraph>
+
+                    <!-- Hyperlink -->
+                    <Paragraph>
+                        <RichRun Text="Visit the " />
+                        <RichHyperlink NavigateUri="https://avaloniaui.net">
+                            <RichRun Text="Avalonia website" />
+                        </RichHyperlink>
+                        <RichRun Text=" for more information." />
+                    </Paragraph>
+
+                    <!-- Section -->
+                    <Section Margin="0,10,0,0" Padding="10" BorderThickness="1"
+                             BorderBrush="Gray" CornerRadius="4">
+                        <Paragraph FontWeight="Bold">
+                            <RichRun Text="Section Block" />
+                        </Paragraph>
+                        <Paragraph>
+                            <RichRun Text="A Section groups multiple blocks together with shared formatting." />
+                        </Paragraph>
+                    </Section>
+
+                    <!-- List (bullets) -->
+                    <Paragraph FontSize="16" FontWeight="Bold" Margin="0,10,0,0">
+                        <RichRun Text="Bulleted List" />
+                    </Paragraph>
+                    <List MarkerStyle="Disc">
+                        <ListItem>
+                            <Paragraph>
+                                <RichRun Text="First item" />
+                            </Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>
+                                <RichRun Text="Second item" />
+                            </Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>
+                                <RichRun Text="Third item with " />
+                                <RichBold>
+                                    <RichRun Text="bold" />
+                                </RichBold>
+                                <RichRun Text=" text" />
+                            </Paragraph>
+                        </ListItem>
+                    </List>
+
+                    <!-- List (numbered) -->
+                    <Paragraph FontSize="16" FontWeight="Bold" Margin="0,10,0,0">
+                        <RichRun Text="Numbered List" />
+                    </Paragraph>
+                    <List MarkerStyle="Decimal">
+                        <ListItem>
+                            <Paragraph>
+                                <RichRun Text="Step one" />
+                            </Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>
+                                <RichRun Text="Step two" />
+                            </Paragraph>
+                        </ListItem>
+                        <ListItem>
+                            <Paragraph>
+                                <RichRun Text="Step three" />
+                            </Paragraph>
+                        </ListItem>
+                    </List>
+
+                    <!-- Table -->
+                    <Paragraph FontSize="16" FontWeight="Bold" Margin="0,10,0,0">
+                        <RichRun Text="Table" />
+                    </Paragraph>
+                    <Table>
+                        <Table.Columns>
+                            <TableColumn Width="200" />
+                            <TableColumn Width="100" />
+                            <TableColumn Width="100" />
+                        </Table.Columns>
+                        <TableRowGroup>
+                            <TableRow>
+                                <TableCell BorderThickness="0,0,0,1" BorderBrush="Gray" Padding="4">
+                                    <Paragraph FontWeight="Bold">
+                                        <RichRun Text="Product" />
+                                    </Paragraph>
+                                </TableCell>
+                                <TableCell BorderThickness="0,0,0,1" BorderBrush="Gray" Padding="4">
+                                    <Paragraph FontWeight="Bold">
+                                        <RichRun Text="Qty" />
+                                    </Paragraph>
+                                </TableCell>
+                                <TableCell BorderThickness="0,0,0,1" BorderBrush="Gray" Padding="4">
+                                    <Paragraph FontWeight="Bold">
+                                        <RichRun Text="Price" />
+                                    </Paragraph>
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell Padding="4">
+                                    <Paragraph>
+                                        <RichRun Text="Apples" />
+                                    </Paragraph>
+                                </TableCell>
+                                <TableCell Padding="4">
+                                    <Paragraph>
+                                        <RichRun Text="12" />
+                                    </Paragraph>
+                                </TableCell>
+                                <TableCell Padding="4">
+                                    <Paragraph>
+                                        <RichRun Text="$3.00" />
+                                    </Paragraph>
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell Padding="4">
+                                    <Paragraph>
+                                        <RichRun Text="Bread" />
+                                    </Paragraph>
+                                </TableCell>
+                                <TableCell Padding="4">
+                                    <Paragraph>
+                                        <RichRun Text="2" />
+                                    </Paragraph>
+                                </TableCell>
+                                <TableCell Padding="4">
+                                    <Paragraph>
+                                        <RichRun Text="$4.50" />
+                                    </Paragraph>
+                                </TableCell>
+                            </TableRow>
+                        </TableRowGroup>
+                    </Table>
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
+        </TabItem>
+
+        <!-- ============================================================ -->
+        <!-- 3. Styling and Theming                                       -->
+        <!-- ============================================================ -->
+        <TabItem Header="Styling">
+            <FlowDocumentScrollViewer Classes="themed">
+                <FlowDocument FontFamily="Segoe UI" FontSize="14"
+                              Foreground="#333333" TextAlignment="Left">
+                    <Paragraph FontSize="24" FontWeight="Bold" Foreground="DarkBlue">
+                        <RichRun Text="Document-Level Defaults" />
+                    </Paragraph>
+                    <Paragraph>
+                        <RichRun Text="This paragraph inherits FontFamily, FontSize, and Foreground from the FlowDocument element." />
+                    </Paragraph>
+                    <Paragraph FontSize="18" FontWeight="Bold" Foreground="DarkRed">
+                        <RichRun Text="Per-Element Overrides" />
+                    </Paragraph>
+                    <Paragraph>
+                        <RichRun Text="Individual paragraphs and inlines can override the inherited values." />
+                    </Paragraph>
+                    <Paragraph>
+                        <RichRun Text="Visit the " />
+                        <RichHyperlink NavigateUri="https://avaloniaui.net">
+                            <RichRun Text="Avalonia website" />
+                        </RichHyperlink>
+                        <RichRun Text=" — hyperlinks support :pointerover, :pressed, and :visited pseudo-classes." />
+                    </Paragraph>
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
+        </TabItem>
+
+        <!-- ============================================================ -->
+        <!-- 4. Page Layout — PageWidth, PagePadding, ShowPageBounds      -->
+        <!-- ============================================================ -->
+        <TabItem Header="Page Layout">
+            <FlowDocumentScrollViewer ShowPageBounds="True"
+                                      Background="#E8E8E8"
+                                      Padding="40">
+                <FlowDocument PageWidth="612" PageHeight="792" PagePadding="72"
+                              FontSize="14">
+                    <!-- US Letter: 612 × 792 DIPs at 96 DPI = 8.5 × 11 inches -->
+                    <Paragraph FontSize="20" FontWeight="Bold">
+                        <RichRun Text="Print Preview Layout" />
+                    </Paragraph>
+                    <Paragraph>
+                        <RichRun Text="PageWidth=612, PageHeight=792, PagePadding=72 simulates US Letter with 0.75-inch margins." />
+                    </Paragraph>
+                    <Paragraph>
+                        <RichRun Text="ShowPageBounds is enabled, rendering visual indicators at the page boundary. The gray background outside the page area demonstrates the centered page effect." />
+                    </Paragraph>
+                    <Paragraph>
+                        <RichRun Text="This is useful for print-preview scenarios where the user needs to see how content will fit on a physical page." />
+                    </Paragraph>
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
+        </TabItem>
+
+        <!-- ============================================================ -->
+        <!-- 5. Embedded Controls — BlockUIContainer, InlineUIContainer   -->
+        <!-- ============================================================ -->
+        <TabItem Header="Embedded Controls">
+            <FlowDocumentScrollViewer Padding="20">
+                <FlowDocument FontSize="14">
+                    <Paragraph FontSize="20" FontWeight="Bold">
+                        <RichRun Text="Embedded Controls" />
+                    </Paragraph>
+
+                    <Paragraph>
+                        <RichRun Text="BlockUIContainer — full-width block:" />
+                    </Paragraph>
+                    <BlockUIContainer>
+                        <Border Background="#E3F2FD" CornerRadius="8" Padding="16"
+                                HorizontalAlignment="Stretch">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="This is a live Avalonia Border + StackPanel inside a BlockUIContainer."
+                                           FontWeight="Bold" />
+                                <ProgressBar Value="65" Maximum="100" Height="20" />
+                                <TextBlock Text="Progress: 65%" />
+                            </StackPanel>
+                        </Border>
+                    </BlockUIContainer>
+
+                    <Paragraph>
+                        <RichRun Text="RichInlineUIContainer — small control inline with text:" />
+                    </Paragraph>
+                    <Paragraph>
+                        <RichRun Text="Status: " />
+                        <RichInlineUIContainer>
+                            <Border Background="Green" CornerRadius="4" Padding="4,2">
+                                <TextBlock Text="Active" Foreground="White" FontSize="11" />
+                            </Border>
+                        </RichInlineUIContainer>
+                        <RichRun Text=" since January 2026. Priority: " />
+                        <RichInlineUIContainer>
+                            <Border Background="Orange" CornerRadius="4" Padding="4,2">
+                                <TextBlock Text="Medium" Foreground="White" FontSize="11" />
+                            </Border>
+                        </RichInlineUIContainer>
+                        <RichRun Text="." />
+                    </Paragraph>
+
+                    <Paragraph FontStyle="Italic" Foreground="Gray" Margin="0,10,0,0">
+                        <RichRun Text="Note: Embedded controls are live but not captured in serialization snapshots." />
+                    </Paragraph>
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
+        </TabItem>
+
+        <!-- ============================================================ -->
+        <!-- 6. Code-Built Documents (FlowDocumentBuilder + Manual)       -->
+        <!-- ============================================================ -->
+        <TabItem Header="Code-Built">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8"
+                            Margin="0,0,0,8">
+                    <Button x:Name="BuildManualButton" Content="Manual Construction" />
+                    <Button x:Name="BuildFluentButton" Content="FlowDocumentBuilder" />
+                </StackPanel>
+                <FlowDocumentScrollViewer x:Name="CodeBuiltViewer" Padding="20" />
+            </DockPanel>
+        </TabItem>
+
+        <!-- ============================================================ -->
+        <!-- 7. Embedded Resource Loading                                 -->
+        <!-- ============================================================ -->
+        <TabItem Header="From Resource">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8"
+                            Margin="0,0,0,8">
+                    <Button x:Name="LoadResourceButton" Content="Load Help.axaml from Resource" />
+                </StackPanel>
+                <FlowDocumentScrollViewer x:Name="ResourceViewer" Padding="20" />
+            </DockPanel>
+        </TabItem>
+
+        <!-- ============================================================ -->
+        <!-- 8. Snapshots — create once, serialize to multiple formats    -->
+        <!-- ============================================================ -->
+        <TabItem Header="Snapshots">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Top" Spacing="8" Margin="0,0,0,8">
+                    <TextBlock Text="Demonstrates DocumentSnapshot: create once, reuse across operations."
+                               FontWeight="Bold" />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button x:Name="TakeSnapshotButton" Content="Take Snapshot" />
+                        <Button x:Name="SerializeSnapshotButton" Content="Serialize to XAML"
+                                IsEnabled="False" />
+                    </StackPanel>
+                    <TextBox x:Name="SnapshotOutput" IsReadOnly="True" AcceptsReturn="True"
+                             Height="180" FontFamily="Cascadia Code,Consolas,Courier New"
+                             FontSize="12" />
+                </StackPanel>
+                <FlowDocumentScrollViewer x:Name="SnapshotViewer" Padding="20">
+                    <FlowDocument FontSize="14">
+                        <Paragraph FontSize="18" FontWeight="Bold">
+                            <RichRun Text="Snapshot Source Document" />
+                        </Paragraph>
+                        <Paragraph>
+                            <RichRun Text="This document will be snapshotted. The snapshot is immutable and thread-safe — it can be serialized to multiple formats from any thread." />
+                        </Paragraph>
+                        <Paragraph>
+                            <RichBold>
+                                <RichRun Text="Tip:" />
+                            </RichBold>
+                            <RichRun Text=" Call CreateSnapshot() once and reuse the result. Each call traverses the document tree." />
+                        </Paragraph>
+                    </FlowDocument>
+                </FlowDocumentScrollViewer>
+            </DockPanel>
+        </TabItem>
+
+        <!-- ============================================================ -->
+        <!-- 9. Virtualization — large document performance               -->
+        <!-- ============================================================ -->
+        <TabItem Header="Virtualization">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Top" Spacing="8" Margin="0,0,0,8">
+                    <TextBlock Text="Generates a document with many blocks to demonstrate virtualization."
+                               FontWeight="Bold" />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Block count:" VerticalAlignment="Center" />
+                        <NumericUpDown x:Name="BlockCountInput" Value="2000"
+                                       Minimum="100" Maximum="50000" Increment="500"
+                                       Width="120" />
+                        <Button x:Name="GenerateLargeDocButton" Content="Generate" />
+                        <TextBlock x:Name="GenerateTimingText" VerticalAlignment="Center"
+                                   Foreground="Gray" />
+                    </StackPanel>
+                </StackPanel>
+                <FlowDocumentScrollViewer x:Name="VirtualizationViewer" Padding="20" />
+            </DockPanel>
+        </TabItem>
+
+        <!-- ============================================================ -->
+        <!-- 10. Dynamic Report — data-driven document generation         -->
+        <!-- ============================================================ -->
+        <TabItem Header="Dynamic Report">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8"
+                            Margin="0,0,0,8">
+                    <Button x:Name="GenerateReportButton" Content="Generate Sales Report" />
+                </StackPanel>
+                <FlowDocumentScrollViewer x:Name="ReportViewer" Padding="20" />
+            </DockPanel>
+        </TabItem>
+
+    </TabControl>
+</Window>

@@ -1,6 +1,12 @@
 <Solution>
+  <Folder Name="/MarkdownSample/">
+    <Project Path="MarkdownSample/Avalonia.Controls.Markdown.Samples/Avalonia.Controls.Markdown.Samples.csproj" />
+    <Project Path="MarkdownSample/MarkdownStreaming.Demo/MarkdownStreaming.Demo.csproj" />
+  </Folder>
   <Folder Name="/MediaPlayerSample/">
-    <Project Path="MediaPlayerSample/Avalonia.Media.Demo.Android/Avalonia.Media.Demo.Android.csproj" />
+    <Project Path="MediaPlayerSample/Avalonia.Media.Demo.Android/Avalonia.Media.Demo.Android.csproj">
+      <Deploy Solution="Debug|*" />
+    </Project>
     <Project Path="MediaPlayerSample/Avalonia.Media.Demo.Desktop/Avalonia.Media.Demo.Desktop.csproj" />
     <Project Path="MediaPlayerSample/Avalonia.Media.Demo.iOS/Avalonia.Media.Demo.iOS.csproj" />
     <Project Path="MediaPlayerSample/Avalonia.Media.Demo/Avalonia.Media.Demo.csproj" />
@@ -19,6 +25,10 @@
     <Project Path="NativeWebViewAndDialogSample/NativeWebViewAndDialogSample.Desktop/NativeWebViewAndDialogSample.Desktop.csproj" />
     <Project Path="NativeWebViewAndDialogSample/NativeWebViewAndDialogSample.iOS/NativeWebViewAndDialogSample.iOS.csproj" />
     <Project Path="NativeWebViewAndDialogSample/NativeWebViewAndDialogSample/NativeWebViewAndDialogSample.csproj" />
+  </Folder>
+  <Folder Name="/RichTextEditorSample/">
+    <Project Path="RichTextEditorSample/DocumentViewer.Demo/DocumentViewer.Demo.csproj" />
+    <Project Path="RichTextEditorSample/RichTextEditor.Demo/RichTextEditor.Demo.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".gitattributes" />

@@ -1,0 +1,40 @@
+<FlowDocument xmlns="https://github.com/avaloniaui"
+              FontSize="14">
+    <Paragraph FontSize="22" FontWeight="Bold">
+        <RichRun Text="Embedded Help Document" />
+    </Paragraph>
+    <Paragraph>
+        <RichRun Text="This document was loaded from an embedded XAML resource using " />
+        <RichBold>
+            <RichRun Text="AssetLoader.Open" />
+        </RichBold>
+        <RichRun Text=" and deserialized with " />
+        <RichBold>
+            <RichRun Text="XamlSerializer" />
+        </RichBold>
+        <RichRun Text="." />
+    </Paragraph>
+    <Paragraph>
+        <RichRun Text="This pattern is useful for bundling static content such as help pages, about dialogs, and license text directly into the application assembly." />
+    </Paragraph>
+    <Paragraph FontWeight="Bold" FontSize="16">
+        <RichRun Text="Key Points" />
+    </Paragraph>
+    <List MarkerStyle="Disc">
+        <ListItem>
+            <Paragraph>
+                <RichRun Text="XAML documents round-trip all formatting and structure." />
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                <RichRun Text="Resources are compiled into the assembly — no external files needed." />
+            </Paragraph>
+        </ListItem>
+        <ListItem>
+            <Paragraph>
+                <RichRun Text="Loading is synchronous and fast for small documents." />
+            </Paragraph>
+        </ListItem>
+    </List>
+</FlowDocument>
